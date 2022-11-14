@@ -1,0 +1,270 @@
+{
+  "navBar":{
+    "home":"Home",
+    "aboutUs":"About us",
+    "ourOffers":"Our offers",
+    "ourServices":"Our services",
+    "keyBenefits":"key benefits",
+    "beliefs":"Beliefs",
+    "contactUs":"Contact us",
+    "clientSpace":"Customer Area"
+  },
+    "index": {
+      "hero" : {
+        "l1":"Change",
+        "l2":"your future.",
+        "l3":"Change",
+        "l4":"your energy!",
+        "button":"Find out more"
+      },
+      "section1":{
+       "h2":"We are innovative energy",
+       "p":"Bohr Energie is the power supplier that combines innovation, quality services, and fair prices to improve your business. We will change the way you invest in energy.",
+       "button":"More about us"
+      },
+      "section2":{
+        "h2":"Our energy solutions",
+        "h3":"Find suitable solutions for your unique needs.",
+        "h2Products":"Products",
+        "pProducts":"We create tailor-made energy solutions for your business -no matter what its size or its industry is. We do it to optimize yourenergy budget.",
+        "h2Services" :"Services",
+        "pServices" : "We help you control your energy consumption by using modern digital tools, with the support of dedicated contact personnel.",
+        "button" : "Discover more",
+        "pimg" : "Read More",
+        "h2img1" : "Residential Complexes",
+        "h2img2" : "Independent Businesses",
+        "h2img3" : "Small & Medium Enterprises",
+        "h2img4" : "Corporative & Industrial Complexes"
+       },
+       "section3":{
+        "h2":"Our key benefits",
+        "h3" : "Contribute to your business and our world.",
+        "h2img1" : "Digital innovation",
+        "pimg1" :"User-friendly solutions and smart digital tools that make everything easier.",
+        "h2img2" :"Fair rates",
+        "pimg2" :"Transparent prices that optimize your power consumption and investments.",
+        "h2img3" : "Personalized attention",
+        "pimg3" : "Professional support to set up tailor-made integrated energy solutions.",
+        "h2img4" :"Green Energy",
+        "pimg4" : "100% renewable energy to create a sustainable business world.",
+        "button" :"Discover more"
+       }
+    },
+    "aboutus":{
+      "hero":{
+        "l1" : "Our",
+        "l2":"Innovative",
+        "l3" : "company"
+      },
+      "section1":{
+        "h2" : "Change your future with an OFG start-up enterprise.",
+        "text" : "Be Bohr Energie!",
+        "p" : "We are a French energy supplier founded in 2020, with the main goal of taking advantage of innovation and real-time data to offer suitable power solutions that enhance business operations.",
+        "button" : "Find an energy solution"
+      },
+      "section2" : {
+        "h2":"Let’s change together",
+        "p":"We aim at a real change in our planet. For that reason, we can help you optimize your resource spending –in incomes and energy, but more importantly, we want to make you aware of the impact that energy has over your business, your life, and our world.",
+        "h3img1" : "Mission",
+        "pimg1" : "To secure tailor-made energy solutions based on transparent prices and power consumption optimization to improve business revenues.",
+        "h3img2" : "Vision",
+        "pimg2" : "To become the alternative power supplier leader that offers affordable green energy solutions for B2B companies, driven by real-time digital tools.",
+        "h3img3" : "Values",
+        "pimg3" : "We try to do better things for our customers and our planet according to our principles:",
+        "li1" :"Excellence and efficiency.",
+        "li2" :"Transparency and accountability.",
+        "li3" :"Quality products and dedicated customer service.",
+        "li4" :"Environmental and social responsibility.",
+        "h3img4" :"Philosophy",
+        "pimg4" :"We are an open-energy company based on sharing data, sources, and innovation, that seeks to generate efficient power solutions to enhance our world.",
+        "button" : "Contact us"
+      }
+    },
+    "beOurClient":{
+      "hero" :{
+        "l1" : "Our",
+        "l2" :"targeted",
+        "l3" : "clients"
+      },
+      "section1":{
+        "h2":"Change your energy to improve your business.",
+        "p" : "Be outstanding by being innovative with Bohr Energie’s solutions. We have a highly personalized offer for your business —no matter what its size or its industry is.",
+        "button" : "Find an energy solution"
+      },
+      "section2" : {
+        "h2img1":"Residential Complexes",
+        "spanimg1":"(<10 MWh annual consumption)",
+        "pimg1":"Focused on collectivities and populated areas with moderate power consumption. We can set up a perfect solution to satisfy their daily energy requirements.",
+        "h2img2":"Independent Businesses",
+        "spanimg2":"(<0.15 GWh annual consumption)",
+        "pimg2" : "Ideal for the power demands of liberal professions, micro-entrepreneurs, and craftsmen. You can control your energy consumption to save incomes.",
+        "h2img3":"Small and Medium Enterprises",
+        "spanimg3":"(0.15 - 1 GWh annual consumption)",
+        "pimg3" : "Targeted to entrepreneurships, small businesses, and small industries. We can find an integrated power solution for your growing company’s demands.",
+        "h2img4" :"Corporative & Industrial Complexes",
+        "spanimg4":"(>1 GWh annual consumption)",
+        "pimg4" : "For big enterprises, hypermarkets, hospitals, corporative buildings, and large industrial sites. We can assure you you will get the power supply needed to maintain your commercial and industrial activities.",
+        "button":"Contact us"
+      }
+    },
+    "beliefs" :{
+      "hero":{
+        "l1" : "Our",
+        "l2":"foundational",
+        "l3" : "beliefs"
+      },
+      "section1":{
+        "h2":"Change your future with an open-energy world.",
+        "p1" : "Bohr Energie supplies affordable energy for every enterprise that needs it because we believe in Niels Bohr’s dream of an open world, where resources can be shared",
+        "p2" : "Inspired by the physicist, we created an open-energy company based on sharing data, sources, and innovation to get better rates, save energy, and protect the environment. Now, as a sustainable energy supplier, we aim to generate efficient power solutions that enhance our world.",
+        "button" : "Find an energy solution"
+    },
+    "section2" :{
+      "h2img" : "Bohr’s legacy",
+      "h3img" : "“What cannot be measured does not exist.”",
+      "pimg" :"Niels Bohr, Nobel Prize of Physics.",
+      "pdiv" : "We acknowledge the importance of measuring our accomplishments and our environmental share by observing two kinds of metrics that help us focus on our main goal: to provide affordable green energy to every enterprise that needs it.",
+      "h3ul" :"SATISFACTION INDICATORS",
+      "li1":"Customer satisfaction",
+      "pli1" : "Is our client happy with our integrated solutions and services?",
+      "li2":"Customer effort score",
+      "pli2":"Did our client spend time and energy to obtain a satisfactory solution?",
+      "li3":"Net promoted score",
+      "pli3" : "What are the odds of being recommended by our clients?",
+      "h3ul1" : "CLEAN ENERGY INDICATORS" ,
+      "ul1li1":"Carbon metrics",
+      "ul1p1" :"It includes indicators such as carbon footprinting and C02 emission reductions.",
+      "ul1li2":"Green / Brown exposure",
+      "ul1p2":"It covers indicators of climate solutions and climate problems in technology, sectors, and industries.",
+      "ul1li3":"Climate score",
+      "ul1p3" : "It comprehends qualitative climate-related indicators.",
+      "button":"Start now"
+    }
+    },
+    "keyBenefits":{
+      "hero":{
+        "l1" : "Our key",
+        "l2":"benefits"
+      },
+      "section1":{
+        "h2":"Change your energy and let your business contribute to our world.",
+        "p":"Bohr Energie gives you innovative energy solutions that can raise your power performance by protecting the environment.",
+        "button":"Find an energy solution"
+      },
+      "section2":{
+        "h3img1":"Digital innovation",
+        "pimg1":"Discover an easier way to control your energy consumption with our real-time analytic digital tools powered by our artificial intelligence platform.",
+        "h3img2":"Fair rates",
+        "pimg2":"Secure better prices by monitoring your power consumption —anywhere and anytime, and with our transparent energy rates.",
+        "h3img3":"Personalized attention",
+        "pimg3":"Obtain professional support to set up a tailor-made energy solution for your business and whenever needed.",
+        "h3img4":"Green energy",
+        "pimg4":"Transform your business into a sustainable one with our renewable energy solutions that enhance your future and our world.",
+        "button":"Start now"
+      }
+    },
+    "openSolutions":{
+      "hero":{
+        "l1":"Our",
+        "l2":"energy",
+        "l3":"solution"
+      },
+      "section1" : {
+        "text" : "Suitable solutions",
+        "h2":"Change your future with tailor-made solutions.",
+        "p":"There are no two businesses that are alike. Why settle for a generic power product? Find a suitable energy solution for your company’s unique needs.",
+        "button" :"Start now"
+      },
+      "section2":{
+        "h3img1":"Fixed-price",
+        "pimg1": "You have a secured price for the duration of your contract.",
+        "li1img1":"100% market or indexed to ARENH.",
+        "li2img1":"Contract duration from 1 to 4 years.",
+        "li3img1":"For one or multiple sites.",
+        "li4img1":"Guaranteed green energy of origin.",
+        "li5img1":"Tailor-made billing.",
+
+        "h3img2":"Variable price",
+        "pimg2": "You decide when you want to buy your energy supply.",
+        "li1img2":"Indexed to forward wholesale market depending on its position.",
+        "li2img2":"Contract duration from 1 to 4 years.",
+        "li3img2":"For one or multiple sites.",
+        "li4img2":"Guaranteed green energy of origin.",
+        "li5img2":"Click option on all or part of the volumes.",
+        
+        "h3img3":"Spot price",
+        "pimg3": "You have a price that moves concerning a spot market evolution.",
+        "li1img3":"Indexed on the spot hourly market prices.",
+        "li2img3":"Contract duration from 1 to 4 years.",
+        "li3img3":"For one or multiple sites.",
+        "li4img3":"Guaranteed green energy of origin.",
+
+        "link" :"Start now"
+      },
+      "section3":{
+        "text" : "Integrated services",
+        "h2":"Change your future with personalized services.",
+        "p":"Do you need an energy consultant? We are here for you and all your power projects. Find the support your business deserves.",
+        "button" :"Book a consult"
+      },
+      "section4":{
+        "h2img1":"Optimization tools",
+        "pimg1":"Get better rates and taxes with our real-time analytic digital tools powered by our artificial intelligence platform.",
+
+        "h2img2":"Energy Advisors",
+        "pimg2":"Our energy specialists —with expertise in risk management, energy markets, and data analysis, can guide you in any power project.",
+        
+        "h2img3":"Capacity mechanism",
+        "pimg3":"We can secure electricity when needed by collaborating with the power plants and participating in the power market.",
+        
+        "h2img4":"Energy-Saving Certificates (CEE)",
+        "pimg4":"We comply with our state obligation by offering bonuses, subsidized loans, or free diagnostics to help you save energy..",
+        
+        "h2img5":"e-Mobility Service Provider",
+        "pimg5":"Obtain an optimized safety utility net through the main grid of charge point operators with our smart charging tech and transparent platforms."
+        
+      },
+      "section5":{
+        "text" : "How do we do it?",
+        "h2":"A transparent process for a sustainable change.",
+        "p":"We do things differently to provide you with affordable energy solutions. Easy to control, easy to manage.",
+        "button" :"Start now"
+      },
+      "section6":{
+        "h3img1":"Contact us",
+        "pimg1":"You want a better energy solution.",
+
+        "h3img2":"Get a solution",
+        "pimg2":"We analyze your real power needs.",
+        
+        "h3img3":"Sign up with us",
+        "pimg3":"We supply you with green energy.",
+        
+        "h3img4":"Control supply",
+        "pimg4":"You optimize your power consumption",
+        
+        "h3img5":"Get better rates",
+        "pimg5":"You improve your energy budget."
+        
+      } 
+    },
+    "contactUs":{
+      "hero":{
+        "l1":"Contact us",
+        "l2":"Our Location",
+        "l3":"I prefer to be called"
+      },
+      "section1" : {
+        "text" : "Let’s talk about and find better solutions to change your energy and change your business",
+        "h2":"Name",
+        "h3":"Company",
+        "h4":"Telephone",
+        "h5":"Email",
+        "h6":"Message",
+        "button" :"Contact us now",
+        "locale":"en",
+        "button2":"Receive a call"
+      }
+    }
+
+}

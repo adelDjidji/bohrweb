@@ -1,0 +1,285 @@
+{
+  "navBar":{
+    "home":"",
+    "aboutUs":"",
+    "ourOffers":"",
+    "ourServices":"",
+    "keyBenefits":"Our technology",
+    "beliefs":"Who we are?",
+    "contactUs":"Contact us",
+    "clientSpace":"Customer Area"
+  },
+    "index": {
+      "hero" : {
+        "l1":"Connect your power units",
+        "l2":"on the energy",
+        "l3":"markets!.",
+        "l4":"",
+        "c1":"Hydro-electricity",
+        "c2":"Wind",
+        "c3":"Solar",
+        "p1_0":"Free / Under or exit OA / New projects",
+        "p1_1":"Production capacity: from 0,1MW to 40MW.",
+        "h1":"Improve your earnings !",
+        "button":"",
+        "button2":""
+      },
+
+      "section1":{
+        "h1":"If you had sold 1MW per hour in 2022, you would have earned at:",
+        "h2":"Join Bohr Energie and sell your energy production on short-term power markets !",
+        "h3":"Market price - 'Spot' (€/MWh):",
+        "h4":"Market price - 'Futures' (€/MWh):",
+        "button":"Join us !"
+      },
+
+      "section2":{
+        "h2":"For Producers",
+        "h3":"Bohr energie provides you with innovative energy offers by optimising your energy assets on short-term power markets. Change the way you sell your production to increase your energy incomes.",
+        "h4":"3 Offers",
+        "h2Product1":"Optimizing the selling price of energy",
+        "pProduct1":"Bohr Energie's team of specialists supports you in maximizing the selling price of your production.",
+        "h2Product2" :"Manage guarantees of origin",
+        "pProduct2" : "Enhance your status as a renewable energy producer by selling your green guarantees of origin on the markets.",
+        "h2Product3" :"Manage capacity mechanisms",
+        "pProduct3" : "We certify with RTE and value your winter peak production capacity on capacity auctions.",
+        "h2Product4" :"",
+        "pProduct4" : "",
+        "button" : ""
+       },
+
+       "section3":{
+        "h2":"Our mission",
+        "h3" : "Connecting producers and consumers with the best energy asset management solutions.",
+        "h2img1" : "Digital Innovation",
+        "pimg1" :"Develop renewable energies and sustain the sector with our innovative solutions.",
+        "h2img2" :"Tailor-made optimization offers",
+        "pimg2" :"Make energy asset management practices in the markets transparent and accessible.",
+        "h2img3" : "Personalized customer service",
+        "pimg3" : "Offer a local service created by producers for producers.",
+        "h2img4" :"Energie verte",
+        "pimg4" : " Une energie 100% renouvelable pour un monde plus durable.",
+        "button" :"Learn more"
+       }
+    },
+    "aboutus":{
+      "hero":{
+        "l1" : "Our",
+        "l2":"Innovative",
+        "l3" : "company"
+      },
+      "section1":{
+        "h2" : "Change your future with an OFG start-up enterprise.",
+        "text" : "Be Bohr Energie!",
+        "p" : "We are a French energy supplier founded in 2020, with the main goal of taking advantage of innovation and real-time data to offer suitable power solutions that enhance business operations.",
+        "button" : "Find an energy solution"
+      },
+      "section2" : {
+        "h2":"Let’s change together",
+        "p":"We aim at a real change in our planet. For that reason, we can help you optimize your resource spending –in incomes and energy, but more importantly, we want to make you aware of the impact that energy has over your business, your life, and our world.",
+        "h3img1" : "Mission",
+        "pimg1" : "To secure tailor-made energy solutions based on transparent prices and power consumption optimization to improve business revenues.",
+        "h3img2" : "Vision",
+        "pimg2" : "To become the alternative power supplier leader that offers affordable green energy solutions for B2B companies, driven by real-time digital tools.",
+        "h3img3" : "Values",
+        "pimg3" : "We try to do better things for our customers and our planet according to our principles:",
+        "li1" :"Excellence and efficiency.",
+        "li2" :"Transparency and accountability.",
+        "li3" :"Quality products and dedicated customer service.",
+        "li4" :"Environmental and social responsibility.",
+        "h3img4" :"Philosophy",
+        "pimg4" :"We are an open-energy company based on sharing data, sources, and innovation, that seeks to generate efficient power solutions to enhance our world.",
+        "button" : "Contact us"
+      }
+    },
+    "beOurClient":{
+      "hero" :{
+        "l1" : "Our",
+        "l2" :"targeted",
+        "l3" : "clients"
+      },
+      "section1":{
+        "h2":"Change your energy to improve your business.",
+        "p" : "Be outstanding by being innovative with Bohr Energie’s solutions. We have a highly personalized offer for your business —no matter what its size or its industry is.",
+        "button" : "Find an energy solution"
+      },
+      "section2" : {
+        "h2img1":"Residential Complexes",
+        "spanimg1":"(<10 MWh annual consumption)",
+        "pimg1":"Focused on collectivities and populated areas with moderate power consumption. We can set up a perfect solution to satisfy their daily energy requirements.",
+        "h2img2":"Independent Businesses",
+        "spanimg2":"(<0.15 GWh annual consumption)",
+        "pimg2" : "Ideal for the power demands of liberal professions, micro-entrepreneurs, and craftsmen. You can control your energy consumption to save incomes.",
+        "h2img3":"Small and Medium Enterprises",
+        "spanimg3":"(0.15 - 1 GWh annual consumption)",
+        "pimg3" : "Targeted to entrepreneurships, small businesses, and small industries. We can find an integrated power solution for your growing company’s demands.",
+        "h2img4" :"Corporative & Industrial Complexes",
+        "spanimg4":"(>1 GWh annual consumption)",
+        "pimg4" : "For big enterprises, hypermarkets, hospitals, corporative buildings, and large industrial sites. We can assure you you will get the power supply needed to maintain your commercial and industrial activities.",
+        "button":"Contact us"
+      }
+    },
+    "beliefs" :{
+      "hero":{
+        "l1" : "Our",
+        "l2":"technological",
+        "l3" : "advantage"
+      },
+      "section1":{
+        "h2":"Let's change our future in an open energy world.",
+        "p1" : "Bohr Energie is an energy asset manager on the wholesale energy markets with the objective of maximizing the profits from the sale of energy for our customers in order to sustain the development of renewable energies. are doing in the spirit of Niels Bohr's vision for an open world, in which resources and information are freely shared.",
+        "p2" : "Inspired by the physicist, we created an open-energy company based on sharing data, sources, and innovation to get better rates, save energy, and protect the environment. Now, as a sustainable energy supplier, we aim to generate efficient power solutions that enhance our world.",
+        "button" : "Discover more"
+      },
+      "section3":{
+        "h2":"An experienced team",
+        "p1":"We are Bohr!"
+      },
+      "section2" :{
+      "h2img" : "Bohr’s legacy",
+      "h3img" : "“What cannot be measured does not exist.”",
+      "pimg" :"Niels Bohr, Nobel Prize of Physics.",
+      "pdiv" : "We acknowledge the importance of measuring our accomplishments and our environmental share by observing two kinds of metrics that help us focus on our main goal: to provide affordable green energy to every enterprise that needs it.",
+      "h3ul" :"SATISFACTION INDICATORS",
+      "li1":"Customer satisfaction",
+      "pli1" : "Is our client happy with our integrated solutions and services?",
+      "li2":"Customer effort score",
+      "pli2":"Did our client spend time and energy to obtain a satisfactory solution?",
+      "li3":"Net promoted score",
+      "pli3" : "What are the odds of being recommended by our clients?",
+      "h3ul1" : "CLEAN ENERGY INDICATORS" ,
+      "ul1li1":"Carbon metrics",
+      "ul1p1" :"It includes indicators such as carbon footprinting and C02 emission reductions.",
+      "ul1li2":"Green / Brown exposure",
+      "ul1p2":"It covers indicators of climate solutions and climate problems in technology, sectors, and industries.",
+      "ul1li3":"Climate score",
+      "ul1p3" : "It comprehends qualitative climate-related indicators.",
+      "button":"Start now"
+      }
+    },
+    "keyBenefits":{
+      "hero":{
+        "l1": "Our",
+        "l2": "technological",
+        "l3": "advantage"
+      },
+      "section1":{
+        "h1":"We are an actor of innovation",
+        "p1":"Bohr Energie is an aggregator of renewable electricity production plants. Thanks to our approval with the EPEX stock exchange, we offer you the possibility of selling your energy on the free energy market, thus constituting an alternative to the EDF purchase obligation mechanism.",
+        "h2":"Improve the profitability of your production on the free energy market thanks to our virtual management plant.",
+        "p2":"Thanks to our digital artificial intelligence platform, our algorithms are at your service to offer you innovative solutions for optimizing your assets in order to increase your profitability.",
+        "button":"Our process"
+      },
+      "section2":{
+        "h1":"Our virtual management center",
+        "p1":"Improve the profitability of your production on the free energy market thanks to our virtual management plant. Virtual Power Plant is a key technology that solves the tasks of the distributed energy world.",
+        "p2":"Virtual Power Plant not only allows aggregation of thousands of power generators, flexible assets such as storage units, or more electro-intensive consumers who have chosen load shedding type flexibility solutions.",
+        "p3":"The platform makes it possible to offer their power and flexibility on different markets while intelligently controlling their injections or withdrawals and minimizing the risks.",
+        "button":"Contact-us"
+      }
+    },
+    "openSolutions":{
+      "hero":{
+        "l1":"Our",
+        "l2":"energy",
+        "l3":"solution"
+      },
+      "section1" : {
+        "text" : "Suitable solutions",
+        "h2":"Change your future with tailor-made solutions.",
+        "p":"There are no two businesses that are alike. Why settle for a generic power product? Find a suitable energy solution for your company’s unique needs.",
+        "button" :"Start now"
+      },
+      "section2":{
+        "h3img1":"Fixed-price",
+        "pimg1": "You have a secured price for the duration of your contract.",
+        "li1img1":"100% market or indexed to ARENH.",
+        "li2img1":"Contract duration from 1 to 4 years.",
+        "li3img1":"For one or multiple sites.",
+        "li4img1":"Guaranteed green energy of origin.",
+        "li5img1":"Tailor-made billing.",
+
+        "h3img2":"Variable price",
+        "pimg2": "You decide when you want to buy your energy supply.",
+        "li1img2":"Indexed to forward wholesale market depending on its position.",
+        "li2img2":"Contract duration from 1 to 4 years.",
+        "li3img2":"For one or multiple sites.",
+        "li4img2":"Guaranteed green energy of origin.",
+        "li5img2":"Click option on all or part of the volumes.",
+        
+        "h3img3":"Spot price",
+        "pimg3": "You have a price that moves concerning a spot market evolution.",
+        "li1img3":"Indexed on the spot hourly market prices.",
+        "li2img3":"Contract duration from 1 to 4 years.",
+        "li3img3":"For one or multiple sites.",
+        "li4img3":"Guaranteed green energy of origin.",
+
+        "link" :"Start now"
+      },
+      "section3":{
+        "text" : "Integrated services",
+        "h2":"Change your future with personalized services.",
+        "p":"Do you need an energy consultant? We are here for you and all your power projects. Find the support your business deserves.",
+        "button" :"Book a consult"
+      },
+      "section4":{
+        "h2img1":"Optimization tools",
+        "pimg1":"Get better rates and taxes with our real-time analytic digital tools powered by our artificial intelligence platform.",
+
+        "h2img2":"Energy Advisors",
+        "pimg2":"Our energy specialists —with expertise in risk management, energy markets, and data analysis, can guide you in any power project.",
+        
+        "h2img3":"Capacity mechanism",
+        "pimg3":"We can secure electricity when needed by collaborating with the power plants and participating in the power market.",
+        
+        "h2img4":"Energy-Saving Certificates (CEE)",
+        "pimg4":"We comply with our state obligation by offering bonuses, subsidized loans, or free diagnostics to help you save energy..",
+        
+        "h2img5":"e-Mobility Service Provider",
+        "pimg5":"Obtain an optimized safety utility net through the main grid of charge point operators with our smart charging tech and transparent platforms."
+        
+      },
+      "section5":{
+        "text" : "How do we do it?",
+        "h2":"A transparent process for a sustainable change.",
+        "p":"We do things differently to provide you with affordable energy solutions. Easy to control, easy to manage.",
+        "button" :"Start now"
+      },
+      "section6":{
+        "h3img1":"Contact us",
+        "pimg1":"You want a better energy solution.",
+
+        "h3img2":"Get a solution",
+        "pimg2":"We analyze your real power needs.",
+        
+        "h3img3":"Sign up with us",
+        "pimg3":"We supply you with green energy.",
+        
+        "h3img4":"Control supply",
+        "pimg4":"You optimize your power consumption",
+        
+        "h3img5":"Get better rates",
+        "pimg5":"You improve your energy budget."
+        
+      } 
+    },
+    "contactUs":{
+      "hero":{
+        "l1":"Contact us",
+        "l2":"Our Location",
+        "l3":"I prefer to be called"
+      },
+      "section1" : {
+        "text" : "Let’s talk about and find better solutions to change your energy and change your business",
+        "h2":"Name",
+        "h3":"Company",
+        "h4":"Telephone",
+        "h5":"Email",
+        "h6":"Message",
+        "button" :"Contact us now",
+        "locale":"en",
+        "button2":"Receive a call"
+      }
+    }
+
+}

@@ -1,0 +1,286 @@
+{
+  "navBar":{
+    "home":"",
+    "aboutUs":"",
+    "ourOffers":"",
+    "ourServices":"",
+    "keyBenefits":"Notre technologie",
+    "beliefs":"Qui sommes-nous?",
+    "contactUs":"Contactez nous",
+    "clientSpace":"Espace client"
+  },
+  "index": {
+    "hero" : {
+      "l1":"Connectez vos unités",
+      "l2":"de production sur le marché libre",
+      "l3":"de l'énergie.",
+      "l4":"",
+      "c1":"Hydroélectrique",
+      "c2":"Éolien",
+      "c3":"Photovoltaïque",
+      "p1_0":"Libre / Sous ou en sortie OA / Nouveaux projets",
+      "p1_1":"Capacité de production : de 0,1MW à 40MW.",
+      "h1":"Améliorez votre rentabilité !",
+      "button":"",
+      "button2":""
+    },
+
+    "section1":{
+     "h1":"Si vous aviez vendu 1 MW par heure en 2022, vous auriez géneré au:",
+     "h2":"Rejoignez Bohr Energie et vendez votre production au Marché Spot ! ",
+     "h3":"Prix Marché - 'Spot' (€/MWh):",
+     "h4":"Prix Marché - 'Futures' (€/MWh):",
+     "button":"Nous rejoindre"
+    },
+
+    "section2":{
+      "h2":"Pour les producteurs",
+      "h3":"Bohr Energie propose des offres innovantes d'optimisation d'actifs énergétiques sur les marchés boursiers de l'électricité. Changez votre façon de vendre vos productions afin d'augmenter vos revenus.",
+      "h4":"3 Offres",
+      "h2Product1":"Optimiser le prix de vente de l’énergie",
+      "pProduct1":"L’équipe de spécialistes de Bohr Energie vous accompagne pour maximiser le prix de vente de votre production.",
+      "h2Product2" :"Gérer les garanties d’origine",
+      "pProduct2" : "Valoriser votre statut de producteur d’énergie renouvelable en vendant vos garanties d’origine vertes sur les marchés.",
+      "h2Product3" :"Gérer les mécanismes de capacité",
+      "pProduct3" : "Nous certifions auprès de RTE et valorisons votre capacité de production de pointe hivernale sur les enchères de capacité.",
+      "h2Product4" :"",
+      "pProduct4" : "",
+      "button" : ""
+     },
+
+     "section3":{
+      "h2":"Notre mission",
+      "h3" : "Connecter les producteurs et les consommateurs avec les meilleures solutions de gestion d'actifs énergétiques.",
+      "h2img1" : "Innovation Digitale",
+      "pimg1" :"Développer les énergies renouvelables et pérenniser la filière avec nos solutions innovantes.",
+      "h2img2" :"Offres d'optimisation sur-mesure",
+      "pimg2" :"Rendre transparentes  et accessibles les pratiques de gestion d'actifs énergétiques sur les marchés.",
+      "h2img3" : "Service client personnalisé",
+      "pimg3" : " Offrir un service de proximité créé  par des producteurs pour des producteurs.",
+      "h2img4" :"Energie verte",
+      "pimg4" : " Une energie 100% renouvelable pour un monde plus durable.",
+      "button" :"En savoir plus"
+     }
+  },
+  "aboutus":{
+    "hero":{
+      "l1" : "Notre",
+      "l2":"entreprise",
+      "l3" : "innovante"
+    },
+    "section1":{
+      "h2" : "Changez votre futur avec nos solutions énergétiques innovantes.",
+      "text" : "Rejoignez-nous Bohr!",
+      "p" : "Nous sommes un fournisseur d'électricité alternatif créé en 2020, notre objectif principal est de fournir à nos clients des solutions énergétiques sur-mesure leurs permettant d'améliorer leurs opérations.",
+      "button" : "Trouvez votre solution énergétique"
+    },
+    "section2" : {
+      "h2":"Changeons ensemble",
+      "p":"Nous souhaitons être un acteur de la transition énergétique pour le bien de notre planète. Nous vous aidons à optimiser votre production d'énergie renouvelable. Nous voulons surtout faire prendre conscience de l'impact positif  de nos processus d'optimisation sur la pérénnité économique, sociale et environnementale des énergies renouvelables.",
+      "h3img1" : "Notre Mission",
+      "pimg1" : "Grâce à notre technologie, optimiser la vente de votre production renouvelable en toute transparence sur le marché libre de l'énergie afin d'améliorer vos revenus et ainsi pérenniser votre installation dans le temps pour un avenir plus durable.",
+      "h3img2" : "Notre Vision",
+      "pimg2" : "Devenir un acteur Européen incontournable de la gestion d'actifs énergétiques sur les marchés de gros de l'énergie.",
+      "h3img3" : "Nos valeurs",
+      "pimg3" : "Fournir les meilleurs services possibles à nos clients en adéquation avec nos principes de protection de notre planète",
+      "li1" :"Excellence et Efficacité.",
+      "li2" :"Transparence et Responsabilité.",
+      "li3" :"Qualité des produits et réactivité du service client.",
+      "li4" :" Responsabilité sociétale et environnementale.",
+      "h3img4" :"Notre philisophie",
+      "pimg4" :"Nous sommes une entreprise d'énergie ouverte basée sur l'innovation, le partage des données et des informations avec nos clients. Nous cherchons à proposer des solutions d'optimisation éfficaces pour améliorer la rentabilité des actifs de production renouvelable.",
+      "button" : "Contactez-nous"
+    }
+  },
+  "beOurClient":{
+    "hero" :{
+      "l1" : "Devenir",
+      "l2" :"un de nos",
+      "l3" : "clients"
+    },
+    "section1":{
+      "h2":"Changer votre énergie pour changer le monde.",
+      "p" : "Soyez innovants en adoptant les solutions de Bohr Energie. Notre offre hautement personnalisée répond aux besoins de votre entreprise, peu importe sa taille ou son secteur d'activité.",
+      "button" : "Trouvez votre solution énergétique"
+    },
+    "section2" : {
+      "h2img1":"Complexes résidentiels",
+      "spanimg1":"(<10 MWh de consommation annuelle)",
+      "pimg1":"Axé sur les collectivités et les zones peuplées à consommation électrique modérée, nous pouvons mettre en place une solution parfaite pour satisfaire vos besoins énergétiques quotidiens.",
+      "h2img2":"Commerces indépendants",
+      "spanimg2":"(<0.15 GWh de consommation annuelle)",
+      "pimg2" : " Idéal pour les besoins en puissance des proféssions libérales, des entrepreneurs, et des artisans. Vous controllez votre consommation d'énergie pour plus d'économies.",
+      "h2img3":"Petites et moyennes enterprises",
+      "spanimg3":"(0.15 - 1 GWh de consommation annuelle)",
+      "pimg3" : "Destiné aux entrepreneurs, aux petites entreprises et aux petites industries, nous trouvons une solution de fourniture intégrée pour les demandes de votre entreprise en pleine croissance.",
+      "h2img4" :"Corporative & Industrial Complexes",
+      "spanimg4":"(>1 GWh de consommation annuelle)",
+      "pimg4" : "Pour les grandes entreprises, les hypermarchés, les hôpitaux, les bâtiments tertiaires et les grands sites industriels. Nous nous assurerons de vous fournir la solution adéquate à vos activités commerciales et industrielles de grandes tailles.",
+      "button":"Contactez-nous"
+    }
+  },
+  "beliefs" :{
+    "hero":{
+      "l1" : "Notre",
+      "l2":"entreprise",
+      "l3" : "innovante"
+    },
+    "section1":{
+      "h2":"Changeons notre future énergétique dans un monde ouvert.",
+      "p1" : "Bohr Energie est un gestionnaire d'actifs énergétiques sur les marchés de gros de l'énergie avec comme objectif de maximiser le produit de la vente d'énergie de nos clients afin de pérenniser le développement des énergies renouvelables. Nous le faisons dans l'esprit de la vision de Niels Bohr pour un monde ouvert, dans lequel les ressources et les informations sont librement partagées.",
+      "p2" : "Inspirés par le physicien, nous avons voulu développer un entreprise ouverte au sein de laquelle les données, les informations, et l'innovation sont la pierre angulaire d'un système cherchant à fournir le meilleur service possible à nos clients tout en préservant notre environnement.",
+      "button" : "En savoir plus"
+    },
+    "section3":{
+      "h2":"Une Equipe expérimentée",
+      "p1":"We are Bohr!"
+    },
+    "section2" :{
+    "h2img" : "L'héritage de Niels Bohr",
+    "h3img" : "“Ce qui ne se mesure pas n'éxiste pas.”",
+    "pimg" :"Niels Bohr, Prix Nobel de physique.",
+    "pdiv" : "Nous sommes conscients de l'importance de mesurer nos actions et notre impact environnemental en observant deux types de mesure qui nous aide à nous concentrer sur notre mission première: fournir une énergie verte et abordable à chacun de nos clients.",
+    "h3ul" :"INDICATEURS DE SATISFACTION",
+    "li1":"Satisfaction Client",
+    "pli1" : "Notre client est-il sastisfait de nos solutions et services intégrés?",
+    "li2":"Score d'effort client",
+    "pli2":"Est-ce que notre client a dépensé de l'énergie et du temps pour obtenir une solution satisfaisante?",
+    "li3":"Score de promotion net",
+    "pli3" : "Quelle est la probabilité que nous soyons recommandés par nos clients?",
+    "h3ul1" : "Indicateurs Energie Propre" ,
+    "ul1li1":"Mesures Carbone",
+    "ul1p1" :"Cela inclut des indicateurs comme l'empreinte carbone et la réduction des émissions de C02.",
+    "ul1li2":"Exposition Verte ",
+    "ul1p2":"Cela couvre les indicateurs de solutions climatiques et les problèmes climatiques dans la technologie, les secteurs et les industries.",
+    "ul1li3":"Score Climat",
+    "ul1p3" : "Cela comprend des indicateurs qualitatifs liés au climat.",
+    "button":"Contactez-nous"
+    }
+  },
+  "keyBenefits":{
+    "hero":{
+      "l1": "Notre",
+      "l2": "avantage",
+      "l3": "technologique"
+    },
+
+    "section1":{
+      "h1":"Nous sommes un acteur de l'innovation",
+      "p1":"Bohr Energie est un agrégateur  de centrales de production électrique  renouvelable. Grâce à notre agrément auprès de la bourse EPEX, nous vous proposons de vendre votre énergie sur le marché libre de l'énergie constituant ainsi une alternative au mécanisme d' EDF obligation d'achat.",
+      "h2":"Améliorez la rentabilité de votre production sur le marché libre de l'énergie grâce à notre centrale virtuelle de gestion.",
+      "p2":"Grâce à notre plateforme digitale d'intelligence artificielle, nos algorithmes sont à votre service pour vous proposer des solutions innovantes d'optimisation de vos actifs afin d'augmenter votre rentabilité.",
+      "button":"Notre proces"
+    },
+
+    "section2":{
+      "h1":"Notre centrale virtuelle de gestion",
+      "p1":"Améliorez la rentabilité de votre production sur le marché libre de l'énergie grâce à notre centrale virtuelle de gestion. La centrale électrique virtuelle est une technologie clé qui permet de résoudre les tâches du monde de l’énergie distribuée.",
+      "p2":"La centrale virtuelle permet non seulement d’agréger des milliers de producteurs d’électricité, des actifs flexibles tels que des unités de stockage, ou encore des consommateurs électro-intensifs ayant choisi des solutions de flexibilités type effacement.",
+      "p3":"La plateforme permet d’offrir leur puissance et leur flexibilité sur différents marchés tout en contrôlant intelligemment leurs injections ou soutirages et minimisant les risques.",
+      "button":"Contactez-nous"
+    }
+  },
+  "openSolutions":{
+    "hero":{
+      "l1":"Notre",
+      "l2":"solution",
+      "l3":"énergétique"
+    },
+    "section1" : {
+      "text" : "Des solutions adaptées",
+      "h2":"Changez votre futur avec nos solutions sur-mesure.",
+      "p":"Il n'y a pas deux entreprises qui se ressemblent. Pourquoi se contenter d'un produit générique ? Trouvez une solution énergétique adaptée aux besoins uniques de votre entreprise.",
+      "button" :"Start"
+    },
+    "section2":{
+      "h3img1":"Offre prix fixe",
+      "pimg1": "Vous optez pour une prix fixe pour la durée de votre contract.",
+      "li1img1":"100% marché ou indexé ARENH.",
+      "li2img1":"Contrat de 1 à 4 ans.",
+      "li3img1":"Pour un ou plusieurs sites.",
+      "li4img1":"Energie verte garantie d'origine.",
+      "li5img1":"Facturation sur mesure.",
+
+      "h3img2":"Offre prix variable",
+      "pimg2": "Vous décidez quand vous voulez acheter votre énergie.",
+      "li1img2":"Indexée sur les prix du marché futur.",
+      "li2img2":"Contrat de 1 à 4 ans.",
+      "li3img2":"Pour un ou plusieurs sites.",
+      "li4img2":"Energie verte garantie d'origine.",
+      "li5img2":"Click option sur toute ou une partie des volumes.",
+      
+      "h3img3":"Prix au comptant",
+      "pimg3": "Votre prix suit l'évolution du marché au comptant.",
+      "li1img3":"Indexé sur le prix du marché journalier au comptant.",
+      "li2img3":"Contrat de 1 à 4 years.",
+      "li3img3":"Pour un ou plusieurs sites.",
+      "li4img3":"Energie verte garantie d'origine.",
+
+      "link" :"Start"
+    },
+    "section3":{
+      "text" : "Services intégrés",
+      "h2":"Changez votre futur avec nos services personnalisés.",
+      "p":"Vous avez besoin d'un consultant en énergie? Nous sommes là pour répondre à vos besoins. Nous sommes le conseil que votre entreprise mérite.",
+      "button" :"Réserver un entretien"
+    },
+    "section4":{
+      "h2img1":"Outils d'optimisation",
+      "pimg1":"Obtenez de meilleurs prix avec nos outils numériques d'analyse en temps réel alimentés par notre plateforme d'intelligence artificielle.",
+
+      "h2img2":"Conseillers en énergie",
+      "pimg2":"Nos spécialistes de l'énergie, dotés d'une expertise dans la gestion des risques, des marchés de l'énergie et l'analyse de données, peuvent vous guider dans n'importe quel projet énergétique.",
+      
+      "h2img3":"Mécanisme de capacité",
+      "pimg3":"Nous pouvons sécuriser l'électricité en cas de besoin en collaborant avec des centrales électriques et en participant au mécanisme de capacité.",
+      
+      "h2img4":"Certificats d'économie d'énergie (CEE)",
+      "pimg4":"Nous respectons notre obligation étatique en proposant des primes, des prêts bonifiés ou des diagnostics gratuits pour vous aider à économiser de l'énergie.",
+      
+      "h2img5":"Fournisseur de solutions de mobilité électrique via notre filiale Bohr-Eplug",
+      "pimg5":"Profitez de nos solutions de bornes de recharge grâce à un réseau d'installateurs partenaires certifiés IRVE et de nos accords de distribution avec les plus grandes marques."
+      
+    },
+    "section5":{
+      "text" : "Comment nous procédons?",
+      "h2":"Un processus transparent pour un changement durable.",
+      "p":"Nous faisons les choses différemment pour vous fournir des solutions énergétiques abordables. Facile à contrôler, facile à gérer",
+      "button" :"Start"
+    },
+    "section6":{
+      "h3img1":"Contactez-nous",
+      "pimg1":"Vous voulez une meilleure solution énergétique.",
+
+      "h3img2":"Vous voulez une solution rapide",
+      "pimg2":"Nous analysons rapidement vos besoins en énergie.",
+      
+      "h3img3":"Signez avec nous",
+      "pimg3":"Nous vous fournissons une énergie verte.",
+      
+      "h3img4":"Contrôlez votre consommation",
+      "pimg4":"Nous optimisons vos consommations d'énergie",
+      
+      "h3img5":"Accédez à des meilleurs prix",
+      "pimg5":"Nous améliorons votre budget énergie."
+      
+    } 
+  },
+  "contactUs":{
+    "hero":{
+      "l1":"Nous contacter",
+      "l2":"Notre emplacement",
+      "l3":"Je préfère être appelé"
+    },
+    "section1" : {
+      "text" : "Parlons et trouvons de meilleures solutions pour changer votre énergie et changer votre entreprise",
+      "h2":"Nom",
+      "h3":"Entreprise",
+      "h4":"Telephone",
+      "h5":"Email",
+      "h6":"Message",
+      "button" :"Contactez-nous",
+      "locale":"fr",
+      "button2":"Recevoir un appel"
+    }
+  }
+}
