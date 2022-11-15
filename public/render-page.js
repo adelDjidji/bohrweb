@@ -12396,24 +12396,24 @@ if (false) {} else {
 /***/ }),
 
 /***/ "react-dom/server":
-/*!*************************************************************************************************!*\
-  !*** external "/Users/macbookpro/Documents/_dev/Web/frontend/node_modules/react-dom/server.js" ***!
-  \*************************************************************************************************/
+/*!***********************************************************************************!*\
+  !*** external "/home/fahim/coding/work/bohrweb/node_modules/react-dom/server.js" ***!
+  \***********************************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("/Users/macbookpro/Documents/_dev/Web/frontend/node_modules/react-dom/server.js");
+module.exports = require("/home/fahim/coding/work/bohrweb/node_modules/react-dom/server.js");
 
 /***/ }),
 
 /***/ "react":
-/*!********************************************************************************************!*\
-  !*** external "/Users/macbookpro/Documents/_dev/Web/frontend/node_modules/react/index.js" ***!
-  \********************************************************************************************/
+/*!******************************************************************************!*\
+  !*** external "/home/fahim/coding/work/bohrweb/node_modules/react/index.js" ***!
+  \******************************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("/Users/macbookpro/Documents/_dev/Web/frontend/node_modules/react/index.js");
+module.exports = require("/home/fahim/coding/work/bohrweb/node_modules/react/index.js");
 
 /***/ }),
 

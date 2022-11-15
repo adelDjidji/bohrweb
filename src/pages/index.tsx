@@ -1,102 +1,67 @@
-import { useTranslation } from "react-i18next"
-import Seo from "../components/seo"
-import Layout from "../components/Layout"
-import Divider from "../components/Divider"
-import ContactUs from "../components/ContactUs"
-import { Link } from "gatsby"
-import { useState } from "react"
-import CookieConsent from "react-cookie-consent"
-import "tw-elements"
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js"
-import { Line } from "react-chartjs-2"
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-)
-
- const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top" as const,
-    },
-    title: {
-      display: false,
-     // text: "Chart.js Line Chart",
-    },
-  },
-  scales: {
-    x: {
-      // The axis for this scale is determined from the first letter of the id as `'x'`
-      // It is recommended to specify `position` and / or `axis` explicitly.
-      // type: 'time',
-    //   time: {
-    //     displayFormats: {
-    //         quarter: 'MMM YYYY'
-    //     }
-    // }
-    // ticks: {
-    //   // Include a dollar sign in the ticks
-    //   callback: function(value, index, ticks) {
-    //     let d = new Date(value)
-    //       return d.getDate()+'/'+d.getMonth()+'/'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes();
-    //   }
-    // }
-    },
-    y: {
-        ticks: {
-            // Include a dollar sign in the ticks
-            callback: function(value, index, ticks) {
-                return '€' + value;
-            }
-        }
-    }
-}
-}
+import { useTranslation } from "react-i18next";
+import Seo from "../components/seo";
+import Layout from "../components/Layout";
+import Divider from "../components/Divider";
+import ContactUs from "../components/ContactUs";
+import { Link } from "gatsby";
+import { useEffect, useState } from "react";
+import CookieConsent from "react-cookie-consent";
+import "tw-elements";
+import jsonData from "./graphique-dayahead.json";
+import { LineChart } from "./lineCharFunc";
 
 const IndexPage = () => {
-  const { t } = useTranslation()
-  const [toggle1, setToggle1] = useState(false)
-  const [toggle2, setToggle2] = useState(false)
-  const [toggle3, setToggle3] = useState(false)
-  const [toggle4, setToggle4] = useState(false)
-  const handleReadMore1 = () => setToggle1(!toggle1)
-  const handleReadMore2 = () => setToggle2(!toggle2)
-  const handleReadMore3 = () => setToggle3(!toggle3)
-  const handleReadMore4 = () => setToggle4(!toggle4)
+  const { t } = useTranslation();
+  const [toggle1, setToggle1] = useState(false);
+  const [toggle2, setToggle2] = useState(false);
+  const [toggle3, setToggle3] = useState(false);
+  const [toggle4, setToggle4] = useState(false);
+  const handleReadMore1 = () => setToggle1(!toggle1);
+  const handleReadMore2 = () => setToggle2(!toggle2);
+  const handleReadMore3 = () => setToggle3(!toggle3);
+  const handleReadMore4 = () => setToggle4(!toggle4);
+  // line chart related all data here..
+  const dataArr = [
+    ...jsonData.spotMarketPrice,
+    ...jsonData.H01ContractRate,
+    ...jsonData.H07ContractRate,
+    ...jsonData.H16ContractRate,
+  ];
+  console.log(
+    "needed data",
+    dataArr.map((d) => new Date(d.start_time))
+  );
 
-  var labels:any=[]
-  const file = {} //require("./graphique-dayahead.json")
-  var mx=0
-  const borderColors=['rgba(255, 99, 132, 1)',
-  'rgba(54, 162, 235, 1)',
-  'rgba(255, 206, 86, 1)',
-  'rgba(75, 192, 192, 1)',
-  'rgba(153, 102, 255, 1)',
-  'rgba(255, 159, 64, 1)']
+  useEffect(() => {
+    LineChart(dataArr, {
+      x: (d) => new Date(d.start_time),
+      y: (d) => d["Tarif contrat H01"],
+      yLabel: "Tarif contrat H01",
+      width: 500,
+      height: 500,
+      color: "steelblue",
+    });
+  }, []);
+
+  var labels: any = [];
+  const file = {}; //require("./graphique-dayahead.json")
+  var mx = 0;
+  const borderColors = [
+    "rgba(255, 99, 132, 1)",
+    "rgba(54, 162, 235, 1)",
+    "rgba(255, 206, 86, 1)",
+    "rgba(75, 192, 192, 1)",
+    "rgba(153, 102, 255, 1)",
+    "rgba(255, 159, 64, 1)",
+  ];
   var datasets = Object.values(file).map((it: any, idx: number) => {
-    if(it.length>mx){
+    if (it.length > mx) {
       labels = it.map((i: any) => {
-        let d = new Date(i.start_time)
-        if(d.getHours()==1) return ""
-        return d.getDate()+'/'+d.getMonth()+1+'/'+d.getFullYear()//+' '+d.getHours()+':'+d.getMinutes();
+        let d = new Date(i.start_time);
+        if (d.getHours() == 1) return "";
+        return d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear(); //+' '+d.getHours()+':'+d.getMinutes();
       });
-      mx=it.length
+      mx = it.length;
     }
     return {
       label: Object.keys(it[0])[1],
@@ -104,30 +69,30 @@ const IndexPage = () => {
       borderColor: borderColors[idx],
       borderWidth: 1,
       //backgroundColor: "rgba(53, 162, 235, 0.5)",
-    }
-  })
+    };
+  });
   const data = {
     labels,
-    datasets
-  }
-  console.log(data)
-  const now = Date.now()
-  const today = new Date()
+    datasets,
+  };
+  console.log(data);
+  const now = Date.now();
+  const today = new Date();
 
-  var start = new Date(today)
-  start.setUTCHours(10, 0, 0, 0)
+  var start = new Date(today);
+  start.setUTCHours(10, 0, 0, 0);
 
   const data_contract_response: any = {
     "Marché Spot (K€)": 0.07848,
     "Contrat H01 (K€)": 0.0842,
     "Contrat H07 (K€)": 0.09762,
     "Contrat H016 (K€)": 0.19538,
-  }
+  };
   const data_table_dayahead = {
     Date: "2022/11/06",
     "Spot Base": 107.689583333333,
     "Spot Pointe": 107.996666666667,
-  }
+  };
 
   const data_table_futures = [
     {
@@ -160,7 +125,7 @@ const IndexPage = () => {
       "Cal Base": 128.47,
       "Cal Pointe": null,
     },
-  ]
+  ];
   return (
     <Layout>
       <Seo title="Bohr energie" />
@@ -294,7 +259,7 @@ const IndexPage = () => {
           </h3>
 
           <div className="flex sm:flex-row flex-col justify-between mx-5 md:mx-20 lg:max-w-md lg:mx-auto lg:my-10 my-5 gap-5">
-            {Object.keys(data_contract_response).map(key => (
+            {Object.keys(data_contract_response).map((key) => (
               <div>
                 <p>{key}</p>
                 <h1 className="text-4xl mt-3">{data_contract_response[key]}</h1>
@@ -313,8 +278,8 @@ const IndexPage = () => {
         </div>
 
         <div className="w-screen flex sm:flex-row flex-col justify-center md:mt-16">
-          <div className="sm:w-3/5 h-300">
-            <Line options={options} data={data} />
+          <div className="sm:w-3/5 h-300" id="chart123456">
+            {/* D3 Line chat */}
           </div>
           {/* <iframe className="w-full" src={"https://market.ctyanalytics.eu/d-solo/YamW_Pw7z/public?orgId=2&from=1641013200000&to=" + now + "&theme=light&panelId=2"} 
                       //width="650" 
@@ -365,7 +330,7 @@ const IndexPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {data_table_futures.map(item => (
+                {data_table_futures.map((item) => (
                   <tr className="h-9 border-b border-gray-100">
                     <td>{item["Année"]}</td>
                     <td>{item["Cal Base"]}</td>
@@ -594,7 +559,7 @@ const IndexPage = () => {
         </CookieConsent>
       </section>
     </Layout>
-  )
-}
+  );
+};
 
-export default IndexPage
+export default IndexPage;
