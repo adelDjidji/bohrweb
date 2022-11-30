@@ -1,0 +1,28 @@
+.UserTable .user-table-pagination .page {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 32px;
+  height: 32px;
+  min-width: 32px;
+  color: #6f729c;
+  cursor: pointer;
+}
+
+.UserTable .user-table-pagination .page:hover {
+  background-color: #ede7fd;
+  border-radius: 8px;
+  color: #5819f1;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.right-arrow {
+  transform: rotate(180deg);
+}
+
+.left-arrow:hover,
+.right-arrow:hover {
+  filter: brightness(0) saturate(100%) invert(11%) sepia(99%) saturate(6140%)
+    hue-rotate(262deg) brightness(93%) contrast(104%);
+  cursor: pointer;
+}
