@@ -26,3 +26,25 @@
     hue-rotate(262deg) brightness(93%) contrast(104%);
   cursor: pointer;
 }
+
+.ant-table-thead .ant-table-cell {
+  background-color: #F5F6FA !important;
+}
+
+/* .ant-pagination-item-active a{
+  font-weight: 600;
+  font-size: 12px;
+  color: #6f729c;
+  cursor: pointer;
+  border:none;
+}
+.ant-pagination-item-active{
+  border:none;
+}
+.ant-pagination-item-active a:hover{
+  background-color: #ede7fd;
+  border-radius: 8px;
+  color: #5819f1;
+  cursor: pointer;
+  font-size: 14px;
+} */

@@ -3,161 +3,364 @@ import UserTableData from './UserTableData';
 import { demoUserData } from './UserTableData';
 import UserTableHeader from './UserTableHeader';
 import './UserTable.css';
+import { Space, Table, Pagination, } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
+import copy from '../images/copy-clipboard-icon.svg';
+import edit from '../images/edit-icon.svg';
+import trash from '../images/trash-icon.svg';
+import { useState } from 'react';
+
+interface DataType {
+  key: string;
+  name: string;
+  age: number;
+  address: string;
+  tags: string[];
+}
 
 const UserTable = () => {
+  const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
+  const [pageIndex, setPageIndex] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const hitCount = 10;
+
+  const rowSelection = {
+    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    getCheckboxProps: (record: DataType) => ({
+      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
+
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'Enterprise',
+      dataIndex: 'entreprise',
+      key: 'entreprise',
+    },
+    {
+      title: 'Nom',
+      dataIndex: 'nom',
+      key: 'nom',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Rôle',
+      dataIndex: 'role',
+      key: 'role',
+    },
+    {
+      title: 'Sites',
+      dataIndex: 'sites',
+      key: 'sites',
+    },
+    {
+      title: 'Invité par',
+      dataIndex: 'invite',
+      key: 'invite',
+    },
+    {
+      title: '',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+          <img src={copy} alt="" className="cursor-pointer" />
+          <img src={edit} alt="" className="mt-[6px] cursor-pointer" />
+          <img src={trash} alt="" className="cursor-pointer" />
+        </Space>
+      ),
+    },
+  ];
   return (
     <div className="UserTable px-[24px] rounded-[12px] mt-[16px] bg-white">
       <div className="flex justify-between  items-center py-[17px]">
         <div>Utilisateurs (48)</div>
         <div className="flex gap-[16px]">
           <div>
-            <button
-              id="dropdownDefault1"
-              data-dropdown-toggle="dropdown1"
-              className="text-[#6F729C] bg-white hover:text-[#5819F1] border border-[#E8E7EF] rounded-[8px]  focus:outline-none  focus:ring-blue-300 font-medium  text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              type="button"
-            >
-              Filtrer par entreprise
-              <svg
-                className="ml-2 w-4 h-4 "
-                aria-hidden="true"
-                fill="none"
-                stroke="#6F729C"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7"
-                ></path>
-              </svg>
-            </button>
-
-            <div
-              id="dropdown1"
-              className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
-            >
-              <ul
-                className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="dropdownDefault1"
-              >
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            <div className="flex justify-center">
+              <div>
+                <div className="dropdown relative">
+                  <button
+                    className="
+                    text-[#6F729C] bg-white hover:text-[#5819F1] border border-[#E8E7EF] rounded-[8px]
+                      dropdown-toggle
+                      px-6
+                      py-2.5
+                      font-medium
+                      text-xs
+                      leading-tight
+                      
+                      active:text-white
+                      transition
+                      duration-150
+                      ease-in-out
+                      flex
+                      items-center
+                      whitespace-nowrap"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
-                    Dashboard
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    Filtrer par entreprise
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      data-prefix="fas"
+                      data-icon="caret-down"
+                      className="w-2 ml-2"
+                      role="img"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 320 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                      ></path>
+                    </svg>
+                  </button>
+                  <ul
+                    className="
+          dropdown-menu
+          min-w-max
+          absolute
+          hidden
+          bg-white
+          text-base
+          z-50
+          float-left
+          py-2
+          list-none
+          text-left
+          rounded-lg
+          shadow-lg
+          mt-1
+          
+          m-0
+          bg-clip-padding
+          border-none
+        "
+                    aria-labelledby="dropdownMenuButton1"
                   >
-                    Settings
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Earnings
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Sign out
-                  </a>
-                </li>
-              </ul>
+                    <li>
+                      <a
+                        className="
+              dropdown-item
+              text-sm
+              py-2
+              px-4
+              font-normal
+              block
+              w-full
+              whitespace-nowrap
+              bg-transparent
+              text-gray-700
+              hover:bg-gray-100
+            "
+                        href="#"
+                      >
+                        Action
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="
+              dropdown-item
+              text-sm
+              py-2
+              px-4
+              font-normal
+              block
+              w-full
+              whitespace-nowrap
+              bg-transparent
+              text-gray-700
+              hover:bg-gray-100
+            "
+                        href="#"
+                      >
+                        Another action
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="
+              dropdown-item
+              text-sm
+              py-2
+              px-4
+              font-normal
+              block
+              w-full
+              whitespace-nowrap
+              bg-transparent
+              text-gray-700
+              hover:bg-gray-100
+            "
+                        href="#"
+                      >
+                        Something else here
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="dropdown-2">
-            <button
-              id="dropdownDefault2"
-              data-dropdown-toggle="dropdown2"
-              className="text-[#6F729C] bg-white hover:text-[#5819F1] border border-[#E8E7EF] rounded-[8px]  focus:outline-none focus:ring-blue-300 font-medium  text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              type="button"
-            >
-              Filtrer par rôle
-              <svg
-                className="ml-2 w-4 h-4"
-                aria-hidden="true"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7"
-                ></path>
-              </svg>
-            </button>
-
-            <div
-              id="dropdown"
-              className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
-            >
-              <ul
-                className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="dropdownDefault"
-              >
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          <div>
+            <div className="flex justify-center">
+              <div>
+                <div className="dropdown relative">
+                  <button
+                    className="
+                    text-[#6F729C] bg-white hover:text-[#5819F1] border border-[#E8E7EF] rounded-[8px]
+          dropdown-toggle
+          px-6
+          py-2.5
+          font-medium
+          text-xs
+          leading-tight
+          
+          active:text-white
+          transition
+          duration-150
+          ease-in-out
+          flex
+          items-center
+          whitespace-nowrap"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
-                    Dashboard
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    Filtrer par rôle
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      data-prefix="fas"
+                      data-icon="caret-down"
+                      className="w-2 ml-2"
+                      role="img"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 320 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                      ></path>
+                    </svg>
+                  </button>
+                  <ul
+                    className="
+          dropdown-menu
+          min-w-max
+          absolute
+          hidden
+          bg-white
+          text-base
+          z-50
+          float-left
+          py-2
+          list-none
+          text-left
+          rounded-lg
+          shadow-lg
+          mt-1
+          
+          m-0
+          bg-clip-padding
+          border-none
+        "
+                    aria-labelledby="dropdownMenuButton1"
                   >
-                    Settings
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Earnings
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Sign out
-                  </a>
-                </li>
-              </ul>
+                    <li>
+                      <a
+                        className="
+              dropdown-item
+              text-sm
+              py-2
+              px-4
+              font-normal
+              block
+              w-full
+              whitespace-nowrap
+              bg-transparent
+              text-gray-700
+              hover:bg-gray-100
+            "
+                        href="#"
+                      >
+                        Action
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="
+              dropdown-item
+              text-sm
+              py-2
+              px-4
+              font-normal
+              block
+              w-full
+              whitespace-nowrap
+              bg-transparent
+              text-gray-700
+              hover:bg-gray-100
+            "
+                        href="#"
+                      >
+                        Another action
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="
+              dropdown-item
+              text-sm
+              py-2
+              px-4
+              font-normal
+              block
+              w-full
+              whitespace-nowrap
+              bg-transparent
+              text-gray-700
+              hover:bg-gray-100
+            "
+                        href="#"
+                      >
+                        Something else here
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="user-table-pagination flex justify-center items-center gap-[16px]">
-            <img src={arrow} alt="left-arrow" className="left-arrow" />
-            <span className="page active-page flex justify-center items-center">
-              1
-            </span>
-            <span className="page flex justify-center items-center">2</span>
-            <img src={arrow} alt="right-arrow" className="right-arrow" />
-          </div>
+
+          <Pagination current={pageIndex} total={hitCount} onChange={(page: any, size: any) => { setPageIndex(page); setPageSize(size) }} />
         </div>
       </div>
-      <UserTableHeader />
-      <UserTableData demoUserData={demoUserData} />
+      {/* <UserTableHeader />
+      <UserTableData demoUserData={demoUserData} /> */}
+      <div>
+        <Table
+          rowSelection={{
+            type: selectionType,
+            ...rowSelection,
+          }}
+          columns={columns}
+          pagination={false}
+          dataSource={demoUserData} />
+      </div>
     </div>
   );
 };

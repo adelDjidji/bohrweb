@@ -2,7 +2,8 @@ module.exports = {
   mode: 'jit',
   purge: [
     './src/**/*.{js,jsx,ts,tsx}',
-    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
+    './src/**/*.{html,js}',
+    './node_modules/tw-elements/dist/js/**/*.js',
   ],
 
   darkMode: false, // or 'media' or 'class'
@@ -121,6 +122,5 @@ module.exports = {
     require('@tailwindcss/aspect-ratio'),
     require('tailwindcss-css-filters'),
     require('tw-elements/dist/plugin'),
-    require('flowbite/plugin'),
   ],
 };

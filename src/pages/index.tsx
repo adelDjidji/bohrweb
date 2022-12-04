@@ -1,12 +1,12 @@
-import { useTranslation } from "react-i18next"
-import Seo from "../components/seo"
-import Layout from "../components/Layout"
-import Divider from "../components/Divider"
-import ContactUs from "../components/ContactUs"
-import { Link } from "gatsby"
-import { useState } from "react"
-import CookieConsent from "react-cookie-consent"
-import "tw-elements"
+import { useTranslation } from 'react-i18next';
+import Seo from '../components/seo';
+import Layout from '../components/Layout';
+import Divider from '../components/Divider';
+import ContactUs from '../components/ContactUs';
+import { Link } from 'gatsby';
+import { useState } from 'react';
+import CookieConsent from 'react-cookie-consent';
+import 'tw-elements';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,8 +16,8 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js"
-import { Line } from "react-chartjs-2"
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
 
 ChartJS.register(
   CategoryScale,
@@ -27,17 +27,17 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend
-)
+);
 
- const options = {
+const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: "top" as const,
+      position: 'top' as const,
     },
     title: {
       display: false,
-     // text: "Chart.js Line Chart",
+      // text: "Chart.js Line Chart",
     },
   },
   scales: {
@@ -45,58 +45,60 @@ ChartJS.register(
       // The axis for this scale is determined from the first letter of the id as `'x'`
       // It is recommended to specify `position` and / or `axis` explicitly.
       // type: 'time',
-    //   time: {
-    //     displayFormats: {
-    //         quarter: 'MMM YYYY'
-    //     }
-    // }
-    // ticks: {
-    //   // Include a dollar sign in the ticks
-    //   callback: function(value, index, ticks) {
-    //     let d = new Date(value)
-    //       return d.getDate()+'/'+d.getMonth()+'/'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes();
-    //   }
-    // }
+      //   time: {
+      //     displayFormats: {
+      //         quarter: 'MMM YYYY'
+      //     }
+      // }
+      // ticks: {
+      //   // Include a dollar sign in the ticks
+      //   callback: function(value, index, ticks) {
+      //     let d = new Date(value)
+      //       return d.getDate()+'/'+d.getMonth()+'/'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes();
+      //   }
+      // }
     },
     y: {
-        ticks: {
-            // Include a dollar sign in the ticks
-            callback: function(value, index, ticks) {
-                return '€' + value;
-            }
-        }
-    }
-}
-}
+      ticks: {
+        // Include a dollar sign in the ticks
+        callback: function (value, index, ticks) {
+          return '€' + value;
+        },
+      },
+    },
+  },
+};
 
 const IndexPage = () => {
-  const { t } = useTranslation()
-  const [toggle1, setToggle1] = useState(false)
-  const [toggle2, setToggle2] = useState(false)
-  const [toggle3, setToggle3] = useState(false)
-  const [toggle4, setToggle4] = useState(false)
-  const handleReadMore1 = () => setToggle1(!toggle1)
-  const handleReadMore2 = () => setToggle2(!toggle2)
-  const handleReadMore3 = () => setToggle3(!toggle3)
-  const handleReadMore4 = () => setToggle4(!toggle4)
+  const { t } = useTranslation();
+  const [toggle1, setToggle1] = useState(false);
+  const [toggle2, setToggle2] = useState(false);
+  const [toggle3, setToggle3] = useState(false);
+  const [toggle4, setToggle4] = useState(false);
+  const handleReadMore1 = () => setToggle1(!toggle1);
+  const handleReadMore2 = () => setToggle2(!toggle2);
+  const handleReadMore3 = () => setToggle3(!toggle3);
+  const handleReadMore4 = () => setToggle4(!toggle4);
 
-  var labels:any=[]
-  const file = {} //require("./graphique-dayahead.json")
-  var mx=0
-  const borderColors=['rgba(255, 99, 132, 1)',
-  'rgba(54, 162, 235, 1)',
-  'rgba(255, 206, 86, 1)',
-  'rgba(75, 192, 192, 1)',
-  'rgba(153, 102, 255, 1)',
-  'rgba(255, 159, 64, 1)']
+  var labels: any = [];
+  const file = {}; //require("./graphique-dayahead.json")
+  var mx = 0;
+  const borderColors = [
+    'rgba(255, 99, 132, 1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)',
+  ];
   var datasets = Object.values(file).map((it: any, idx: number) => {
-    if(it.length>mx){
+    if (it.length > mx) {
       labels = it.map((i: any) => {
-        let d = new Date(i.start_time)
-        if(d.getHours()==1) return ""
-        return d.getDate()+'/'+d.getMonth()+1+'/'+d.getFullYear()//+' '+d.getHours()+':'+d.getMinutes();
+        let d = new Date(i.start_time);
+        if (d.getHours() == 1) return '';
+        return d.getDate() + '/' + d.getMonth() + 1 + '/' + d.getFullYear(); //+' '+d.getHours()+':'+d.getMinutes();
       });
-      mx=it.length
+      mx = it.length;
     }
     return {
       label: Object.keys(it[0])[1],
@@ -104,63 +106,63 @@ const IndexPage = () => {
       borderColor: borderColors[idx],
       borderWidth: 1,
       //backgroundColor: "rgba(53, 162, 235, 0.5)",
-    }
-  })
+    };
+  });
   const data = {
     labels,
-    datasets
-  }
-  console.log(data)
-  const now = Date.now()
-  const today = new Date()
+    datasets,
+  };
+  console.log(data);
+  const now = Date.now();
+  const today = new Date();
 
-  var start = new Date(today)
-  start.setUTCHours(10, 0, 0, 0)
+  var start = new Date(today);
+  start.setUTCHours(10, 0, 0, 0);
 
   const data_contract_response: any = {
-    "Marché Spot (K€)": 0.07848,
-    "Contrat H01 (K€)": 0.0842,
-    "Contrat H07 (K€)": 0.09762,
-    "Contrat H016 (K€)": 0.19538,
-  }
+    'Marché Spot (K€)': 0.07848,
+    'Contrat H01 (K€)': 0.0842,
+    'Contrat H07 (K€)': 0.09762,
+    'Contrat H016 (K€)': 0.19538,
+  };
   const data_table_dayahead = {
-    Date: "2022/11/06",
-    "Spot Base": 107.689583333333,
-    "Spot Pointe": 107.996666666667,
-  }
+    Date: '2022/11/06',
+    'Spot Base': 107.689583333333,
+    'Spot Pointe': 107.996666666667,
+  };
 
   const data_table_futures = [
     {
-      Année: "2023",
-      "Cal Base": 496.04,
-      "Cal Pointe": 845.61,
+      Année: '2023',
+      'Cal Base': 496.04,
+      'Cal Pointe': 845.61,
     },
     {
-      Année: "2024",
-      "Cal Base": 280,
-      "Cal Pointe": 413.09,
+      Année: '2024',
+      'Cal Base': 280,
+      'Cal Pointe': 413.09,
     },
     {
-      Année: "2025",
-      "Cal Base": 190.35,
-      "Cal Pointe": 293.03,
+      Année: '2025',
+      'Cal Base': 190.35,
+      'Cal Pointe': 293.03,
     },
     {
-      Année: "2026",
-      "Cal Base": 152.18,
-      "Cal Pointe": 257.08,
+      Année: '2026',
+      'Cal Base': 152.18,
+      'Cal Pointe': 257.08,
     },
     {
-      Année: "2027",
-      "Cal Base": 142.71,
-      "Cal Pointe": null,
+      Année: '2027',
+      'Cal Base': 142.71,
+      'Cal Pointe': null,
     },
     {
-      Année: "2028",
-      "Cal Base": 128.47,
-      "Cal Pointe": null,
+      Année: '2028',
+      'Cal Base': 128.47,
+      'Cal Pointe': null,
     },
-  ]
+  ];
   return (
     <Layout>
       <Seo title="Bohr energie" />
@@ -171,7 +173,7 @@ const IndexPage = () => {
         <div
           id="carouselExampleCaptions"
           className="carousel slide relative w-screen"
-          data-bs-pause={"hover"}
+          data-bs-pause={'hover'}
           data-bs-ride="carousel"
           data-bs-interval="10000"
         >
@@ -206,9 +208,9 @@ const IndexPage = () => {
                 alt="Hydraulique"
               />
               <div className="carousel-caption hidden md:block absolute text-center">
-                <h5 className="text-2xl md:mt-48">{t("index.hero.c1")}</h5>
-                <p>{t("index.hero.p1_0")}</p>
-                <p>{t("index.hero.p1_1")}</p>
+                <h5 className="text-2xl md:mt-48">{t('index.hero.c1')}</h5>
+                <p>{t('index.hero.p1_0')}</p>
+                <p>{t('index.hero.p1_1')}</p>
               </div>
             </div>
 
@@ -220,9 +222,9 @@ const IndexPage = () => {
               />
 
               <div className="carousel-caption hidden md:block absolute text-center ">
-                <h5 className="text-2xl md:mt-48">{t("index.hero.c2")}</h5>
-                <p>{t("index.hero.p1_0")}</p>
-                <p>{t("index.hero.p1_1")}</p>
+                <h5 className="text-2xl md:mt-48">{t('index.hero.c2')}</h5>
+                <p>{t('index.hero.p1_0')}</p>
+                <p>{t('index.hero.p1_1')}</p>
               </div>
             </div>
 
@@ -233,9 +235,9 @@ const IndexPage = () => {
                 alt="Photovoltaique"
               />
               <div className="carousel-caption hidden md:block absolute text-center">
-                <h5 className="text-2xl md:mt-48">{t("index.hero.c3")}</h5>
-                <p>{t("index.hero.p1_0")}</p>
-                <p>{t("index.hero.p1_1")}</p>
+                <h5 className="text-2xl md:mt-48">{t('index.hero.c3')}</h5>
+                <p>{t('index.hero.p1_0')}</p>
+                <p>{t('index.hero.p1_1')}</p>
               </div>
             </div>
           </div>
@@ -268,19 +270,19 @@ const IndexPage = () => {
 
           <div className="carousel-caption absolute text-center sm:top-1/4 top-0 md:top-1/2 sm:w-2/3 w-full sm:left-auto left-0 flex md:block items-center justify-center">
             <h1 className="bg-black bg-opacity-0 text-white divide-x-2 md:text-5xl sm:text-2xl xs:text-xl text-md md:-ml-0 ml-0 md:-mt-32 -mt-0 font-semibold sm:mt-0 -mt-10 xs:leading-none leading-4">
-              {t("index.hero.l1")}
+              {t('index.hero.l1')}
               <br />
-              {t("index.hero.l2")}
+              {t('index.hero.l2')}
               <br />
-              {t("index.hero.l3")}
+              {t('index.hero.l3')}
               <br />
-              {t("index.hero.l4")}
+              {t('index.hero.l4')}
             </h1>
           </div>
 
           <div className="carousel-caption absolute text-center">
             <h1 className="text-white md:leading-tight md:text-3xl sm:text-2xl xs:text-lg text-sm md:-ml-0 ml-0 md:-mt-48 -mt-0 max-w-400 md:mb-5 pt-26 md:pt-0">
-              {t("index.hero.h1")}
+              {t('index.hero.h1')}
             </h1>
           </div>
         </div>
@@ -290,11 +292,11 @@ const IndexPage = () => {
       <section className="mt-20 text-gray-4a">
         <div className="w-screen text-center">
           <h3 className="relative md:text-1xl text-1xl">
-            {t("index.section1.h1")}
+            {t('index.section1.h1')}
           </h3>
 
           <div className="flex sm:flex-row flex-col justify-between mx-5 md:mx-20 lg:max-w-md lg:mx-auto lg:my-10 my-5 gap-5">
-            {Object.keys(data_contract_response).map(key => (
+            {Object.keys(data_contract_response).map((key) => (
               <div>
                 <p>{key}</p>
                 <h1 className="text-4xl mt-3">{data_contract_response[key]}</h1>
@@ -302,13 +304,13 @@ const IndexPage = () => {
             ))}
           </div>
           <h3 className="relative md:text-1xl text-1xl  md:mt-8 sm:mx-0 m-10">
-            {t("index.section1.h2")}
+            {t('index.section1.h2')}
           </h3>
           <Link
             to="/our-services"
             className="block text-white text-center bg-orange-bohr border-orange-bohr rounded-full border-solid border-4 md:py-2 py-1 px-4 w-40 md:mt-4 mx-auto"
           >
-            {t("index.section1.button")}
+            {t('index.section1.button')}
           </Link>
         </div>
 
@@ -324,7 +326,7 @@ const IndexPage = () => {
 
           <div className="sm:w-2/5 h-300 text-center">
             <h3 className="relative md:text-1xl text-1xl md:ml-12 md:mt-0 sm:m-5">
-              {t("index.section1.h3")}
+              {t('index.section1.h3')}
             </h3>
 
             <div>
@@ -338,9 +340,9 @@ const IndexPage = () => {
                 </thead>
                 <tbody>
                   <tr className="h-9 border-b border-gray-100">
-                    <td>{data_table_dayahead["Date"]}</td>
-                    <td>{data_table_dayahead["Spot Base"].toFixed(2)}</td>
-                    <td>{data_table_dayahead["Spot Pointe"].toFixed(2)}</td>
+                    <td>{data_table_dayahead['Date']}</td>
+                    <td>{data_table_dayahead['Spot Base'].toFixed(2)}</td>
+                    <td>{data_table_dayahead['Spot Pointe'].toFixed(2)}</td>
                   </tr>
                 </tbody>
               </table>
@@ -353,7 +355,7 @@ const IndexPage = () => {
               </iframe> */}
 
             <h3 className="relative md:text-1xl text-1xl md:ml-12 md:mt-4">
-              {t("index.section1.h4")}
+              {t('index.section1.h4')}
             </h3>
 
             <table className="table w-full">
@@ -365,11 +367,11 @@ const IndexPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {data_table_futures.map(item => (
+                {data_table_futures.map((item) => (
                   <tr className="h-9 border-b border-gray-100">
-                    <td>{item["Année"]}</td>
-                    <td>{item["Cal Base"]}</td>
-                    <td>{item["Cal Pointe"]}</td>
+                    <td>{item['Année']}</td>
+                    <td>{item['Cal Base']}</td>
+                    <td>{item['Cal Pointe']}</td>
                   </tr>
                 ))}
               </tbody>
@@ -388,17 +390,17 @@ const IndexPage = () => {
         <Divider />
         <div className="flex md:flex-row flex-col md:p-8 p-2 md:justify-center">
           <h2 className="lg:w-1/3 text-2xl md:text-6xl mt-20 mb-10 text-gray-4a md:text-left text-center">
-            <strong>{t("index.section2.h2")}</strong>
+            <strong>{t('index.section2.h2')}</strong>
           </h2>
           <h3 className="lg:w-2/3 text-1xl md:text-justify md:ml-0 sm:ml-0 md:mt-20 md:text-1xl text-center md:p-0 p-3">
-            {t("index.section2.h3")}
+            {t('index.section2.h3')}
           </h3>
         </div>
 
         <div className="flex md:flex-row flex-col md:p-8 p-2 md:justify-center">
           <h2 className="text-2xl md:text-5xl text-gray-4a text-center">
-            {" "}
-            <strong>{t("index.section2.h4")}</strong>
+            {' '}
+            <strong>{t('index.section2.h4')}</strong>
           </h2>
         </div>
 
@@ -416,10 +418,10 @@ const IndexPage = () => {
               className="md:ml-0 m-auto"
             />
             <h2 className="text-center text-2xl my-8 text-gray-4a md:text-3xl">
-              <strong>{t("index.section2.h2Product1")}</strong>
+              <strong>{t('index.section2.h2Product1')}</strong>
             </h2>
             <p className="text-center text-gray-222">
-              {t("index.section2.pProduct1")}
+              {t('index.section2.pProduct1')}
             </p>
           </div>
 
@@ -445,10 +447,10 @@ const IndexPage = () => {
               className="md:mt-14 md:ml-4 mx-auto"
             />
             <h2 className="text-center text-2xl my-8 text-gray-4a md:text-3xl md:mt-10">
-              <strong>{t("index.section2.h2Product2")}</strong>
+              <strong>{t('index.section2.h2Product2')}</strong>
             </h2>
             <p className="text-center text-gray-222">
-              {t("index.section2.pProduct2")}
+              {t('index.section2.pProduct2')}
             </p>
           </div>
 
@@ -474,10 +476,10 @@ const IndexPage = () => {
               className="md:ml-0 mt-0 mx-auto"
             />
             <h2 className="text-center text-2xl my-8 text-gray-4a md:text-3xl">
-              <strong>{t("index.section2.h2Product3")}</strong>
+              <strong>{t('index.section2.h2Product3')}</strong>
             </h2>
             <p className="text-center text-gray-222">
-              {t("index.section2.pProduct3")}
+              {t('index.section2.pProduct3')}
             </p>
           </div>
         </div>
@@ -499,10 +501,10 @@ const IndexPage = () => {
 
         <div className="flex md:flex-row flex-col md:p-8 p-2 md:justify-center">
           <h2 className="lg:w-1/3 text-2xl md:text-6xl md:ml-0 mt-20 md:mr-0  mb-10 text-gray-4a md:text-left text-center">
-            <strong>{t("index.section3.h2")}</strong>
+            <strong>{t('index.section3.h2')}</strong>
           </h2>
           <h3 className="lg:w-2/3 text-1xl md:text-justify md:ml-10 sm:ml-0 md:mt-20 md:mr-20 md:text-1xl text-center">
-            {t("index.section3.h3")}
+            {t('index.section3.h3')}
           </h3>
         </div>
 
@@ -519,10 +521,10 @@ const IndexPage = () => {
               alt="Digital innovation"
             />
             <h2 className="text-center text-2xl my-8 text-gray-4a md:text-3xl">
-              <strong>{t("index.section3.h2img1")}</strong>
+              <strong>{t('index.section3.h2img1')}</strong>
             </h2>
             <p className="text-center text-gray-222 md:mb-20">
-              {t("index.section3.pimg1")}
+              {t('index.section3.pimg1')}
             </p>
           </div>
 
@@ -538,10 +540,10 @@ const IndexPage = () => {
               alt="Fair rates"
             />
             <h2 className="text-center text-2xl my-8 text-gray-4a md:text-3xl">
-              <strong>{t("index.section3.h2img2")}</strong>
+              <strong>{t('index.section3.h2img2')}</strong>
             </h2>
             <p className="text-center text-gray-222">
-              {t("index.section3.pimg2")}
+              {t('index.section3.pimg2')}
             </p>
           </div>
 
@@ -557,10 +559,10 @@ const IndexPage = () => {
               alt="Personalized attention"
             />
             <h2 className="text-center text-2xl my-8 text-gray-4a md:text-3xl">
-              <strong>{t("index.section3.h2img3")}</strong>
+              <strong>{t('index.section3.h2img3')}</strong>
             </h2>
             <p className="text-center text-gray-222 md:mb-20">
-              {t("index.section3.pimg3")}
+              {t('index.section3.pimg3')}
             </p>
           </div>
         </div>
@@ -569,7 +571,7 @@ const IndexPage = () => {
           to="/our-services"
           className="block text-white text-center bg-orange-bohr border-orange-bohr rounded-full border-solid border-4 md:py-2 py-1 px-4 w-40 md:mt-0 mx-auto"
         >
-          {t("index.section3.button")}
+          {t('index.section3.button')}
         </Link>
 
         <CookieConsent
@@ -579,22 +581,22 @@ const IndexPage = () => {
           location="bottom"
           buttonText="J'accepte"
           cookieName="myAwesomeCookieName2"
-          style={{ background: "#2B373B" }}
-          buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
+          style={{ background: '#2B373B' }}
+          buttonStyle={{ color: '#4e503b', fontSize: '13px' }}
           expires={150}
         >
-          <p style={{ textAlign: "justify" }}>
+          <p style={{ textAlign: 'justify' }}>
             Afin d'améliorer nos services en continu et de vous proposer une
             expérience qualitative, nous et nos partenaires utilisons des
             cookies à des fins de mesure d’audience, de personnalisation des
             contenus et de publicité ciblée en ligne y compris de partenaires
             tiers. Nous utilisons également des cookies nécessaires au bon
-            fonctionnement de notre site internet.{" "}
+            fonctionnement de notre site internet.{' '}
           </p>
         </CookieConsent>
       </section>
     </Layout>
-  )
-}
+  );
+};
 
-export default IndexPage
+export default IndexPage;

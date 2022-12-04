@@ -1,0 +1,16 @@
+.sidebar-link-container-parent:hover svg {
+  filter: brightness(0) saturate(100%) invert(10%) sepia(84%) saturate(6017%)
+    hue-rotate(258deg) brightness(114%) contrast(96%);
+}
+.sidebar-link-container-parent:hover .sidebar-link-container::before {
+  content: '';
+  width: 4px;
+  height: 40px;
+  background-color: red;
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  background: #5819f1;
+  border-radius: 0px 8px 8px 0px;
+}
