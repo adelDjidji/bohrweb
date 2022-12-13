@@ -1,5 +1,5 @@
 export function ErrorMessage({ message }: any) {
-    return <label className='text-sm font-semibold text-red-500' >{message}</label>;
+    return <label className='text-xs font-semibold text-red-500' >{message}</label>;
 }
 
 export const isMobileNumber = (e: any) => {
@@ -10,6 +10,13 @@ export const isMobileNumber = (e: any) => {
     .test(e);
 };
 export const isPasswordValid = (e: any) => {
+    if (!e) {
+        return true;
+    }
+    return /^[a-zA-Z0-9]{8,16}$/
+    .test(e);
+};
+export const isEmailValid = (e: any) => {
     if (!e) {
         return true;
     }

@@ -7,7 +7,7 @@
     "keyBenefits":"Notre technologie",
     "beliefs":"Qui sommes-nous?",
     "contactUs":"Contactez nous",
-    "clientSpace":"Espace client"
+    "clientSpace":"Espace producteur"
   },
   "index": {
     "hero" : {
@@ -26,16 +26,18 @@
     },
 
     "section1":{
-     "h1":"Si vous aviez vendu 1 MW par heure en 2022, vous auriez géneré au:",
+     "h1":"Si vous aviez vendu 1 MW/h en 2022",
+     "h1_2":"vous auriez generé:",
      "h2":"Rejoignez Bohr Energie et vendez votre production au Marché Spot ! ",
-     "h3":"Prix Marché - 'Spot' (€/MWh):",
-     "h4":"Prix Marché - 'Futures' (€/MWh):",
-     "button":"Nous rejoindre"
+     "h3":"Spot (€/MWh)",
+     "h4":"Futures (€/MWh)",
+     "button":"Demander une démo"
     },
 
     "section2":{
-      "h2":"Pour les producteurs",
-      "h3":"Bohr Energie propose des offres innovantes d'optimisation d'actifs énergétiques sur les marchés boursiers de l'électricité. Changez votre façon de vendre vos productions afin d'augmenter vos revenus.",
+      "h2":"Nos 3 offres pour les producteurs",
+      "h3":"Bohr Energie propose des offres innovantes d'optimisation d'actifs énergétiques sur les marchés boursiers de l'électricité.",
+      "h31":"Changez votre façon de vendre vos productions afin d'augmenter vos revenus.",
       "h4":"3 Offres",
       "h2Product1":"Optimiser le prix de vente de l’énergie",
       "pProduct1":"L’équipe de spécialistes de Bohr Energie vous accompagne pour maximiser le prix de vente de votre production.",
@@ -45,21 +47,35 @@
       "pProduct3" : "Nous certifions auprès de RTE et valorisons votre capacité de production de pointe hivernale sur les enchères de capacité.",
       "h2Product4" :"",
       "pProduct4" : "",
-      "button" : ""
+      "button" : "Découvrez notre technologie"
      },
-
+     "section5":{
+      "h1":"Votre centrale virtuelle pour gérer tous vos sites",
+      "h2img1":"Monitoring et contrôle des actifs",
+      "pimg1":"Monitoring individuel des actifs disponibles et de leur performance.",
+      "h2img2":"Analyse de la production et des gains",
+      "pimg2":"Monitoring individuel des actifs disponibles et de leur performance.",
+      "h2img3":"Gestion de votre portefeuille",
+      "pimg3":"Monitoring individuel des actifs disponibles et de leur performance."
+     },
      "section3":{
-      "h2":"Notre mission",
+      "h2":"Notre mission au service de votre rentabilité",
       "h3" : "Connecter les producteurs et les consommateurs avec les meilleures solutions de gestion d'actifs énergétiques.",
       "h2img1" : "Innovation Digitale",
       "pimg1" :"Développer les énergies renouvelables et pérenniser la filière avec nos solutions innovantes.",
-      "h2img2" :"Offres d'optimisation sur-mesure",
+      "h2img2" :"Offres d'optimisation",
       "pimg2" :"Rendre transparentes  et accessibles les pratiques de gestion d'actifs énergétiques sur les marchés.",
       "h2img3" : "Service client personnalisé",
       "pimg3" : " Offrir un service de proximité créé  par des producteurs pour des producteurs.",
       "h2img4" :"Energie verte",
       "pimg4" : " Une energie 100% renouvelable pour un monde plus durable.",
-      "button" :"En savoir plus"
+      "button" :"En savoir plus sur Bohr Energie"
+     },
+
+     "section4":{
+      "h1":"Connecter les producteurs et les consommateurs avec les meilleures solutions de gestions d'actifs énergétiques.",
+      "h2":"Certifications",
+      "h3":"Partenaires"
      }
   },
   "aboutus":{
@@ -94,9 +110,9 @@
   },
   "beOurClient":{
     "hero" :{
-      "l1" : "Devenir",
-      "l2" :"un de nos",
-      "l3" : "clients"
+      "l1" : "Contactez-nous",
+      "l2" : "",
+      "l3" : ""
     },
     "section1":{
       "h2":"Changer votre énergie pour changer le monde.",
@@ -121,9 +137,7 @@
   },
   "beliefs" :{
     "hero":{
-      "l1" : "Notre",
-      "l2":"entreprise",
-      "l3" : "innovante"
+      "l1" : "Notre entreprise innovante"
     },
     "section1":{
       "h2":"Changeons notre future énergétique dans un monde ouvert.",
@@ -159,22 +173,25 @@
   },
   "keyBenefits":{
     "hero":{
-      "l1": "Notre",
-      "l2": "avantage",
-      "l3": "technologique"
+      "l1": "Notre avantage technologique"
     },
 
     "section1":{
       "h1":"Nous sommes un acteur de l'innovation",
-      "p1":"Bohr Energie est un agrégateur  de centrales de production électrique  renouvelable. Grâce à notre agrément auprès de la bourse EPEX, nous vous proposons de vendre votre énergie sur le marché libre de l'énergie constituant ainsi une alternative au mécanisme d' EDF obligation d'achat.",
+      "p0":"Bohr Energie est un agrégateur  de centrales de production électrique  renouvelable.",
+      "p1":"Grâce à notre agrément auprès de la bourse EPEX, nous vous proposons de vendre votre énergie sur le marché libre de l'énergie constituant ainsi une alternative au mécanisme d' EDF obligation d'achat.",
       "h2":"Améliorez la rentabilité de votre production sur le marché libre de l'énergie grâce à notre centrale virtuelle de gestion.",
       "p2":"Grâce à notre plateforme digitale d'intelligence artificielle, nos algorithmes sont à votre service pour vous proposer des solutions innovantes d'optimisation de vos actifs afin d'augmenter votre rentabilité.",
       "button":"Notre proces"
     },
 
     "section2":{
-      "h1":"Notre centrale virtuelle de gestion",
-      "p1":"Améliorez la rentabilité de votre production sur le marché libre de l'énergie grâce à notre centrale virtuelle de gestion. La centrale électrique virtuelle est une technologie clé qui permet de résoudre les tâches du monde de l’énergie distribuée.",
+      "h0":"Améliorez la rentabilité de votre production grâce à notre centrale virtuelle de gestion.",
+      "h1":"Comment fonctionne notre centrale virtuelle de gestion ?",
+      "h2":"Titre",
+      "h3":"Aggregation",
+      "h4":"Interface marché",
+      "p1":"La centrale électrique virtuelle est une technologie clé qui permet de résoudre les tâches du monde de l’énergie distribuée.",
       "p2":"La centrale virtuelle permet non seulement d’agréger des milliers de producteurs d’électricité, des actifs flexibles tels que des unités de stockage, ou encore des consommateurs électro-intensifs ayant choisi des solutions de flexibilités type effacement.",
       "p3":"La plateforme permet d’offrir leur puissance et leur flexibilité sur différents marchés tout en contrôlant intelligemment leurs injections ou soutirages et minimisant les risques.",
       "button":"Contactez-nous"
@@ -267,20 +284,20 @@
   },
   "contactUs":{
     "hero":{
-      "l1":"Nous contacter",
+      "l1":"Par message",
       "l2":"Notre emplacement",
       "l3":"Je préfère être appelé"
     },
     "section1" : {
-      "text" : "Parlons et trouvons de meilleures solutions pour changer votre énergie et changer votre entreprise",
+      "text" : "Discutons pour mettre en place des solutions vous permettant d'améliorer la rentabilité de vos unités de production en le connectant au marché libre de l'énergie.",
       "h2":"Nom",
       "h3":"Entreprise",
       "h4":"Telephone",
       "h5":"Email",
       "h6":"Message",
-      "button" :"Contactez-nous",
+      "button" :"Envoyer",
       "locale":"fr",
-      "button2":"Recevoir un appel"
+      "button2":"Valider"
     }
   }
 }

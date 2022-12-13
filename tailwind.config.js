@@ -6,19 +6,33 @@ module.exports = {
       colors: {
         "orange-bohr": "#ff622e",
         "violet-bohr": "#5819f1",
+        "violet-bohr-bis": "#350F91",
+        "violet-bohr-dark": "#280972",
+        "violet-bohr-obs":"#280B6F",
+        "violet-bohr-claire": "#492394",
+        "violet-menu": "#260570",
         "gray-222": "#222222",
         "black-footer": "#363636",
+        "gray-bg": "#F5F6FA",
+        "gray-6f": "#6F729C",
       },
       textColor: {
         "gray-4a": "#4A4A4A",
         "gray-222": "#222222",
+        "gray-6f": "#6F729C",
         "orange-bohr": "#ff622e",
         "violet-bohr": "#5819f1",
-        "orange-ff7": "#ff7c4d",
+        "violet-bohr-bis": "#350F91",
+        "violet-bohr-dark": "#280972",
+        "orange-bohr": "#ff7c4d",
         "white-FB": "rgba(255,255,255,.75)",
+        "dark-grey": "#1E293B"
       },
       fontFamily: {
         Poppins: ["Poppins", "sans-serif"],
+        Campton: ["Campton", "sans-serif"],
+        CamptonBold: ["CamptonBold", "sans-serif"],
+        CamptonThin: ["CamptonThin", "sans-serif"],
       },
       screens: {
         "2md": "840px",
@@ -26,10 +40,11 @@ module.exports = {
       backgroundImage: () => ({
         "hero-home": "url('/images/CABECERA_INTRO.png')",
         "hero-aboutus": "url('/images/INNOVATIVE_COMPANY.jpg')",
-        "hero-benefits": "url('/images/CABECERA_BENEFITS.jpg')",
-        "hero-customer": "url('/images/CABECERA_CUSTOMER.jpg')",
-        "hero-beliefs": "url('/images/CABECERA_BELIEFS.jpg')",
+        "hero-benefits": "url('/images/Hero-Technologie.png')",
+        "hero-customer": "url('/images/Hero-Contactez-nous.png')",
+        "hero-beliefs": "url('/images/Hero-Qui-sommes-nous.png')",
         "hero-solutions": "url('/images/CABECERA_SOLUTIONS.jpg')",
+        "hero-banner": "url('/images/Banner.png')",
         "flag-france": "url('/images/france.png')",
         "flag-usa": "url('/images/usa.png')",
       }),
@@ -68,7 +83,7 @@ module.exports = {
     },
     screens: {
       
-       'xs': '340px',
+      'xs': '340px',
       'sm': '640px',
       'md': '1181px',
       // => @media (min-width: 768px) { ... }

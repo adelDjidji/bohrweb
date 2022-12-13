@@ -1,0 +1,113 @@
+.UserTable .user-table-pagination .page {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 32px;
+  height: 32px;
+  min-width: 32px;
+  color: #6f729c;
+  cursor: pointer;
+}
+
+.UserTable .user-table-pagination .page:hover {
+  background-color: #ede7fd;
+  border-radius: 8px;
+  color: #5819f1;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.right-arrow {
+  transform: rotate(180deg);
+}
+
+.left-arrow:hover,
+.right-arrow:hover {
+  filter: brightness(0) saturate(100%) invert(11%) sepia(99%) saturate(6140%)
+    hue-rotate(262deg) brightness(93%) contrast(104%);
+  cursor: pointer;
+}
+
+.ant-table-thead .ant-table-cell {
+  background-color: #F5F6FA !important;
+}
+
+/* .ant-pagination-item-active a{
+  font-weight: 600;
+  font-size: 12px;
+  color: #6f729c;
+  cursor: pointer;
+  border:none;
+}
+.ant-pagination-item-active{
+  border:none;
+}
+.ant-pagination-item-active a:hover{
+  background-color: #ede7fd;
+  border-radius: 8px;
+  color: #5819f1;
+  cursor: pointer;
+  font-size: 14px;
+} */
+
+.ant-table-row * {
+  font-size: 16px;
+}
+.ant-pagination-item-active {
+  font-weight: 600;
+  background-color: #EDE7FD !important;
+  border-color: #EDE7FD !important;
+}
+
+
+/* antd checkbox style */
+.ant-checkbox-group .ant-checkbox-wrapper{
+  padding: 12px !important;
+  margin-inline-start: 0px!important;
+}
+.ant-checkbox-group .ant-checkbox-wrapper:hover{
+  background-color: #5918f0;
+    color: white;
+}
+.ant-checkbox-group .ant-checkbox-wrapper .ant-checkbox+span{
+  padding-inline-start: 14px !important;
+  font-size: 16px;
+}
+.ant-dropdown:not(.ant-dropdown-hidden){
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid rgb(229, 227, 237);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.user-drawer .ant-drawer-header-title{
+  /* justify-content: end; */
+  display: block;
+    text-align: right;
+}
+.user-drawer .ant-drawer-header-title .ant-drawer-title{
+  text-align: left;
+}
+
+
+/* antd radio style */
+.ant-radio-group .ant-radio-wrapper{
+  padding: 12px !important;
+  margin-inline-start: 0px!important;
+  margin-inline-end: 0px!important;
+}
+.ant-radio-group .ant-radio-wrapper:hover{
+  background-color: #5918f0;
+    color: white;
+}
+.ant-radio-group .ant-radio-wrapper .ant-radio+span{
+  padding-inline-start: 14px !important;
+  font-size: 16px;
+}
+
+
+/** SelectDropdown: hide radio input on type=none  */
+.ant-radio-group.none .ant-radio{
+  display: none !important;
+}

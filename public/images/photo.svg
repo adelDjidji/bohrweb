@@ -1,0 +1,11 @@
+<svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M31.0342 22.5C31.0342 27.3167 27.0586 31.25 22.1189 31.25C17.1792 31.25 13.2036 27.3167 13.2036 22.5C13.2036 17.6833 17.1792 13.75 22.1189 13.75C27.0586 13.75 31.0342 17.6833 31.0342 22.5Z" stroke="white" stroke-width="2"/>
+<line x1="21.8813" y1="7.5" x2="21.8813" y2="-4.33855e-07" stroke="white" stroke-width="2"/>
+<line x1="21.8813" y1="45" x2="21.8813" y2="37.5" stroke="white" stroke-width="2"/>
+<line x1="37.373" y1="21.5" x2="45.0002" y2="21.5" stroke="white" stroke-width="2"/>
+<line y1="21.5" x2="7.62716" y2="21.5" stroke="white" stroke-width="2"/>
+<line y1="-1" x2="7.56385" y2="-1" transform="matrix(0.713026 -0.701138 0.713026 0.701138 33.668 12)" stroke="white" stroke-width="2"/>
+<line y1="-1" x2="7.56385" y2="-1" transform="matrix(0.713026 -0.701138 0.713026 0.701138 6.70117 38.25)" stroke="white" stroke-width="2"/>
+<line y1="-1" x2="7.56385" y2="-1" transform="matrix(0.713025 0.701138 -0.713026 0.701138 33.668 33)" stroke="white" stroke-width="2"/>
+<line y1="-1" x2="7.56385" y2="-1" transform="matrix(0.713025 0.701138 -0.713026 0.701138 6.70117 6.75)" stroke="white" stroke-width="2"/>
+</svg>

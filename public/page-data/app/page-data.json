@@ -2,5 +2,5 @@
     "componentChunkName": "component---src-pages-app-tsx",
     "path": "/app/",
     "result": {"pageContext":{"matchPath":"/app/*"}},
-    "staticQueryHashes": [],
+    "staticQueryHashes": ["63159454"],
     "matchPath": "/app/*"}

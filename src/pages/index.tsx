@@ -1,273 +1,253 @@
-import { useTranslation } from "react-i18next"
-import Seo from "../components/seo"
-import Layout from "../components/Layout"
-import Divider from "../components/Divider"
-import ContactUs from "../components/ContactUs"
-import { Link } from "gatsby"
-import { useState } from "react"
-import CookieConsent from "react-cookie-consent"
-import "tw-elements"
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js"
-import { Line } from "react-chartjs-2"
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-)
-
- const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top" as const,
-    },
-    title: {
-      display: false,
-     // text: "Chart.js Line Chart",
-    },
-  },
-  scales: {
-    x: {
-      // The axis for this scale is determined from the first letter of the id as `'x'`
-      // It is recommended to specify `position` and / or `axis` explicitly.
-      // type: 'time',
-    //   time: {
-    //     displayFormats: {
-    //         quarter: 'MMM YYYY'
-    //     }
-    // }
-    // ticks: {
-    //   // Include a dollar sign in the ticks
-    //   callback: function(value, index, ticks) {
-    //     let d = new Date(value)
-    //       return d.getDate()+'/'+d.getMonth()+'/'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes();
-    //   }
-    // }
-    },
-    y: {
-        ticks: {
-            // Include a dollar sign in the ticks
-            callback: function(value, index, ticks) {
-                return '€' + value;
-            }
-        }
-    }
-}
-}
+import { useTranslation } from "react-i18next";
+import Seo from "../components/seo";
+import Layout from "../components/Layout";
+import Divider from "../components/Divider";
+import ContactUs from "../components/ContactUs";
+import FooterImage from "../components/FooterImage"
+import { Link } from "gatsby";
+import { useEffect, useState } from "react";
+import CookieConsent from "react-cookie-consent";
+import "tw-elements";
+import jsonData from "./graphique-dayahead.json";
+import { LineChart, IndexChart } from "./lineCharFunc";
+import Spiner from "../components/spiner"
 
 const IndexPage = () => {
-  const { t } = useTranslation()
-  const [toggle1, setToggle1] = useState(false)
-  const [toggle2, setToggle2] = useState(false)
-  const [toggle3, setToggle3] = useState(false)
-  const [toggle4, setToggle4] = useState(false)
-  const handleReadMore1 = () => setToggle1(!toggle1)
-  const handleReadMore2 = () => setToggle2(!toggle2)
-  const handleReadMore3 = () => setToggle3(!toggle3)
-  const handleReadMore4 = () => setToggle4(!toggle4)
+  const { t } = useTranslation();
 
-  var labels:any=[]
-  const file = {} //require("./graphique-dayahead.json")
-  var mx=0
-  const borderColors=['rgba(255, 99, 132, 1)',
-  'rgba(54, 162, 235, 1)',
-  'rgba(255, 206, 86, 1)',
-  'rgba(75, 192, 192, 1)',
-  'rgba(153, 102, 255, 1)',
-  'rgba(255, 159, 64, 1)']
-  var datasets = Object.values(file).map((it: any, idx: number) => {
-    if(it.length>mx){
-      labels = it.map((i: any) => {
-        let d = new Date(i.start_time)
-        if(d.getHours()==1) return ""
-        return d.getDate()+'/'+d.getMonth()+1+'/'+d.getFullYear()//+' '+d.getHours()+':'+d.getMinutes();
-      });
-      mx=it.length
-    }
-    return {
-      label: Object.keys(it[0])[1],
-      data: it.map((i: any) => Object.values(i)[1]),
-      borderColor: borderColors[idx],
-      borderWidth: 1,
-      //backgroundColor: "rgba(53, 162, 235, 0.5)",
-    }
-  })
-  const data = {
-    labels,
-    datasets
-  }
-  console.log(data)
-  const now = Date.now()
-  const today = new Date()
+  // line chart related all data here..
+  const [loadingChart, setloadingChart] = useState(false);
 
-  var start = new Date(today)
-  start.setUTCHours(10, 0, 0, 0)
-
-  const data_contract_response: any = {
-    "Marché Spot (K€)": 0.07848,
-    "Contrat H01 (K€)": 0.0842,
-    "Contrat H07 (K€)": 0.09762,
-    "Contrat H016 (K€)": 0.19538,
-  }
-  const data_table_dayahead = {
+  const data_contract_response_sample: any = {
+    "Marché Spot": 0,
+    "Contrat H01": 0,
+    "Contrat H07 ": 0,
+    "Contrat H016": 0,
+  };
+  const data_table_dayahead_sample = {
     Date: "2022/11/06",
-    "Spot Base": 107.689583333333,
-    "Spot Pointe": 107.996666666667,
-  }
+    "Spot Base": 0,
+    "Spot Pointe": 0,
+  };
 
-  const data_table_futures = [
+  const data_table_futures_sample = [
     {
       Année: "2023",
-      "Cal Base": 496.04,
-      "Cal Pointe": 845.61,
+      "Cal Base": 0,
+      "Cal Pointe": 0,
     },
     {
       Année: "2024",
-      "Cal Base": 280,
-      "Cal Pointe": 413.09,
+      "Cal Base": 0,
+      "Cal Pointe": 0,
     },
     {
       Année: "2025",
-      "Cal Base": 190.35,
-      "Cal Pointe": 293.03,
+      "Cal Base": 0,
+      "Cal Pointe": 0,
     },
     {
       Année: "2026",
-      "Cal Base": 152.18,
-      "Cal Pointe": 257.08,
+      "Cal Base": 0,
+      "Cal Pointe": 0,
     },
     {
       Année: "2027",
-      "Cal Base": 142.71,
+      "Cal Base": 0,
       "Cal Pointe": null,
     },
     {
       Année: "2028",
-      "Cal Base": 128.47,
+      "Cal Base": 0,
       "Cal Pointe": null,
     },
-  ]
+  ];
+  const [data_contract_response, setData_contract] = useState(
+    data_contract_response_sample
+  );
+  const [data_table_dayahead, setData_table_dayahead] = useState(
+    data_table_dayahead_sample
+  );
+  const [data_table_futures, set_data_table_futures] = useState(
+    data_table_futures_sample
+  );
+
+  const [loading_comparison, setLoadingComp] = useState(false);
+  const [loading_graph, setLoadingGraph] = useState(false);
+  const [loading_tableahead, setLoadingTableahead] = useState(false);
+  const [loading_tablefuturs, setLoadingTablefuturs] = useState(false);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const api_url = "http://localhost:8080"
+      "https://0c87-196-179-246-130.eu.ngrok.io"; //"localhost:8088"
+
+      const Url_contract_comparison =
+        api_url +
+        "/statistic/contract-comparison?spotMarketCountry=france&spotMarketProvider=entsoe&spotMarketStartTime=2022-01-01&spotMarketEndTime=2022-05-01&contractStartTime=2022-01-01&contractEndTime=2022-05-01";
+      const Url_graphique =
+        api_url +
+        "/statistic/graphique-dayahead?spotMarketPriceCountry=france&spotMarketPriceProvider=entsoe&spotMarketPriceStartTime=2022-01-01&spotMarketPriceEndTime=2022-05-01";
+      const Url_table_dayahead =
+        api_url +
+        "/statistic/table-dayahead?spotMarketPriceCountry=france&spotMarketPriceProvider=entsoe&spotMarketPriceStartTime=2022-01-01";
+      const Url_table_futurs =
+        api_url + "/statistic/table-futures?maxYear=2025";
+
+      try {
+        setLoadingComp(true)
+        setLoadingGraph(true)
+        setLoadingTableahead(true)
+        setLoadingTablefuturs(true)
+        const contract = await (
+          await fetch(Url_contract_comparison, {
+            headers: {
+              "ngrok-skip-browser-warning": "anyvalue",
+            },
+          })
+        ).json();
+        setLoadingComp(false)
+        const chartData = await (
+          await fetch(Url_graphique, {
+            headers: {
+              "ngrok-skip-browser-warning": "anyvalue",
+            },
+          })
+        ).json();
+        
+        const table_ahead = await (
+          await fetch(Url_table_dayahead, {
+            headers: {
+              "ngrok-skip-browser-warning": "anyvalue",
+            },
+          })
+        ).json();
+        setLoadingTableahead(false)
+        const table_futurs = await (
+          await fetch(Url_table_futurs, {
+            headers: {
+              "ngrok-skip-browser-warning": "anyvalue",
+            },
+          })
+        ).json();
+        setLoadingTablefuturs(false)
+        setData_contract(contract);
+        setData_table_dayahead(table_ahead);
+        set_data_table_futures(table_futurs);
+
+        var dataArr = [
+          ...chartData.spotMarketPrice,
+          ...chartData.H01ContractRate,
+          ...chartData.H07ContractRate,
+          ...chartData.H16ContractRate,
+        ];
+
+        dataArr = dataArr.map((item) => {
+          let val = {};
+          if (Object.keys(item).includes("Tarif contrat H01")) {
+            val = {
+              value: item["Tarif contrat H01"],
+              type: "Tarif contrat H01",
+            };
+          } else if (Object.keys(item).includes("Tarif contrat H07")) {
+            val = {
+              value: item["Tarif contrat H07"],
+              type: "Tarif contrat H07",
+            };
+          } else if (Object.keys(item).includes("Tarif contrat H16")) {
+            val = {
+              value: item["Tarif contrat H16"],
+              type: "Tarif contrat H16",
+            };
+          }else if (Object.keys(item).includes("Prix marché Spot")) {
+            val = {
+              value: item["Prix marché Spot"],
+              type: "Prix marché Spot",
+            };
+          }
+          return {
+            ...item,
+            ...val,
+          };
+        });
+        LineChart(dataArr, {
+          x: (d) => new Date(d.start_time),
+          y: (d) => d.value,
+          z: (d) => d.type,
+          yLabel: "Prix (€)",
+          width: 500,
+          height: 500,
+          //color: "steelblue",
+        });
+        setLoadingGraph(false)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  var labels: any = [];
+  const file = {}; //require("./graphique-dayahead.json")
+  var mx = 0;
+  const borderColors = [
+    "rgba(255, 99, 132, 1)",
+    "rgba(54, 162, 235, 1)",
+    "rgba(255, 206, 86, 1)",
+    "rgba(75, 192, 192, 1)",
+    "rgba(153, 102, 255, 1)",
+    "rgba(255, 159, 64, 1)",
+  ];
+  // var datasets = Object.values(file).map((it: any, idx: number) => {
+  //   if (it.length > mx) {
+  //     labels = it.map((i: any) => {
+  //       let d = new Date(i.start_time);
+  //       if (d.getHours() == 1) return "";
+  //       return d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear(); //+' '+d.getHours()+':'+d.getMinutes();
+  //     });
+  //     mx = it.length;
+  //   }
+  //   return {
+  //     label: Object.keys(it[0])[1],
+  //     data: it.map((i: any) => Object.values(i)[1]),
+  //     borderColor: borderColors[idx],
+  //     borderWidth: 1,
+  //     //backgroundColor: "rgba(53, 162, 235, 0.5)",
+  //   };
+  // });
+  // const data = {
+  //   labels,
+  //   datasets,
+  // };
+  // console.log(data);
+  const now = Date.now();
+  const today = new Date();
+
+  var start = new Date(today);
+  start.setUTCHours(10, 0, 0, 0);
+
   return (
     <Layout>
       <Seo title="Bohr energie" />
 
       {/* Banner */}
-      <section className="mx-auto mb-20 sm:mt-0 mt-20">
-        <Divider />
-        <div
-          id="carouselExampleCaptions"
-          className="carousel slide relative w-screen"
-          data-bs-pause={"hover"}
-          data-bs-ride="carousel"
-          data-bs-interval="10000"
-        >
-          <div className="carousel-indicators absolute right-0 bottom-0 left-0 flex justify-center p-0 mb-4">
-            <button
-              type="button"
-              data-bs-target="#carouselExampleCaptions"
-              data-bs-slide-to="0"
-              className="active"
-              aria-current="true"
-              aria-label="Slide 1"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleCaptions"
-              data-bs-slide-to="1"
-              aria-label="Slide 2"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleCaptions"
-              data-bs-slide-to="2"
-              aria-label="Slide 3"
-            ></button>
+      <section className="mx-auto mb-20 sm:mt-0 h-screen">
+        <div className="relative w-screen">
+ 
+          <div className="h-screen w-screen">
+              <img
+                src="./images/Hero.png"
+                className="h-full w-full md:object-fill sm:object-none object-none"
+                alt="Hero"
+              />
           </div>
 
-          <div className="carousel-inner relative overflow-hidden md:pt-0 sm:pt-20 pt-0">
-            <div className="carousel-item active relative float-left w-full">
-              <img
-                src="./images/hydro1_bannier.jpg"
-                className="block w-full"
-                alt="Hydraulique"
-              />
-              <div className="carousel-caption hidden md:block absolute text-center">
-                <h5 className="text-2xl md:mt-48">{t("index.hero.c1")}</h5>
-                <p>{t("index.hero.p1_0")}</p>
-                <p>{t("index.hero.p1_1")}</p>
-              </div>
-            </div>
-
-            <div className="carousel-item relative float-left w-full">
-              <img
-                src="./images/windFarm_banner1.jpg"
-                className="block w-full"
-                alt="WindFarm"
-              />
-
-              <div className="carousel-caption hidden md:block absolute text-center ">
-                <h5 className="text-2xl md:mt-48">{t("index.hero.c2")}</h5>
-                <p>{t("index.hero.p1_0")}</p>
-                <p>{t("index.hero.p1_1")}</p>
-              </div>
-            </div>
-
-            <div className="carousel-item relative float-left w-full">
-              <img
-                src="./images/solarPanel2_banner.jpg"
-                className="block w-full"
-                alt="Photovoltaique"
-              />
-              <div className="carousel-caption hidden md:block absolute text-center">
-                <h5 className="text-2xl md:mt-48">{t("index.hero.c3")}</h5>
-                <p>{t("index.hero.p1_0")}</p>
-                <p>{t("index.hero.p1_1")}</p>
-              </div>
-            </div>
-          </div>
-
-          <button
-            className="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
-            type="button"
-            data-bs-target="#carouselExampleCaptions"
-            data-bs-slide="prev"
-          >
-            <span
-              className="carousel-control-prev-icon inline-block bg-no-repeat"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-
-          <button
-            className="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
-            type="button"
-            data-bs-target="#carouselExampleCaptions"
-            data-bs-slide="next"
-          >
-            <span
-              className="carousel-control-next-icon inline-block bg-no-repeat"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Next</span>
-          </button>
-
-          <div className="carousel-caption absolute text-center sm:top-1/4 top-0 md:top-1/2 sm:w-2/3 w-full sm:left-auto left-0 flex md:block items-center justify-center">
-            <h1 className="bg-black bg-opacity-0 text-white divide-x-2 md:text-5xl sm:text-2xl xs:text-xl text-md md:-ml-0 ml-0 md:-mt-32 -mt-0 font-semibold sm:mt-0 -mt-10 xs:leading-none leading-4">
+          <div className="carousel-caption absolute text-center sm:top-1/4 top-1/4 md:top-1/4 sm:w-2/3 w-2/3 sm:left-auto md:block justify-center">
+            <h1 className="text-white md:text-3xl sm:text-xl xs:text-lg text-sm md:mb-8 mb-8">
+              {t("index.hero.h1")}
+            </h1>
+            <h1 className="font-CamptonBold text-white md:text-5xl sm:text-3xl xs:text-2xl text-2xl font-semibold sm:mt-10 -mt-0 xs:leading-none leading-4">
               {t("index.hero.l1")}
               <br />
               {t("index.hero.l2")}
@@ -276,301 +256,475 @@ const IndexPage = () => {
               <br />
               {t("index.hero.l4")}
             </h1>
-          </div>
 
-          <div className="carousel-caption absolute text-center">
-            <h1 className="text-white md:leading-tight md:text-3xl sm:text-2xl xs:text-lg text-sm md:-ml-0 ml-0 md:-mt-48 -mt-0 max-w-400 md:mb-5 pt-26 md:pt-0">
-              {t("index.hero.h1")}
-            </h1>
+            <div className="flex md:flex-row sm:flex-row flex-row mt-12 md:p-8 p-2 md:justify-center sm:justify-center justify-center">
+
+              <div className="text-xs md:text-center md:justify-center text-center justify-center">
+                <img
+                  className="md:px-14 sm:px-6 px-0 md:h-9 h-6 mx-auto"
+                  src="./images/hydro.svg"
+                  alt="Hydro"
+                />
+                <p className="text-center md:my-4 my-2 md:ml-0">
+                  Hydroélectrique
+                </p>
+              </div>
+
+              <div className="text-xs md:ml-4 ml-4 md:justify-center text-center justify-center">
+                <img
+                  className=" md:px-14 sm:px-6 px-0 md:w-18 md:h-9 h-6 mx-auto"
+                  src="./images/eolien.svg"
+                  alt="Eolien"
+                />
+                <p className="text-center md:my-4 my-2">
+                  Eolien
+                </p>
+                
+              </div>
+
+              <div className="text-xs md:ml-4 ml-4 md:text-center justify-center items-center">
+                <img
+                  className=" md:px-14 sm:px-6 px-0 md:w-18 md:h-9 h-6 mx-auto"
+                  src="./images/photo.svg"
+                  alt="Solaire"
+                />
+                <p  className="text-center md:my-4 my-2">
+                  Photovoltaique
+                </p>
+                 
+              </div>
+
+              <div className="text-xs md:ml-4 ml-4 md:text-center justify-center items-center">
+                <img
+                  className=" md:px-14 sm:px-6 px-0 md:w-18 md:h-9 h-6 mx-auto"
+                  src="./images/bat.svg"
+                  alt="Hydro"
+                />
+                <p  className="text-center md:my-4 my-2">
+                  Batterie
+                </p>
+                
+              </div>
+            </div>
+
+            <Link
+              to="/our-services"
+              className="block text-white text-center bg-orange-bohr border-orange-bohr rounded-full border-solid border-4 md:py-2 py-1 px-4 w-60 md:mt-4 sm:mt-8 mt-12 mx-auto"
+            >
+              {t("index.section1.button")}
+            </Link>
           </div>
+          
         </div>
       </section>
 
       {/* Section 1 */}
-      <section className="mt-20 text-gray-4a">
-        <div className="w-screen text-center">
-          <h3 className="relative md:text-1xl text-1xl">
+      <section className="-mt-24 bg-gray-bg grid relative content-center items-center place-items-center place-content-center">
+        {/* Card */}
+        <div className="bg-violet-bohr-bis md:w-3/4 w-full md:-mt-48 sm:mt-0 -mt-32 md:rounded-lg">
+          <h3 className="text-white text-center relative md:text-4xl text-2xl md:mt-12 mt-8">
             {t("index.section1.h1")}
           </h3>
-
-          <div className="flex sm:flex-row flex-col justify-between mx-5 md:mx-20 lg:max-w-md lg:mx-auto lg:my-10 my-5 gap-5">
-            {Object.keys(data_contract_response).map(key => (
-              <div>
-                <p>{key}</p>
-                <h1 className="text-4xl mt-3">{data_contract_response[key]}</h1>
-              </div>
-            ))}
-          </div>
-          <h3 className="relative md:text-1xl text-1xl  md:mt-8 sm:mx-0 m-10">
-            {t("index.section1.h2")}
+          <h3 className="text-white text-center relative md:text-1xl text-1xl mb-16">
+            {t("index.section1.h1_2")}
           </h3>
-          <Link
-            to="/our-services"
-            className="block text-white text-center bg-orange-bohr border-orange-bohr rounded-full border-solid border-4 md:py-2 py-1 px-4 w-40 md:mt-4 mx-auto"
-          >
-            {t("index.section1.button")}
-          </Link>
+
+          {!loading_comparison && (
+            <div className="text-white flex sm:flex-row mx-8 flex-col justify-between   lg:my-10 my-5 items-center lg:items-end">
+              {Object.keys(data_contract_response).map((key) => (
+                <div className="md:ml-8">
+                  <div className="flex flex-row"> 
+                    <h1 className="md:text-5xl text-3xl">
+                      {data_contract_response[key]}
+                    </h1>
+                    <p className="">(K€)</p>
+                  </div>
+                  
+                  <p className="mb-12 text-center">{key}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-        <div className="w-screen flex sm:flex-row flex-col justify-center md:mt-16">
-          <div className="sm:w-3/5 h-300">
-            <Line options={options} data={data} />
-          </div>
-          {/* <iframe className="w-full" src={"https://market.ctyanalytics.eu/d-solo/YamW_Pw7z/public?orgId=2&from=1641013200000&to=" + now + "&theme=light&panelId=2"} 
-                      //width="650" 
-                      height="300" 
-                      frameborder="0">          
-            </iframe> */}
+        {/* Title */}
+        <div className="flex justify-center w-screen relative text-center mt-12">
+          
+          <h2 className="text-black md:text-1xl text-2xl md:text-4xl md:mt-8 sm:mx-0 m-10 md:w-1/2 w-3/4">
+            <strong>{t("index.section1.h2")}</strong>
+          </h2>
 
-          <div className="sm:w-2/5 h-300 text-center">
-            <h3 className="relative md:text-1xl text-1xl md:ml-12 md:mt-0 sm:m-5">
-              {t("index.section1.h3")}
-            </h3>
+        </div>
+        
+        {/* Graphiques + Tables */}
+        <div className="flex sm:flex-row flex-col justify-center md:mt-12 w-3/4">
+          
+          {/* D3 Line chat */}      
+          <div className="bg-white rounded-lg mr-8 md:w-2/5 sm:w-3/5 w-full md:mb-24 mb-8" id="chart123456">
+            <h2 className="md:ml-8 md:my-4 md:text-left text-center text-xl">
+              Prix du marché
+            </h2>
 
-            <div>
-              <table className="table w-full">
-                <thead className="bg-blue-100 h-10">
-                  <tr>
-                    <th>Date</th>
-                    <th>Spot Base</th>
-                    <th>Spot Pointe</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="h-9 border-b border-gray-100">
-                    <td>{data_table_dayahead["Date"]}</td>
-                    <td>{data_table_dayahead["Spot Base"].toFixed(2)}</td>
-                    <td>{data_table_dayahead["Spot Pointe"].toFixed(2)}</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="">
+              {
+                loading_graph && <Spiner/>
+              }
             </div>
-            {/* <iframe src={"https://market.ctyanalytics.eu/d-solo/YamW_Pw7z/public?orgId=2&from=" + start.valueOf() + "&to=" + start.valueOf() + "&theme=light&panelId=11"} 
-                      className="mx-auto sm:ml-0 md:ml-24 md:mt-4"
-                      //width="450" 
-                      height="100" 
-                      frameborder="0">
-              </iframe> */}
+            
+          </div>
 
-            <h3 className="relative md:text-1xl text-1xl md:ml-12 md:mt-4">
-              {t("index.section1.h4")}
-            </h3>
+         {/* Tables */}
+          <div className="md:w-2/5 sm:w-2/5 w-full">
 
-            <table className="table w-full">
-              <thead className="bg-blue-100 h-10">
-                <tr>
-                  <th>Année</th>
-                  <th>Cal Base</th>
-                  <th>Cal Pointe</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data_table_futures.map(item => (
-                  <tr className="h-9 border-b border-gray-100">
-                    <td>{item["Année"]}</td>
-                    <td>{item["Cal Base"]}</td>
-                    <td>{item["Cal Pointe"]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {/* <iframe src="https://market.ctyanalytics.eu/d-solo/YamW_Pw7z/public?orgId=2&from=1654156645111&to=1654178245111&theme=light&panelId=10" 
-                      className="mx-auto sm:ml-0 md:ml-24 md:mt-4"
-                      //width="450" 
-                      height="200" 
-                      frameborder="0"></iframe> */}
+            <div className="bg-white rounded-lg h-1/5 sm:mb-8">
+              <h3 className="md:text-xl md:ml-4">
+                {t("index.section1.h3")}
+              </h3>
+              <div className="m-4">
+                {!loading_tableahead && (
+                  <table className="table w-full">
+                    <thead className="bg-gray-bg text-xs h-10">
+                      <tr>
+                        <th>Date</th>
+                        <th>Spot Base</th>
+                        <th>Spot Pointe</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="text-center h-9 border-b border-gray-100">
+                        <td>{data_table_dayahead["Date"]}</td>
+                        <td>{data_table_dayahead["Spot Base"].toFixed(2)}</td>
+                        <td>{data_table_dayahead["Spot Pointe"].toFixed(2)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-lg h-2/6">
+              <h3 className="relative md:text-xl md:ml-4 sm:mt-4 mt-5">
+                {t("index.section1.h4")}
+              </h3>
+              <div className="m-4">
+                {!loading_tablefuturs && (
+                  <table className="table w-full">
+                    <thead className="bg-gray-bg text-xs h-10">
+                      <tr>
+                        <th>Année</th>
+                        <th>Cal Base</th>
+                        <th>Cal Pointe</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data_table_futures.map((item) => (
+                        <tr className="text-center h-9 border-b border-gray-100">
+                          <td>{item["Année"]}</td>
+                          <td>{item["Cal Base"]}</td>
+                          <td>{item["Cal Pointe"]}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+              )}
+
+              </div>
+            </div> 
+
           </div>
         </div>
       </section>
 
       {/* Section 2 */}
-      <section className="container mx-auto mb-20">
-        <Divider />
-        <div className="flex md:flex-row flex-col md:p-8 p-2 md:justify-center">
-          <h2 className="lg:w-1/3 text-2xl md:text-6xl mt-20 mb-10 text-gray-4a md:text-left text-center">
-            <strong>{t("index.section2.h2")}</strong>
-          </h2>
-          <h3 className="lg:w-2/3 text-1xl md:text-justify md:ml-0 sm:ml-0 md:mt-20 md:text-1xl text-center md:p-0 p-3">
-            {t("index.section2.h3")}
-          </h3>
-        </div>
+      <section className="mx-auto mb-20">
+                
+        <div className="flex md:flex-row sm:flex-row flex-col">
+          
+          {/* Paragraph left */}              
+          <div className="md:w-1/2 w-full ">
 
-        <div className="flex md:flex-row flex-col md:p-8 p-2 md:justify-center">
-          <h2 className="text-2xl md:text-5xl text-gray-4a text-center">
-            {" "}
-            <strong>{t("index.section2.h4")}</strong>
-          </h2>
-        </div>
-
-        <div className="flex md:flex-row flex-col mt-6 md:p-8 p-2 md:justify-center">
-          <div
-            className="flex-1 md:max-w-md md:mx-4 lg:my-0 my-10"
-            data-sal="slide-right"
-            data-sal-delay="300"
-            data-sal-easing="ease-out"
-          >
-            <img
-              src="./images/PRODUCTOS.jpg"
-              alt="Products"
-              width={300}
-              className="md:ml-0 m-auto"
-            />
-            <h2 className="text-center text-2xl my-8 text-gray-4a md:text-3xl">
-              <strong>{t("index.section2.h2Product1")}</strong>
+            <h2 className="md:text-left sm:text-left text-left text-3xl md:w-2/3 sm:text-3xl md:text-4xl md:ml-24 sm:ml-16 ml-8 md:mt-20 sm:mt-16 mt-8">
+              <strong>{t("index.section2.h2")}</strong>
             </h2>
-            <p className="text-center text-gray-222">
-              {t("index.section2.pProduct1")}
-            </p>
+
+            <h3 className="text-gray-6f w-4/5 sm:w-3/4 md:w-3/4 md:mb-16 sm:mb-16 mb-8 md:ml-24 sm:ml-16 ml-8 md:mt-8 sm:mt-8 mt-8 md:text-lg text-left">
+              {t("index.section2.h3")}
+              <br/>
+              {t("index.section2.h31")}
+            </h3>
+
+            <Link
+              to="/our-services"
+              className="md:ml-24 sm:ml-16 ml-8 text-white text-center bg-orange-bohr border-orange-bohr rounded-full border-solid border-4 md:py-2 sm:py-2 py-1 px-4 w-60 mx-auto"
+            >
+              {t("index.section1.button")}
+            </Link>
+
           </div>
 
-          <div className="md:max-w-xs">
-            <img
-              src="./images/plus.png"
-              alt="plus"
-              width={80}
-              className="md:mt-12 mx-auto"
-            />
-          </div>
+          {/* Paragraph right */}              
+          <div className="md:ml-8 md:mt-6 mt-12 md:w-1/2 w-full">
+            <div className="flex md:flex-row sm:flex-row flex-col md:mx-4 sm:mx-2 lg:my-0 md:my-10 sm:my-0">
+              <img
+                src="./images/bancaire.png"
+                alt="bancaire"
+                className="m-auto"
+              />
+              <div className="ml-8 mr-10 md:mb-4 mb-8">
+                <h2 className="text-left text-2xl md:my-8 my-2 md:text-2xl">
+                  <strong>{t("index.section2.h2Product1")}</strong>
+                </h2>
+                <p className="text-left text-gray-6f">
+                  {t("index.section2.pProduct1")}
+                </p>
+              </div>             
+            </div>
 
-          <div
-            className="flex-1 md:max-w-md md:mx-4 lg:my-0 my-10"
-            data-sal="slide-left"
-            data-sal-delay="300"
-            data-sal-easing="ease-out"
-          >
-            <img
-              src="./images/GREEN.jpg"
-              alt="Environment"
-              width={300}
-              className="md:mt-14 md:ml-4 mx-auto"
-            />
-            <h2 className="text-center text-2xl my-8 text-gray-4a md:text-3xl md:mt-10">
-              <strong>{t("index.section2.h2Product2")}</strong>
-            </h2>
-            <p className="text-center text-gray-222">
-              {t("index.section2.pProduct2")}
-            </p>
-          </div>
+            <div className="flex md:flex-row sm:flex-row flex-col md:mx-4 sm:mx-6 lg:my-0 md:my-10 sm:my-0">
+              <img
+                src="./images/feuille.png"
+                alt="Environment"
+                className="md:ml-3 m-auto"
+              />
+              <div className="ml-10 mr-10 md:mb-4 mb-8">
+                <h2 className="text-black text-left md:text-2xl text-2xl md:my-8 my-2">
+                  <strong>{t("index.section2.h2Product2")}</strong>
+                </h2>
+                <p className="text-left text-gray-6f">
+                  {t("index.section2.pProduct2")}
+                </p>
+              </div>
+              
+            </div>
 
-          <div className="md:max-w-md">
-            <img
-              src="./images/plus.png"
-              alt="plus"
-              width={80}
-              className="md:mt-12 mx-auto"
-            />
-          </div>
+            <div className="flex md:flex-row sm:flex-row flex-col md:mx-4 sm:mx-2 lg:my-0 md:my-10 sm:my-0">
+              <img
+                src="./images/gear.png"
+                alt="Services"
+                className="md:ml-0 m-auto"
+              />
+              <div className="ml-8 mr-10">
+                <h2 className="text-black text-left md:text-2xl text-2xl md:my-8 my-2">
+                  <strong>{t("index.section2.h2Product3")}</strong>
+                </h2>
+                <p className="text-left text-gray-6f">
+                  {t("index.section2.pProduct3")}
+                </p>
+              </div>
+              
+            </div>
+          </div>         
 
-          <div
-            className="flex-1 md:max-w-md md:mx-4 lg:my-0 my-10"
-            data-sal="slide-left"
-            data-sal-delay="300"
-            data-sal-easing="ease-out"
-          >
-            <img
-              src="./images/SERVICIOS.jpg"
-              alt="Services"
-              width={300}
-              className="md:ml-0 mt-0 mx-auto"
-            />
-            <h2 className="text-center text-2xl my-8 text-gray-4a md:text-3xl">
-              <strong>{t("index.section2.h2Product3")}</strong>
-            </h2>
-            <p className="text-center text-gray-222">
-              {t("index.section2.pProduct3")}
-            </p>
-          </div>
         </div>
-
-        {/* <Link
-          to="/contactus"
-          className="block text-white bg-orange-bohr border-orange-bohr rounded-full border-solid border-4 md:py-2 py-1 px-4 w-40 md:mt-12 mx-auto "
-          data-sal="fade"
-          data-sal-delay="300"
-          data-sal-easing="ease-out"
-        >
-          {t("index.section2.button")}
-        </Link> */}
       </section>
 
       {/* Section 3 */}
-      <section className="container mx-auto mb-20">
-        <Divider />
+      <section className="bg-violet-bohr-bis w-screen">
+        
+        <h3 className="text-white sm:text-center md:text-4xl sm:text-3xl text-2xl md:w-2/5 w-full md:mt-24 sm:mt-0 md:ml-44 ml-8 md:py-12 py-12">
+          <strong>{t("index.section5.h1")}</strong>
+        </h3>
 
-        <div className="flex md:flex-row flex-col md:p-8 p-2 md:justify-center">
-          <h2 className="lg:w-1/3 text-2xl md:text-6xl md:ml-0 mt-20 md:mr-0  mb-10 text-gray-4a md:text-left text-center">
+        <div className="flex md:flex-row sm:flex-row flex-col" >
+
+          {/* Paragraph left */}               
+          <div className="md:w-3/4 sm:w-3/4 md:ml-44 sm:ml-12 ml-4 sm:-mr-12 md:mt-0 sm:mt-0 mt-12 md:order-0 sm:order-0 order-1">
+           
+            <div className="flex flex-row" >
+              
+              <img
+                className="md:mt-10 mt-8 m-auto"
+                src="./images/Monitoring.svg"
+                alt="Monitoring"
+              />
+              
+              <div className="md:ml-8 sm:ml-4 ml-4 mt-8" >
+                <h2 className="text-white text-left md:text-2xl text-2xl ">
+                  <strong>{t("index.section5.h2img1")}</strong>
+                </h2>
+                <p className="text-left text-white text-opacity-60">
+                  {t("index.section5.pimg1")}
+                </p>
+              </div>
+              
+            </div>
+
+            <div className="flex flex-row" >
+
+              <img
+                className="m-auto"
+                src="./images/Analyse.svg"
+                alt="Analyse"
+              />
+              <div className="md:ml-8 sm:ml-4 ml-4 mt-8">
+                <h2 className="text-white text-left text-2xl md:text-2xl">
+                  <strong>{t("index.section5.h2img2")}</strong>
+                </h2>
+                <p className="text-left text-white text-opacity-60">
+                  {t("index.section5.pimg2")}
+                </p>
+              </div>
+              
+            </div>
+
+            <div className="flex flex-row mb-16" >
+
+              <img
+                className="m-auto"
+                src="./images/Portefeuille.svg"
+                alt="Portefeuille"
+              />
+              <div className="md:ml-8 sm:ml-4 ml-4 mt-8">
+                <h2 className="text-white text-left text-2xl md:text-2xl">
+                  <strong>{t("index.section5.h2img3")}</strong>
+                </h2>
+                <p className="text-left text-white text-opacity-60">
+                  {t("index.section5.pimg3")}
+                </p>
+              </div>
+              
+            </div>
+
+            <div className="md:ml-0 ml-12 md:mb-12 mb-20 ">
+              <Link
+                to="/our-services"
+                className="bg-orange-bohr text-white text-center border-orange-bohr rounded-full border-solid border-4 md:py-2 py-2 px-4 w-60"
+              >
+                {t("index.section2.button")}
+              </Link>
+            </div>     
+          </div>
+
+          {/* Image right */}               
+          <div className="md:-mt-36 mt-4 md:p-8 p-2 md:order-1 sm:order-1 order-0">
+            <img
+              className="md:float-none sm:float-right md:ml-24 ml-12 sm:-mr-12 sm:mb-12 md:px-14 px-10 md:w-full sm:w-full"
+              src="./images/dashboard.png"
+              alt="Digital innovation"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Section 4 */}
+      <section className="mx-auto">
+   
+        <div className="text-center md:justify-center">
+          <h3 className="md:text-4xl sm:text-3xl text-2xl  md:mt-24 sm:mt-24 my-12">
             <strong>{t("index.section3.h2")}</strong>
-          </h2>
-          <h3 className="lg:w-2/3 text-1xl md:text-justify md:ml-10 sm:ml-0 md:mt-20 md:mr-20 md:text-1xl text-center">
-            {t("index.section3.h3")}
           </h3>
         </div>
 
-        <div className="flex md:flex-row flex-col mt-6 md:p-8 p-2 md:justify-center">
-          <div
-            className="flex-1 md:max-w-md md:mx-4 lg:my-0 my-10"
-            data-sal="slide-right"
-            data-sal-delay="300"
-            data-sal-easing="ease-out"
-          >
+        <div className="flex md:flex-row sm:flex-row flex-col md:p-8 p-2 md:justify-center">
+          <div className="flex-1 md:max-w-md md:mx-4 lg:my-0 md:my-10 sm:my-10 my-4">
             <img
               className="md:px-14 px-10"
               src="./images/DIGITAL.jpg"
               alt="Digital innovation"
             />
-            <h2 className="text-center text-2xl my-8 text-gray-4a md:text-3xl">
+            <h2 className="text-center my-8 md:text-2xl text-2xl">
               <strong>{t("index.section3.h2img1")}</strong>
             </h2>
-            <p className="text-center text-gray-222 md:mb-20">
+            <p className="text-center text-gray-6f md:mb-20 md:ml-16 md:mr-16">
               {t("index.section3.pimg1")}
             </p>
           </div>
 
-          <div
-            className="flex-1 md:max-w-md md:mx-4 lg:my-0 my-10"
-            data-sal="slide-left"
-            data-sal-delay="300"
-            data-sal-easing="ease-out"
-          >
+          <div className="flex-1 md:max-w-md md:mx-4 lg:my-0 md:my-10 sm:my-10 my-4">
             <img
               className="md:px-14 px-10"
               src="./images/MONEY.jpg"
               alt="Fair rates"
             />
-            <h2 className="text-center text-2xl my-8 text-gray-4a md:text-3xl">
+            <h2 className="text-center my-8 md:text-2xl text-2xl">
               <strong>{t("index.section3.h2img2")}</strong>
             </h2>
-            <p className="text-center text-gray-222">
+            <p className="text-center text-gray-6f md:ml-16 md:mr-16">
               {t("index.section3.pimg2")}
             </p>
           </div>
 
-          <div
-            className="flex-1 md:max-w-md md:mx-4 lg:my-0 my-10"
-            data-sal="slide-left"
-            data-sal-delay="300"
-            data-sal-easing="ease-out"
-          >
+          <div className="flex-1 md:max-w-md md:mx-4 lg:my-0 md:my-10 sm:my-10 my-4">
             <img
               className="md:px-14 px-10"
               src="./images/ATTENTION.jpg"
               alt="Personalized attention"
             />
-            <h2 className="text-center text-2xl my-8 text-gray-4a md:text-3xl">
+            <h2 className="text-center my-8 md:text-2xl text-2xl">
               <strong>{t("index.section3.h2img3")}</strong>
             </h2>
-            <p className="text-center text-gray-222 md:mb-20">
+            <p className="text-center text-gray-6f md:mb-20 mb-24 md:ml-16 md:mr-16">
               {t("index.section3.pimg3")}
             </p>
           </div>
         </div>
 
-        <Link
-          to="/our-services"
-          className="block text-white text-center bg-orange-bohr border-orange-bohr rounded-full border-solid border-4 md:py-2 py-1 px-4 w-40 md:mt-0 mx-auto"
-        >
-          {t("index.section3.button")}
-        </Link>
+      </section>
+
+      {/* Section 5 */}
+      <section className="mx-auto mb-20">
+        
+        <FooterImage />
+
+        <div className="flex md:flex-row flex-col md:p-8 p-2 md:justify-left sm:ml-12 sm:mt-12">
+        
+          <div>
+            <h3 className="md:text-4xl sm:text-4xl text-2xl">
+              <strong>{t("index.section4.h2")}</strong>
+            </h3>
+            
+            <div className="flex md:flex-row sm:flex-row mt-12 md:justify-left sm:justify-left items-center">
+                          
+              <img
+                className="md:w-44 sm:w-44 w-24 "
+                src="./images/logo_epex.png"
+                alt="Epex Spot"
+              />
+              <img
+                className="md:w-32 sm:w-32 w-16 md:ml-8 sm:ml-12 ml-2"
+                src="./images/logo_eex.png"
+                alt="EEX"
+              />
+              <img
+                className="md:w-32 sm:w-32 w-24 md:ml-8 sm:ml-12 ml-2"
+                src="./images/logo_enedis.png"
+                alt="Enedis"
+              />
+              <img
+                className="md:w-18 md:w-18 w-14 md:ml-8 sm:ml-12 ml-2"
+                src="./images/logo_rte.png"
+                alt="RTE"
+              />
+
+            </div>
+          </div>
+
+          <div className="md:ml-48 sm:ml-0 ml-0 md:mb-0 sm:mb-12 my-12 border"></div>   
+
+          <div className="md:ml-24 sm:ml-0 ml-0">
+            <h3 className="md:text-4xl sm:text-4xl text-2xl">
+              <strong>{t("index.section4.h3")}</strong>
+            </h3>
+
+            <div className="flex md:flex-row mt-12 md:justify-left items-center">
+            
+              <img
+                className="md:w-34 sm:w-34 w-24"
+                src="./images/logo_bpi.png"
+                alt="BPI"
+              />
+                     
+              <img
+                className="md:ml-8 sm:ml-8 ml-4 md:w-30 sm:w-30 w-24"
+                src="./images/logo_athome.png"
+                alt="ATHOME"
+              />
+
+            </div>
+
+          </div>    
+
+        </div>
 
         <CookieConsent
           enableDeclineButton
@@ -594,7 +748,7 @@ const IndexPage = () => {
         </CookieConsent>
       </section>
     </Layout>
-  )
-}
+  );
+};
 
-export default IndexPage
+export default IndexPage;
