@@ -30,13 +30,38 @@ export enum Colors {
   gray6f = "#6F729C",
 }
 
-interface IconProps{
-  name: string
-  color?: string,
-  className?:string
+interface IconProps {
+  name:
+    | "users"
+    | "manage"
+    | "arrow-left"
+    | "alert-circle"
+    | "close"
+    | "chat"
+    | "dashboard"
+    | "coin"
+    | "chart"
+    | "predict"
+    | "card"
+    | "list"
+    | "plus-circle"
+    | "edit"
+    | "arrow-up"
+    | "arrow-down"
+    | "delete"
+    | "export"
+    | "eye"
+    | "download"
+    | "info"
+    | "stats-up"
+    | "check"
+    | "arrow-down-sm"
+  color?: string
+  className?: string,
+  onClick?:any
 }
 
-export const Icon = ({ name = "", color = undefined, ...props }:IconProps) => {
+export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconProps) => {
   const Ico = function () {
     switch (name) {
       case "users":
