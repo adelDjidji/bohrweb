@@ -35,19 +35,23 @@ interface DropdownProps {
   onSelect: (selected: any[]) => void
   placeholder?: string
   width?: number
+  height?:number
   FooterComponent?: ReactNode | null
   type?: "checkbox" | "radio" | 'none'
   footerClickExitEvent?: boolean
+  className?:string
 }
 
 const SelectDropdown = ({
   items = defaultItems,
   onSelect,
   placeholder = "",
-  width = 230,
+  //width = 230,
+  height = 40,
   FooterComponent = null,
   type = "checkbox",
   footerClickExitEvent = true,
+  className= ''
 }: DropdownProps) => {
   const [slectedValues, setslectedValues] = useState<itemType[]>([])
   const [slectedValue, setslectedValue] = useState<string | null>(null)
@@ -134,8 +138,8 @@ const SelectDropdown = ({
       )}
     >
       <div
-        className="cursor-pointer rounded-lg px-4 py-3 flex justify-between items-center"
-        style={{ border: "2px solid #E5E3ED", height: 40, width }}
+        className={"cursor-pointer rounded-lg px-4 py-3 flex justify-between items-center "+className}
+        style={{ border: "2px solid #E5E3ED", height }}
         onClick={() => setIsOpen(!isOpen)}
       >
         {type === "checkbox" ? (

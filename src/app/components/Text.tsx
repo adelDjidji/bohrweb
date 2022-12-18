@@ -22,6 +22,15 @@ const Text = ({ type, children, className }:PropType) => {
         case '16-500': 
         classNam +=" text-base font-medium";
         break;
+        case '20-500': 
+        classNam +=" text-xl font-medium";
+        break;
+        case '20-600': 
+        classNam +=" text-xl font-semibold";
+        break;
+        case '32-600': 
+        classNam +=" text-xl font-semibold";
+        break;
     }
 
     return <span className={classNam}>{children}</span>
