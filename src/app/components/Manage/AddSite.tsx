@@ -364,7 +364,7 @@ const AddSite = (props) => {
               type='navigation'
               size='small'
               current={step}
-              onChange={()=>onStepChange}
+              onChange={onStepChange}
               className='site-navigation-steps'
               items={steps}
             />
@@ -388,13 +388,12 @@ const AddSite = (props) => {
                 >
                   Valider
                 </button>
-              :<button
-                  type='submit'
-                  className='inline-block bg-violet-bohr px-4 py-3 text-sm font-semibold leading-tight text-white rounded-lg shadow-md focus:shadow-lg focus:outline-none focus:ring-0 active:bg-violet-bohr active:shadow-lg'
+              :<div
+                  className='cursor-pointer inline-block bg-violet-bohr px-4 py-3 text-sm font-semibold leading-tight text-white rounded-lg shadow-md focus:shadow-lg focus:outline-none focus:ring-0 active:bg-violet-bohr active:shadow-lg'
                   onClick={()=>onStepChange(step+1)}
                 >
-                  Valider
-                </button>
+                  Suivant
+                </div>
               }
             </div>
           </form>
