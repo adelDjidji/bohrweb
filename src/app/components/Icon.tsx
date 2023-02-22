@@ -1,4 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
+import { Tooltip, Modal } from 'antd';
+import Text from './Text'
+
 
 export enum IconNames {
   users = "users",
@@ -24,6 +27,9 @@ export enum IconNames {
   info = "info",
   statsUp = "stats-up",
   check = "check",
+  success = "success-icon",
+  calendar = "calendar",
+  statsDown = "stats-down",
 }
 export enum Colors {
   primary = "#5819f1",
@@ -56,13 +62,21 @@ interface IconProps {
     | "stats-up"
     | "check"
     | "arrow-down-sm"
+    | "success-icon"
+    | "calendar"
+    | "stats-down"
   color?: string
   className?: string,
-  onClick?:any
+  onClick?:any,
+  style?:any,
+  title?:string,
+  popupInfos?:string,
+  disabled?:boolean,
+  titleTrigger?:string
 }
 
-export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconProps) => {
-  const Ico = function () {
+export const Icon = ({ name , color = undefined, onClick, style, title='',popupInfos='',disabled=false,titleTrigger ='hover', ...props }: IconProps) => {
+  const Ico = function ({color=undefined}:{color:string|undefined}) {
     switch (name) {
       case "users":
         return (
@@ -101,8 +115,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             fill="none"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M6 6V5C6 3.34315 7.34315 2 9 2H11C12.6569 2 14 3.34315 14 5V6H16C17.1046 6 18 6.89543 18 8V11.5708C15.5096 12.4947 12.8149 12.9999 10 12.9999C7.18514 12.9999 4.49037 12.4947 2 11.5707V8C2 6.89543 2.89543 6 4 6H6ZM8 5C8 4.44772 8.44772 4 9 4H11C11.5523 4 12 4.44772 12 5V6H8V5ZM9 10C9 9.44772 9.44772 9 10 9H10.01C10.5623 9 11.01 9.44772 11.01 10C11.01 10.5523 10.5623 11 10.01 11H10C9.44772 11 9 10.5523 9 10Z"
               fill={!!color ? color : "#1E293B"}
             />
@@ -122,8 +136,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M0.292893 0.292893C0.683417 -0.097631 1.31658 -0.097631 1.70711 0.292893L5 3.58579L8.29289 0.292893C8.68342 -0.0976311 9.31658 -0.0976311 9.70711 0.292893C10.0976 0.683417 10.0976 1.31658 9.70711 1.70711L5.70711 5.70711C5.31658 6.09763 4.68342 6.09763 4.29289 5.70711L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683418 0.292893 0.292893Z"
               fill="#1E293B"
             />
@@ -139,8 +153,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM9 12C9 12.5523 8.55228 13 8 13C7.44771 13 7 12.5523 7 12C7 11.4477 7.44771 11 8 11C8.55228 11 9 11.4477 9 12ZM8 3C7.44771 3 7 3.44772 7 4V8C7 8.55228 7.44771 9 8 9C8.55228 9 9 8.55228 9 8V4C9 3.44772 8.55228 3 8 3Z"
               fill={!!color ? color : "#5819F1"}
             />
@@ -156,8 +170,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M0.868654 0.86902C1.49349 0.244181 2.50656 0.244181 3.1314 0.86902L10 7.73765L16.8687 0.86902C17.4935 0.244181 18.5066 0.244181 19.1314 0.86902C19.7562 1.49386 19.7562 2.50692 19.1314 3.13176L12.2628 10.0004L19.1314 16.869C19.7562 17.4939 19.7562 18.5069 19.1314 19.1318C18.5066 19.7566 17.4935 19.7566 16.8687 19.1318L10 12.2631L3.1314 19.1318C2.50656 19.7566 1.49349 19.7566 0.868654 19.1318C0.243815 18.5069 0.243815 17.4939 0.868654 16.869L7.73728 10.0004L0.868654 3.13176C0.243815 2.50692 0.243815 1.49386 0.868654 0.86902Z"
               fill="#111827"
             />
@@ -173,8 +187,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M16.5 10V2C16.5 0.895431 15.6046 0 14.5 0H2.5C1.39543 0 0.5 0.895431 0.5 2V10C0.5 11.1046 1.39543 12 2.5 12H5.5L8.5 15L11.5 12H14.5C15.6046 12 16.5 11.1046 16.5 10ZM3.5 4C3.5 3.44772 3.94772 3 4.5 3H12.5C13.0523 3 13.5 3.44772 13.5 4C13.5 4.55228 13.0523 5 12.5 5H4.5C3.94772 5 3.5 4.55228 3.5 4ZM4.5 7C3.94772 7 3.5 7.44772 3.5 8C3.5 8.55228 3.94772 9 4.5 9H7.5C8.05229 9 8.5 8.55228 8.5 8C8.5 7.44772 8.05229 7 7.5 7H4.5Z"
               fill="white"
             />
@@ -213,8 +227,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM6.73617 4.97896C7.20793 4.1927 7.69618 4 8 4C8.30383 4 8.79207 4.1927 9.26383 4.97896C9.54798 5.45254 10.1622 5.60611 10.6358 5.32196C11.1094 5.03781 11.263 4.42355 10.9788 3.94997C10.279 2.78361 9.23171 2 8 2C6.76829 2 5.721 2.78361 5.02119 3.94997C4.73632 4.42475 4.51422 4.94939 4.35097 5.5H4C3.44772 5.5 3 5.94772 3 6.5C3 7.05228 3.44772 7.5 4 7.5H4.01337C4.00443 7.66702 4 7.83388 4 8C4 8.16612 4.00443 8.33298 4.01337 8.5H4C3.44772 8.5 3 8.94772 3 9.5C3 10.0523 3.44772 10.5 4 10.5H4.35097C4.51422 11.0506 4.73632 11.5753 5.02119 12.05C5.721 13.2164 6.76829 14 8 14C9.23171 14 10.279 13.2164 10.9788 12.05C11.263 11.5764 11.1094 10.9622 10.6358 10.678C10.1622 10.3939 9.54798 10.5475 9.26383 11.021C8.79207 11.8073 8.30383 12 8 12C7.69618 12 7.20793 11.8073 6.73617 11.021C6.63927 10.8595 6.5511 10.6851 6.47216 10.5H8C8.55228 10.5 9 10.0523 9 9.5C9 8.94772 8.55228 8.5 8 8.5H6.01695C6.00571 8.33502 6 8.16809 6 8C6 7.83191 6.00571 7.66498 6.01695 7.5H8C8.55228 7.5 9 7.05228 9 6.5C9 5.94772 8.55228 5.5 8 5.5H6.47216C6.5511 5.31488 6.63927 5.14047 6.73617 4.97896Z"
               fill="#1E293B"
             />
@@ -230,8 +244,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M2 0C0.895431 0 0 0.89543 0 2V12C0 13.1046 0.89543 14 2 14H12C13.1046 14 14 13.1046 14 12V2C14 0.895431 13.1046 0 12 0H2ZM11 4C11 3.44772 10.5523 3 10 3C9.44772 3 9 3.44772 9 4V10C9 10.5523 9.44772 11 10 11C10.5523 11 11 10.5523 11 10V4ZM8 6C8 5.44772 7.55228 5 7 5C6.44772 5 6 5.44772 6 6V10C6 10.5523 6.44772 11 7 11C7.55228 11 8 10.5523 8 10V6ZM5 9C5 8.44772 4.55228 8 4 8C3.44772 8 3 8.44772 3 9V10C3 10.5523 3.44772 11 4 11C4.55228 11 5 10.5523 5 10V9Z"
               fill="#1E293B"
             />
@@ -247,8 +261,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M1 0C0.447715 0 0 0.447715 0 1C0 1.55228 0.447715 2 1 2V10C1 11.1046 1.89543 12 3 12H5.58579L4.29289 13.2929C3.90237 13.6834 3.90237 14.3166 4.29289 14.7071C4.68342 15.0976 5.31658 15.0976 5.70711 14.7071L8 12.4142L10.2929 14.7071C10.6834 15.0976 11.3166 15.0976 11.7071 14.7071C12.0976 14.3166 12.0976 13.6834 11.7071 13.2929L10.4142 12H13C14.1046 12 15 11.1046 15 10V2C15.5523 2 16 1.55228 16 1C16 0.447715 15.5523 0 15 0H1ZM12.7071 4.70711C13.0976 4.31658 13.0976 3.68342 12.7071 3.29289C12.3166 2.90237 11.6834 2.90237 11.2929 3.29289L8 6.58579L6.70711 5.29289C6.31658 4.90237 5.68342 4.90237 5.29289 5.29289L3.29289 7.29289C2.90237 7.68342 2.90237 8.31658 3.29289 8.70711C3.68342 9.09763 4.31658 9.09763 4.70711 8.70711L6 7.41421L7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L12.7071 4.70711Z"
               fill="#1E293B"
             />
@@ -268,8 +282,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
               fill="#1E293B"
             />
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M16 5H0V10C0 11.1046 0.895431 12 2 12H14C15.1046 12 16 11.1046 16 10V5ZM2 9C2 8.44771 2.44772 8 3 8H4C4.55228 8 5 8.44771 5 9C5 9.55229 4.55228 10 4 10H3C2.44772 10 2 9.55229 2 9ZM7 8C6.44772 8 6 8.44771 6 9C6 9.55229 6.44772 10 7 10H8C8.55228 10 9 9.55229 9 9C9 8.44771 8.55228 8 8 8H7Z"
               fill="#1E293B"
             />
@@ -289,8 +303,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
               fill="#1E293B"
             />
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M0 3C0 1.89543 0.895431 1 2 1C2 2.65685 3.34315 4 5 4H7C8.65685 4 10 2.65685 10 1C11.1046 1 12 1.89543 12 3V14C12 15.1046 11.1046 16 10 16H2C0.895431 16 0 15.1046 0 14V3ZM3 7C2.44772 7 2 7.44772 2 8C2 8.55229 2.44772 9 3 9H3.01C3.56228 9 4.01 8.55229 4.01 8C4.01 7.44772 3.56228 7 3.01 7H3ZM6 7C5.44772 7 5 7.44772 5 8C5 8.55229 5.44772 9 6 9H9C9.55228 9 10 8.55229 10 8C10 7.44772 9.55228 7 9 7H6ZM3 11C2.44772 11 2 11.4477 2 12C2 12.5523 2.44772 13 3 13H3.01C3.56228 13 4.01 12.5523 4.01 12C4.01 11.4477 3.56228 11 3.01 11H3ZM6 11C5.44772 11 5 11.4477 5 12C5 12.5523 5.44772 13 6 13H9C9.55228 13 10 12.5523 10 12C10 11.4477 9.55228 11 9 11H6Z"
               fill="#1E293B"
             />
@@ -306,8 +320,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM9 5C9 4.44772 8.55228 4 8 4C7.44772 4 7 4.44772 7 5V7H5C4.44772 7 4 7.44771 4 8C4 8.55228 4.44772 9 5 9H7V11C7 11.5523 7.44772 12 8 12C8.55228 12 9 11.5523 9 11V9H11C11.5523 9 12 8.55228 12 8C12 7.44772 11.5523 7 11 7H9V5Z"
               fill={!!color ? color : "white"}
             />
@@ -343,8 +357,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M11.6485 7.24892C11.1799 7.71755 10.4201 7.71755 9.95147 7.24892L6 3.29745L2.04853 7.24892C1.5799 7.71755 0.820101 7.71755 0.351472 7.24892C-0.117157 6.78029 -0.117157 6.02049 0.351472 5.55186L5.15147 0.751863C5.6201 0.283233 6.3799 0.283233 6.84853 0.751863L11.6485 5.55186C12.1172 6.02049 12.1172 6.78029 11.6485 7.24892Z"
               fill="#111827"
             />
@@ -360,8 +374,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M0.351471 0.751081C0.8201 0.282452 1.5799 0.282452 2.04853 0.751081L6 4.70255L9.95147 0.751081C10.4201 0.282452 11.1799 0.282452 11.6485 0.751081C12.1172 1.21971 12.1172 1.97951 11.6485 2.44814L6.84853 7.24814C6.3799 7.71677 5.6201 7.71677 5.15147 7.24814L0.35147 2.44814C-0.117159 1.97951 -0.117158 1.21971 0.351471 0.751081Z"
               fill="#111827"
             />
@@ -378,8 +392,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M6 0C5.62123 0 5.27497 0.214002 5.10557 0.552786L4.38197 2L1 2C0.447715 2 0 2.44772 0 3C0 3.55228 0.447716 4 1 4L1 14C1 15.1046 1.89543 16 3 16L11 16C12.1046 16 13 15.1046 13 14L13 4C13.5523 4 14 3.55228 14 3C14 2.44772 13.5523 2 13 2L9.61804 2L8.89443 0.552786C8.72504 0.214002 8.37877 0 8 0L6 0ZM4 6C4 5.44772 4.44772 5 5 5C5.55228 5 6 5.44772 6 6L6 12C6 12.5523 5.55228 13 5 13C4.44772 13 4 12.5523 4 12L4 6ZM9 5C8.44771 5 8 5.44772 8 6L8 12C8 12.5523 8.44771 13 9 13C9.55229 13 10 12.5523 10 12V6C10 5.44772 9.55229 5 9 5Z"
               fill="#5819F1"
             />
@@ -422,8 +436,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
               fill="#5819F1"
             />
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M0.457764 7.00004C1.73202 2.94291 5.52232 0 9.99997 0C14.4776 0 18.2679 2.94288 19.5422 6.99996C18.2679 11.0571 14.4776 14 9.99995 14C5.52232 14 1.73204 11.0571 0.457764 7.00004ZM14 7C14 9.20914 12.2091 11 10 11C7.79087 11 6.00001 9.20914 6.00001 7C6.00001 4.79086 7.79087 3 10 3C12.2091 3 14 4.79086 14 7Z"
               fill="#5819F1"
             />
@@ -440,8 +454,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M0 15C-2.41411e-08 14.4477 0.447715 14 1 14H13C13.5523 14 14 14.4477 14 15C14 15.5523 13.5523 16 13 16H1C0.447715 16 2.41411e-08 15.5523 0 15ZM3.29289 7.29289C3.68342 6.90237 4.31658 6.90237 4.70711 7.29289L6 8.58579L6 1C6 0.447716 6.44771 2.41411e-08 7 0C7.55228 -2.41411e-08 8 0.447715 8 1L8 8.58579L9.29289 7.29289C9.68342 6.90237 10.3166 6.90237 10.7071 7.29289C11.0976 7.68342 11.0976 8.31658 10.7071 8.70711L7.70711 11.7071C7.51957 11.8946 7.26522 12 7 12C6.73478 12 6.48043 11.8946 6.29289 11.7071L3.29289 8.70711C2.90237 8.31658 2.90237 7.68342 3.29289 7.29289Z"
               fill="#5819F1"
             />
@@ -458,8 +472,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM9 4C9 4.55228 8.55228 5 8 5C7.44772 5 7 4.55228 7 4C7 3.44772 7.44772 3 8 3C8.55228 3 9 3.44772 9 4ZM7 7C6.44772 7 6 7.44772 6 8C6 8.55229 6.44772 9 7 9V12C7 12.5523 7.44772 13 8 13H9C9.55228 13 10 12.5523 10 12C10 11.4477 9.55228 11 9 11V8C9 7.44772 8.55228 7 8 7H7Z"
               fill="#1E293B"
             />
@@ -478,13 +492,16 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             <path
               d="M9.83333 1.8335H16.5M16.5 1.8335V8.50016M16.5 1.8335L9.83333 8.50016L6.5 5.16683L1.5 10.1668"
               stroke="#19753C"
-              stroke-width="2"
+              strokeWidth="2"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
           </svg>
         )
-
+      case 'stats-down':
+        return <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.83333 10.1667H16.5M16.5 10.1667V3.50004M16.5 10.1667L9.83333 3.50004L6.5 6.83337L1.5 1.83337" stroke="#991B1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>        
       case "check":
         return (
           <svg
@@ -495,8 +512,8 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM11.7071 6.70711C12.0976 6.31658 12.0976 5.68342 11.7071 5.29289C11.3166 4.90237 10.6834 4.90237 10.2929 5.29289L7 8.58579L5.70711 7.29289C5.31658 6.90237 4.68342 6.90237 4.29289 7.29289C3.90237 7.68342 3.90237 8.31658 4.29289 8.70711L6.29289 10.7071C6.68342 11.0976 7.31658 11.0976 7.70711 10.7071L11.7071 6.70711Z"
               fill="white"
             />
@@ -515,15 +532,43 @@ export const Icon = ({ name = "", color = undefined, onClick, ...props }: IconPr
             <path
               d="M10.6667 1L6 5.66667L1.33333 1"
               stroke="#6F729C"
-              stroke-width="1.66667"
+              strokeWidth="1.66667"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
           </svg>
         )
+      case 'success-icon':
+        return <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 10L9 12L13 8M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="#6BD78B" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>  
+      case 'calendar':
+        return <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.99998 2.61628H3.41664V2.19961V1.39961C3.41664 1.1879 3.58827 1.01628 3.79998 1.01628C4.01168 1.01628 4.18331 1.1879 4.18331 1.39961V2.19961V2.61628H4.59998H9.39998H9.81664V2.19961V1.39961C9.81664 1.1879 9.98827 1.01628 10.2 1.01628C10.4117 1.01628 10.5833 1.1879 10.5833 1.39961V2.19961V2.61628H11H11.8C12.4535 2.61628 12.9833 3.14607 12.9833 3.79961V11.7996C12.9833 12.4531 12.4535 12.9829 11.8 12.9829H2.19998C1.54644 12.9829 1.01664 12.4531 1.01664 11.7996V3.79961C1.01664 3.14607 1.54644 2.61628 2.19998 2.61628H2.99998ZM3.79998 4.18294C3.12803 4.18294 2.58331 4.72766 2.58331 5.39961C2.58331 6.07156 3.12803 6.61628 3.79998 6.61628H10.2C10.8719 6.61628 11.4166 6.07156 11.4166 5.39961C11.4166 4.72766 10.8719 4.18294 10.2 4.18294H3.79998Z" fill="#6F729C" stroke="#6F729C" strokeWidth="0.833333"/>
+        </svg>
+              
       default:
         return null
     }
   }
-  return <span {...props}>{<Ico />}</span>
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClick=()=>{
+    if(disabled) return
+    // if(!!popupInfos){
+    //   setIsModalOpen(true);
+    // }
+    onClick && onClick()
+  }
+  const color_ = disabled ? '#C5C7D7' : color
+  return <Tooltip title={title} placement='right' trigger={titleTrigger}>
+    {/* {
+      !disabled && <Modal centered footer={null} title="" open={isModalOpen} onCancel={()=>setIsModalOpen(false)}>
+      <Text type='16-500'>{popupInfos}</Text>
+    </Modal>
+    } */}
+    <span style={style} onClick={handleClick} {...props}>{<Ico color={color_} />}</span>
+  </Tooltip>
+   
 }

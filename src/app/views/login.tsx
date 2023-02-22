@@ -1,13 +1,22 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Link } from "gatsby"
 import { ErrorMessage, isMobileNumber } from "../../helpers/FormHelpers"
 import Seo from "../../components/seo"
 import VisibilityIcon from "@material-ui/icons/Visibility"
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff"
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux"
+import formValidation, { fieldsValidation } from "../utils/formValidation"
+import ApiService from "../services/ApiService"
+import { errMessage, successMessage } from "../redux/actions"
+import { CircularProgress } from "@material-ui/core"
+import { setCurrentUser } from "../redux/actions/auth"
+import { navigate } from "@reach/router"
+import { persistor } from ".."
+// import { redirect } from "react-router-dom";
 
 type FormValues = {
-  email: string
+  username: string
   password: string
 }
 
@@ -17,12 +26,62 @@ function login() {
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues,
   } = useForm<FormValues>({ mode: "onChange" })
 
   const [show, setShow] = useState(false) // show password
+  const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(false)
+  const {currentUser} = useSelector((state: RootStateOrAny) => state.auth)
+
+  useEffect(() => {
+    // if(!!currentUser) navigate('/app/') 
+  }, [currentUser])
+  
+
+  const handleValidation = () => {
+    const username = getValues("username")
+    const password = getValues("password")
+    return (
+      username.length > 0 &&
+      !formValidation("email", username, fieldsValidation) &&
+      password.length >= 6
+    )
+  }
+  const handleKeyPress = (e: any) => {
+    if (/enter/gi.test(e.key) && handleValidation()) {
+      onSubmit(getValues())
+    }
+  }
+
+  const handlUserLogin = (res:any)=>{
+    localStorage.setItem("token", res.data.token)
+    localStorage.setItem("user", JSON.stringify(res.data.userInfo))
+    dispatch(successMessage("Vous etes a present connecté"))
+    dispatch(setCurrentUser(res.data.userInfo))
+    persistor.flush()
+    setIsLoading(false)
+    if(res.data.userInfo.role==='superadmin') navigate("/app/users")
+    else navigate("/app/")
+  }
 
   const onSubmit = (data: any) => {
-    console.log(data)
+    const { username, password } = data
+    setIsLoading(true)
+    ApiService.Login({ username, password })
+      .then(res => {
+        if (res.data.token !== undefined) {
+          handlUserLogin(res)
+        } else {
+          dispatch(errMessage(res.data.info.message))
+          setIsLoading(false)
+        }
+      })
+      .catch(err => {
+        console.log("error : ", err)
+        dispatch(errMessage(err.response.data.message))
+        setIsLoading(false)
+      })
   }
   return (
     <div>
@@ -55,13 +114,13 @@ function login() {
                     Email
                   </label>
                   <input
-                    {...register("email", { required: "Email is required" })}
+                    {...register("username", { required: "Email is required" })}
                     type="email"
                     placeholder="adresse@exemple.com"
-                    className=" border-2 border-gray-200 text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+                    className=" border-2 border-gray-200 hover:border-violet-bohr  text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
                   />
-                  {errors.email && (
-                    <ErrorMessage message={errors.email.message} />
+                  {errors.username && (
+                    <ErrorMessage message={errors.username.message} />
                   )}
                 </div>
                 <div>
@@ -74,7 +133,7 @@ function login() {
                         required: "Password is required",
                       })}
                       type={show ? "text" : "password"}
-                      className="rounded-none rounded-l-lg border-r-0 border-2 text-dark-grey block flex-1 min-w-0 w-60 text-sm border-gray-200 p-2.5  dark:bg-gray-700  focus:outline-none"
+                      className="rounded-none rounded-l-lg border-r-0 border-2 text-dark-grey block flex-1 min-w-0 w-60 text-sm border-gray-200 hover:border-violet-bohr p-2.5  dark:bg-gray-700  focus:outline-none"
                     />
                     <span
                       className="inline-flex items-center px-1 text-sm text-dark-grey bg-transparent border-2 border-l-0 border-gray-200 rounded-r-lg appearance-none w-15 border-l-none focus:outline-none"
@@ -95,12 +154,16 @@ function login() {
                   </label>
                 </div>
                 <div className="flex mt-8 space-x-4">
-                  <button
-                    type="submit"
-                    className="bg-violet-bohr inline-block px-4 py-3 text-sm font-medium leading-tight text-white rounded-lg shadow-md focus:shadow-lg focus:outline-none"
-                  >
-                    Me connecter
-                  </button>
+                  {isLoading ? (
+                    <CircularProgress color="secondary" />
+                  ) : (
+                    <button
+                      type="submit"
+                      className="bg-violet-bohr inline-block px-4 py-3 text-sm font-medium leading-tight text-white rounded-lg shadow-md focus:shadow-lg focus:outline-none"
+                    >
+                      Me connecter
+                    </button>
+                  )}
                 </div>
               </div>
             </form>

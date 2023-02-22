@@ -1,7 +1,7 @@
 import Snackbar from "@material-ui/core/Snackbar"
 import MuiAlert from "@material-ui/lab/Alert"
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux"
-import { closeMessage } from "../actions"
+import { closeMessage } from "../redux/actions"
 
 export default function AlertMessage() {
   const message = useSelector((state: RootStateOrAny) => state.message)

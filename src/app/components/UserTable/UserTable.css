@@ -60,15 +60,15 @@
 
 
 /* antd checkbox style */
-.ant-checkbox-group .ant-checkbox-wrapper{
+.ant-checkbox-group .ant-checkbox-wrapper, .tous.ant-checkbox-wrapper{
   padding: 12px !important;
   margin-inline-start: 0px!important;
 }
-.ant-checkbox-group .ant-checkbox-wrapper:hover{
+.ant-checkbox-group .ant-checkbox-wrapper:hover, .tous.ant-checkbox-wrapper:hover{
   background-color: #5918f0;
     color: white;
 }
-.ant-checkbox-group .ant-checkbox-wrapper .ant-checkbox+span{
+.ant-checkbox-group .ant-checkbox-wrapper .ant-checkbox+span, .tous.ant-checkbox-wrapper .ant-checkbox+span{
   padding-inline-start: 14px !important;
   font-size: 16px;
 }

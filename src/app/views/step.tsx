@@ -33,7 +33,7 @@ function PageOne() {
           <button type="submit" style={{ backgroundColor: "#5819F1" }} className="px-4 py-3 text-xs font-medium leading-tight text-white rounded-lg shadow-md focus:shadow-lg focus:outline-none">
           Démarrer
           </button>
-      </div>
+        </div>
     </>
   );
 }

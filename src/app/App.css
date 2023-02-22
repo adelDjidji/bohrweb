@@ -32,11 +32,12 @@
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }
 }
+
+
 
 /***********************/
 /***MODAL CUSTOM CSS****/
@@ -46,7 +47,7 @@
 }
 
 .modal-fullscreen .ant-modal-content {
-  height: 100vh !important;
+  min-height: 100vh !important;
 }
 
 /***********************/
@@ -89,7 +90,7 @@
 .ant-steps-item-title {
   display: flex !important;
   flex-direction: column-reverse !important;
-  font-weight: bold !important;
+  font-weight: 500 !important;
 }
 
 .ant-steps-item-subtitle {
@@ -103,7 +104,6 @@
   margin-inline-start: 0px !important;
   color: black !important;
   font-size: 16px;
-  font-weight: 500;
 }
 
 .ant-steps-item-active .ant-steps-item-subtitle {
@@ -112,6 +112,7 @@
 
 .ant-steps-item-active .ant-steps-item-title {
   color: #5819F1 !important;
+  font-weight: 600 !important;  
 }
 
 .ant-steps-item-icon {
@@ -125,4 +126,16 @@
 .leaflet-container {
   width: 100% !important;
   height: 100% !important;
+}
+
+
+
+
+
+text.recharts-text.recharts-cartesian-axis-tick-value {
+  font-size: 12px;
+}
+
+li.recharts-legend-item {
+  line-height: 35px;
 }

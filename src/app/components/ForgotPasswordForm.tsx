@@ -14,7 +14,7 @@ import {
 
 import { Send, Mail, AccountCircleOutlined } from "@material-ui/icons"
 import { navigate, RouteComponentProps } from "@reach/router"
-import { errMessage, successMessage } from "../actions"
+import { errMessage, successMessage } from "../redux/actions"
 import ApiService from "../services/ApiService"
 import { useDispatch } from "react-redux"
 

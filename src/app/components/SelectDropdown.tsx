@@ -1,78 +1,103 @@
-import React, { ReactNode, useState } from "react"
+import React, { ReactNode, useEffect, useState } from "react"
 import { DownOutlined, SmileOutlined } from "@ant-design/icons"
 import { Dropdown, Space, Checkbox, Divider, Button, Radio } from "antd"
 import { Icon } from "./Icon"
 import PropTypes from "prop-types"
 import { CheckboxValueType } from "antd/es/checkbox/Group"
-
-type itemType = {
-  key: string
-  value: string
-}
-type onChangeFun = (val: CheckboxValueType[]) => void
-
-const defaultItems: itemType[] = [
-  {
-    key: "1",
-    value: "test1",
-  },
-  {
-    key: "2",
-    value: "test2",
-  },
-  {
-    key: "3",
-    value: "test3",
-  },
-  {
-    key: "4",
-    value: "test4",
-  },
-]
+import Text from "./Text"
 
 interface DropdownProps {
-  items: { key: string; value: string }[]
-  onSelect: (selected: any[]) => void
+  items: { key: string; value: string }[] | any
+  onSelect?: (selected: any[]|any) => void
   placeholder?: string
   width?: number
-  height?:number
+  fullWidth?: boolean
   FooterComponent?: ReactNode | null
-  type?: "checkbox" | "radio" | 'none'
+  type?: "checkbox" | "radio" | "none"
   footerClickExitEvent?: boolean
-  className?:string
+  defaultValue?: any
+  defaultValues?: any
+  keyAttribute?: string
+  valueAttribute?: string
+  withSlectAll?: boolean
 }
 
 const SelectDropdown = ({
-  items = defaultItems,
+  items = [],
   onSelect,
   placeholder = "",
-  //width = 230,
-  height = 40,
+  width = 230,
+  fullWidth = false,
   FooterComponent = null,
   type = "checkbox",
   footerClickExitEvent = true,
-  className= ''
+  defaultValue = null,
+  defaultValues = [],
+  keyAttribute = "key",
+  valueAttribute = "value",
+  withSlectAll = false,
 }: DropdownProps) => {
-  const [slectedValues, setslectedValues] = useState<itemType[]>([])
-  const [slectedValue, setslectedValue] = useState<string | null>(null)
+  type itemType = {
+    key: string
+    value: string
+  }
+  type onChangeFun = (val: CheckboxValueType[]) => void
+
+  const [slectedValues, setslectedValues] = useState<itemType[] | any>(
+    defaultValues
+  )
+  const [slectedValue, setslectedValue] = useState<any>(defaultValue)
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const onChange: onChangeFun = checkedValues => {
-    let selected: itemType[] = items.filter((it: itemType) =>
-      checkedValues.includes(it.key)
+    let selected: itemType[] | any = items.filter((it: itemType | any) =>
+      checkedValues.includes(it[keyAttribute])
     )
     setslectedValues(selected)
     onSelect && onSelect(selected)
-    console.log(onSelect)
   }
   const onChangeRadio = (e: any) => {
-    let val = e.target.value
-    console.log(val)
+    let id = e.target.value
+    const val = items.filter(i => i[keyAttribute] == id)[0]
     setslectedValue(val)
     onSelect && onSelect(val)
     setIsOpen(false)
   }
 
+  useEffect(() => {
+    if (!!defaultValue) {
+      //check types if array of object or array of ids
+      if (typeof defaultValue === "string") {
+        setslectedValue(items.find(o => o[keyAttribute] == defaultValue))
+      } else {
+        setslectedValue(defaultValue)
+      }
+    }
+    if (!!defaultValues.length) {
+      if (typeof defaultValues[0] === "string") {
+        setslectedValues(
+          defaultValues.map((id: string) =>
+            items.find(o => o[keyAttribute] == id)
+          )
+        )
+      } else {
+        setslectedValues(defaultValues)
+      }
+    }
+  }, [defaultValue, defaultValues])
+
+  const [allSelected, setallSelected] = useState(false)
+  const handleSelectAll = e => {
+    let selected = []
+    setallSelected(e.target.checked)
+    if (e.target.checked) {
+      selected = items
+    } else {
+      selected = []
+    }
+    setslectedValues(selected)
+    onSelect && onSelect(selected)
+  }
   return (
     <Dropdown
       open={isOpen}
@@ -81,17 +106,27 @@ const SelectDropdown = ({
       dropdownRender={menu => (
         <>
           {type === "checkbox" && (
-            <Checkbox.Group
-              onChange={onChange}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              {items.map(item => (
-                <Checkbox value={item.key}>{item.value}</Checkbox>
-              ))}
-            </Checkbox.Group>
+            <>
+              <Checkbox.Group
+                onChange={onChange}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+                defaultValue={slectedValues.map(i => i[keyAttribute])}
+              >
+                {items.map(item => (
+                  <Checkbox disabled={allSelected} value={item[keyAttribute]}>
+                    {item[valueAttribute]}
+                  </Checkbox>
+                ))}
+              </Checkbox.Group>
+              {withSlectAll && (
+                <Checkbox className="tous" onChange={handleSelectAll}>
+                  Tous
+                </Checkbox>
+              )}
+            </>
           )}
           {type === "radio" && (
             <Radio.Group
@@ -100,16 +135,16 @@ const SelectDropdown = ({
                 flexDirection: "column",
               }}
               onChange={onChangeRadio}
-              value={slectedValue}
+              value={slectedValue ? slectedValue[keyAttribute] : ""}
             >
               {items.map(item => (
-                <Radio value={item.key}>{item.value}</Radio>
+                <Radio value={item[keyAttribute]}>{item[valueAttribute]}</Radio>
               ))}
             </Radio.Group>
           )}
           {type === "none" && (
             <Radio.Group
-            className="none"
+              className="none"
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -118,7 +153,7 @@ const SelectDropdown = ({
               value={slectedValue}
             >
               {items.map(item => (
-                <Radio value={item.key}>{item.value}</Radio>
+                <Radio value={item[keyAttribute]}>{item[valueAttribute]}</Radio>
               ))}
             </Radio.Group>
           )}
@@ -138,8 +173,8 @@ const SelectDropdown = ({
       )}
     >
       <div
-        className={"cursor-pointer rounded-lg px-4 py-3 flex justify-between items-center "+className}
-        style={{ border: "2px solid #E5E3ED", height }}
+        className="cursor-pointer bg-white rounded-lg px-4 py-3 flex justify-between items-center border-2 border-gray-200 h-10 hover:border-violet-bohr"
+        style={!fullWidth ? { width } : {}}
         onClick={() => setIsOpen(!isOpen)}
       >
         {type === "checkbox" ? (
@@ -155,7 +190,7 @@ const SelectDropdown = ({
                   whiteSpace: "nowrap",
                 }}
               >
-                {slectedValues.map(i => " " + i.value).toString()}
+                {slectedValues.map(i => " " + i[valueAttribute]).toString()}
               </span>
               <span
                 className="text-violet-bohr text-sm rounded text-center pt-1 w-6 h-6"
@@ -165,12 +200,16 @@ const SelectDropdown = ({
               </span>
             </span>
           ) : (
-            <span className="text-gray-6f">{placeholder} </span>
+            <Text type="14-600" className="text-gray-6f">
+              {placeholder}{" "}
+            </Text>
           )
         ) : slectedValue ? (
-          <span className="text-sm">{slectedValue} </span>
+          <span className="text-sm">{slectedValue[valueAttribute]} </span>
         ) : (
-          <span className="text-gray-6f">{placeholder} </span>
+          <Text type="14-600" className="text-gray-6f">
+            {placeholder}{" "}
+          </Text>
         )}
 
         <Icon name="arrow-down-sm" />

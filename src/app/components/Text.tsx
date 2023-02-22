@@ -1,10 +1,11 @@
 
 interface PropType{
-    type:'16-600' | '14-600' | '14-500' | '12-500' | '16-500';
+    type:'16-600' | '14-600' | '14-500' | '12-500' | '16-500' | '20-500' | '20-600'| '32-600';
     className?:string;
-    children:any
+    children:any,
+    style?:any
 }
-const Text = ({ type, children, className }:PropType) => {
+const Text = ({ type, children, className='', style }:PropType) => {
     var classNam = className;
     switch(type){
         case '16-600': 
@@ -29,11 +30,11 @@ const Text = ({ type, children, className }:PropType) => {
         classNam +=" text-xl font-semibold";
         break;
         case '32-600': 
-        classNam +=" text-xl font-semibold";
+        classNam +=" text-3xl font-semibold";
         break;
     }
 
-    return <span className={classNam}>{children}</span>
+    return <span className={classNam} style={style}>{children}</span>
 }
 
 export default Text;

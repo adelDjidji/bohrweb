@@ -1,12 +1,39 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Passcode from "../components/registerComponents/Passcode"
 import Password from "../components/registerComponents/Password"
 import PersonalInformation from "../components/registerComponents/PersonalInformation"
 import { Link } from "gatsby"
 import Seo from "../../components/seo"
+import ApiService from "../services/ApiService"
+import { errMessage } from "../redux/actions"
+import { useDispatch } from "react-redux"
 
-function register() {
+function register(props) {
   const [formStep, setFormStep] = useState(0)
+  const [tokenValide, setTokenValide] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [token, settoken] = useState(props.token)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    setLoading(true)
+    !!token &&
+      ApiService.ValidateToken(token)
+        .then(res => {
+          setLoading(false)
+          setTokenValide(!!res)
+        })
+        .catch(err => {
+          console.log("error : ", err)
+          setLoading(false)
+          dispatch(errMessage("Token non valide"))
+        })
+  }, [token])
+
+  const [values, setValues] = useState({})
+  const handleValues = (val: any) => {
+    setValues(v => ({ ...v, ...val }))
+  }
 
   return (
     <div>
@@ -33,11 +60,41 @@ function register() {
             <div className="text-3xl font-semibold text-gray-900 mt-30">
               Créez votre compte
             </div>
-            {formStep === 0 && (
-              <PersonalInformation setFormStep={setFormStep} />
+            {loading ? (
+              <div className="flex items-center justify-center h-screen">Loading ..</div>
+            ) : !token || !tokenValide ? (
+              <div className="flex items-center justify-center mt-4">
+                <div className="text-center">
+                  <h1 className="text-red-600 text-xl font-bold">
+                    Token invalide
+                  </h1>
+                  <p>Veuillez ressayer avec un nouveau token</p>
+                </div>
+              </div>
+            ) : (
+              <div>
+                {formStep === 0 && (
+                  <PersonalInformation
+                    token={token}
+                    phone={values?.phone}
+                    setValues={handleValues}
+                    setFormStep={setFormStep}
+                  />
+                )}
+                {formStep === 1 && (
+                  <Passcode
+                    token={token}
+                    phone={values?.phone}
+                    data={values}
+                    setFormStep={setFormStep}
+                    settoken={(t)=>settoken(t)}
+                  />
+                )}
+                {formStep === 2 && (
+                  <Password token={token} setFormStep={setFormStep} />
+                )}
+              </div>
             )}
-            {formStep === 1 && <Passcode setFormStep={setFormStep} />}
-            {formStep === 2 && <Password setFormStep={setFormStep} />}
           </div>
         </div>
         <div

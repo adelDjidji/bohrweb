@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect } from "react";
 import UserService from "./UserService";
 
 const HttpMethods = {
@@ -23,7 +24,9 @@ const getAxiosClient = () => _axios;
 
 const post = (url: string, body: any) => _axios.post(url, body);
 const put = (url: string, body: any) => _axios.put(url, body);
-const get = (url: string) => _axios.get(url);
+const get = (url: string, params?:any) => _axios.get(url, {params});
+const secureGet = (url: string, params?:any) => _axios.get(url, { headers: { Authorization: `Bearer ${UserService.getToken()}` }, params });
+const securePost = (url: string, body:any) => _axios.post(url, body, { headers: { Authorization: `Bearer ${UserService.getToken()}` } });
 const remove = (url: string) => _axios.delete(url);
 
 const HttpService = {
@@ -34,6 +37,8 @@ const HttpService = {
   get,
   remove,
   put,
+  secureGet,
+  securePost
 };
 
 export default HttpService;

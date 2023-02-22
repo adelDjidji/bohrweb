@@ -12,7 +12,7 @@ import {
   CircularProgress,
 } from "@material-ui/core"
 import { Send, Mail, Lock } from "@material-ui/icons"
-import { errMessage, successMessage } from "../actions"
+import { errMessage, successMessage } from "../redux/actions"
 import ApiService from "../services/ApiService"
 import { useDispatch } from "react-redux"
 import { navigate, Link } from "@reach/router"

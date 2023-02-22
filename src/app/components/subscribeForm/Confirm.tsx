@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
-import { successMessage, errMessage } from "../../actions";
+import { successMessage, errMessage } from "../../redux/actions";
 import ApiService from "../../services/ApiService";
 export const Confirm = ({
   handleNext,

@@ -17,7 +17,7 @@ import { navigate, RouteComponentProps, useLocation } from "@reach/router"
 
 import ApiService from "../services/ApiService"
 import { useDispatch } from "react-redux"
-import { errMessage, successMessage } from "../actions"
+import { errMessage, successMessage } from "../redux/actions"
 
 const useStyles = makeStyles(theme => ({
   card: {

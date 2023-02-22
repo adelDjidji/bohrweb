@@ -1,20 +1,25 @@
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 import { navigate } from "gatsby"
 import UserService from "../services/UserService"
 import { RouteComponentProps } from "@reach/router"
-import ApiService from "../services/ApiService"
+
 
 type Props = RouteComponentProps<{
   component: any
+  superadmin: boolean
 }>
 const PrivateRoute: FC<Props> = ({
   component: Component,
   location,
+  superadmin = false,
   ...rest
 }) => {
-    
+  
+  const canAccess = superadmin
+    ? UserService.isSuperadmin()
+    : UserService.isLoggedIn()
   if (
-    !UserService.isLoggedIn() &&
+    !canAccess && 
     location?.pathname !== `/app/login` &&
     location?.pathname !== `/app/register`
   ) {
