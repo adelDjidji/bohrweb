@@ -17,6 +17,15 @@ exports.onCreatePage = async ({ page, actions }) => {
     createPage(page)
   }
 }
+// exports.createPages = async ({ actions }) => {
+//   const { createPage } = actions
+
+//   createPage({
+//     path: '/404',
+//     component: require.resolve('/pages/404.tsx'),
+//     context: {}
+//   })
+// }
 
 exports.onCreateBabelConfig = ({ actions }) => {
   actions.setBabelPlugin({

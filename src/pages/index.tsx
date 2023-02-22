@@ -79,20 +79,22 @@ const IndexPage = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      const api_url = "http://localhost:8080"
+      const api_url = process.env.GATSBY_API_URL
       "https://0c87-196-179-246-130.eu.ngrok.io"; //"localhost:8088"
+      var start_date = new Date(new Date().getFullYear(), 0, 1);
+      var end_date = new Date()
 
       const Url_contract_comparison =
         api_url +
-        "/statistic/contract-comparison?spotMarketCountry=france&spotMarketProvider=entsoe&spotMarketStartTime=2022-01-01&spotMarketEndTime=2022-05-01&contractStartTime=2022-01-01&contractEndTime=2022-05-01";
+        "statistic/contract-comparison?spotMarketCountry=france&spotMarketProvider=entsoe&spotMarketStartTime=" + start_date.toISOString().split('T')[0] + "&spotMarketEndTime=" + end_date.toISOString().split('T')[0] + "&contractStartTime="+start_date.toISOString().split('T')[0]+"&contractEndTime=" + end_date.toISOString().split('T')[0];
       const Url_graphique =
         api_url +
-        "/statistic/graphique-dayahead?spotMarketPriceCountry=france&spotMarketPriceProvider=entsoe&spotMarketPriceStartTime=2022-01-01&spotMarketPriceEndTime=2022-05-01";
+        "statistic/graphique-dayahead?spotMarketPriceCountry=france&spotMarketPriceProvider=entsoe&spotMarketPriceStartTime="+start_date.toISOString().split('T')[0]+"&spotMarketPriceEndTime="+end_date.toISOString().split('T')[0];
       const Url_table_dayahead =
         api_url +
-        "/statistic/table-dayahead?spotMarketPriceCountry=france&spotMarketPriceProvider=entsoe&spotMarketPriceStartTime=2022-01-01";
+        "statistic/table-dayahead?spotMarketPriceCountry=france&spotMarketPriceProvider=entsoe&spotMarketPriceStartTime="+start_date.toISOString().split('T')[0];
       const Url_table_futurs =
-        api_url + "/statistic/table-futures?maxYear=2025";
+        api_url + "statistic/table-futures?maxYear=2025";
 
       try {
         setLoadingComp(true)
@@ -199,28 +201,6 @@ const IndexPage = () => {
     "rgba(153, 102, 255, 1)",
     "rgba(255, 159, 64, 1)",
   ];
-  // var datasets = Object.values(file).map((it: any, idx: number) => {
-  //   if (it.length > mx) {
-  //     labels = it.map((i: any) => {
-  //       let d = new Date(i.start_time);
-  //       if (d.getHours() == 1) return "";
-  //       return d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear(); //+' '+d.getHours()+':'+d.getMinutes();
-  //     });
-  //     mx = it.length;
-  //   }
-  //   return {
-  //     label: Object.keys(it[0])[1],
-  //     data: it.map((i: any) => Object.values(i)[1]),
-  //     borderColor: borderColors[idx],
-  //     borderWidth: 1,
-  //     //backgroundColor: "rgba(53, 162, 235, 0.5)",
-  //   };
-  // });
-  // const data = {
-  //   labels,
-  //   datasets,
-  // };
-  // console.log(data);
   const now = Date.now();
   const today = new Date();
 
@@ -243,7 +223,7 @@ const IndexPage = () => {
               />
           </div>
 
-          <div className="carousel-caption absolute text-center sm:top-1/4 top-1/4 md:top-1/4 sm:w-2/3 w-2/3 sm:left-auto md:block justify-center">
+          <div className="carousel-caption absolute text-center sm:top-1/4 top-1/4 md:top-1/4 sm:w-2/3 w-2/3 md:-mt-16 sm:left-auto md:block justify-center">
             <h1 className="text-white md:text-3xl sm:text-xl xs:text-lg text-sm md:mb-8 mb-8">
               {t("index.hero.h1")}
             </h1>
@@ -321,7 +301,7 @@ const IndexPage = () => {
       {/* Section 1 */}
       <section className="-mt-24 bg-gray-bg grid relative content-center items-center place-items-center place-content-center">
         {/* Card */}
-        <div className="bg-violet-bohr-bis md:w-3/4 w-full md:-mt-48 sm:mt-0 -mt-32 md:rounded-lg">
+        <div className="bg-violet-bohr-bis md:w-3/4 w-full md:-mt-36 sm:mt-0 -mt-32 md:rounded-lg">
           <h3 className="text-white text-center relative md:text-4xl text-2xl md:mt-12 mt-8">
             {t("index.section1.h1")}
           </h3>
@@ -441,13 +421,13 @@ const IndexPage = () => {
         <div className="flex md:flex-row sm:flex-row flex-col">
           
           {/* Paragraph left */}              
-          <div className="md:w-1/2 w-full ">
+          <div className="xl:w-1/2 lg:w-1/2 md:w-1/2 w-full ">
 
-            <h2 className="md:text-left sm:text-left text-left text-3xl md:w-2/3 sm:text-3xl md:text-4xl md:ml-24 sm:ml-16 ml-8 md:mt-20 sm:mt-16 mt-8">
+            <h2 className="md:text-left sm:text-left text-left text-3xl md:w-2/3 sm:text-3xl md:text-4xl xl:ml-44 lg:ml-44 md:ml-24 sm:ml-16 ml-8 md:mt-20 sm:mt-16 mt-8">
               <strong>{t("index.section2.h2")}</strong>
             </h2>
 
-            <h3 className="text-gray-6f w-4/5 sm:w-3/4 md:w-3/4 md:mb-16 sm:mb-16 mb-8 md:ml-24 sm:ml-16 ml-8 md:mt-8 sm:mt-8 mt-8 md:text-lg text-left">
+            <h3 className="text-gray-6f w-4/5 sm:w-3/4 md:w-3/4 md:mb-16 sm:mb-16 mb-8 xl:ml-44 lg:ml-44 md:ml-24 sm:ml-16 ml-8 md:mt-8 sm:mt-8 mt-8 md:text-lg text-left">
               {t("index.section2.h3")}
               <br/>
               {t("index.section2.h31")}
@@ -455,7 +435,7 @@ const IndexPage = () => {
 
             <Link
               to="/our-services"
-              className="md:ml-24 sm:ml-16 ml-8 text-white text-center bg-orange-bohr border-orange-bohr rounded-full border-solid border-4 md:py-2 sm:py-2 py-1 px-4 w-60 mx-auto"
+              className="xl:ml-44 lg:ml-44 md:ml-24 sm:ml-16 ml-8 text-white text-center bg-orange-bohr border-orange-bohr rounded-full border-solid border-4 md:py-2 sm:py-2 py-1 px-4 w-60 mx-auto"
             >
               {t("index.section1.button")}
             </Link>
@@ -463,14 +443,14 @@ const IndexPage = () => {
           </div>
 
           {/* Paragraph right */}              
-          <div className="md:ml-8 md:mt-6 mt-12 md:w-1/2 w-full">
+          <div className="md:ml-8 md:mt-6 mt-12 xl:w-1/2 lg:w-1/2 md:w-1/2 w-full">
             <div className="flex md:flex-row sm:flex-row flex-col md:mx-4 sm:mx-2 lg:my-0 md:my-10 sm:my-0">
               <img
                 src="./images/bancaire.png"
                 alt="bancaire"
-                className="m-auto"
+                className="xl:m-6 lg:m-6 m-auto"
               />
-              <div className="ml-8 mr-10 md:mb-4 mb-8">
+              <div className="xl:ml-12 lg:ml-12 ml-8 mr-10 md:mb-4 mb-8">
                 <h2 className="text-left text-2xl md:my-8 my-2 md:text-2xl">
                   <strong>{t("index.section2.h2Product1")}</strong>
                 </h2>
@@ -484,9 +464,9 @@ const IndexPage = () => {
               <img
                 src="./images/feuille.png"
                 alt="Environment"
-                className="md:ml-3 m-auto"
+                className="xl:ml-8 lg:ml-8 md:ml-3 xl:m-6 lg:m-6 m-auto"
               />
-              <div className="ml-10 mr-10 md:mb-4 mb-8">
+              <div className="xl:ml-16 lg:ml-16 ml-10 mr-10 md:mb-4 mb-8">
                 <h2 className="text-black text-left md:text-2xl text-2xl md:my-8 my-2">
                   <strong>{t("index.section2.h2Product2")}</strong>
                 </h2>
@@ -501,9 +481,9 @@ const IndexPage = () => {
               <img
                 src="./images/gear.png"
                 alt="Services"
-                className="md:ml-0 m-auto"
+                className="md:ml-0 xl:m-6 lg:m-4 m-auto"
               />
-              <div className="ml-8 mr-10">
+              <div className="xl:ml-10 lg:ml-10 ml-8 mr-10">
                 <h2 className="text-black text-left md:text-2xl text-2xl md:my-8 my-2">
                   <strong>{t("index.section2.h2Product3")}</strong>
                 </h2>
@@ -521,24 +501,24 @@ const IndexPage = () => {
       {/* Section 3 */}
       <section className="bg-violet-bohr-bis w-screen">
         
-        <h3 className="text-white sm:text-center md:text-4xl sm:text-3xl text-2xl md:w-2/5 w-full md:mt-24 sm:mt-0 md:ml-44 ml-8 md:py-12 py-12">
+        <h3 className="text-white xl:text-left lg:text-left sm:text-center md:text-4xl sm:text-3xl text-2xl md:w-2/5 w-full md:mt-24 sm:mt-0 md:ml-44 ml-8 md:py-12 py-12">
           <strong>{t("index.section5.h1")}</strong>
         </h3>
 
         <div className="flex md:flex-row sm:flex-row flex-col" >
 
           {/* Paragraph left */}               
-          <div className="md:w-3/4 sm:w-3/4 md:ml-44 sm:ml-12 ml-4 sm:-mr-12 md:mt-0 sm:mt-0 mt-12 md:order-0 sm:order-0 order-1">
+          <div className="md:w-3/4 sm:w-3/4 xl:ml-4 lg:ml-4 md:ml-44 sm:ml-12 ml-4 sm:-mr-12 md:mt-0 sm:mt-0 mt-12 md:order-0 sm:order-0 order-1">
            
-            <div className="flex flex-row" >
+            <div className="flex flex-row xl:ml-40 lg:ml-40 md:ml-44 sm:ml-12 ml-4" >
               
               <img
-                className="md:mt-10 mt-8 m-auto"
+                className="md:mt-10 mt-8"
                 src="./images/Monitoring.svg"
                 alt="Monitoring"
               />
               
-              <div className="md:ml-8 sm:ml-4 ml-4 mt-8" >
+              <div className="xl:ml-8 lg:ml-8 md:ml-8 sm:ml-4 ml-4 mt-8" >
                 <h2 className="text-white text-left md:text-2xl text-2xl ">
                   <strong>{t("index.section5.h2img1")}</strong>
                 </h2>
@@ -549,14 +529,14 @@ const IndexPage = () => {
               
             </div>
 
-            <div className="flex flex-row" >
+            <div className="flex flex-row xl:ml-40 lg:ml-40 md:ml-44 sm:ml-12 ml-4" >
 
               <img
-                className="m-auto"
+                className="mt-4"
                 src="./images/Analyse.svg"
                 alt="Analyse"
               />
-              <div className="md:ml-8 sm:ml-4 ml-4 mt-8">
+              <div className="xl:ml-8 lg:ml-8 md:ml-8 sm:ml-4 ml-4 mt-8">
                 <h2 className="text-white text-left text-2xl md:text-2xl">
                   <strong>{t("index.section5.h2img2")}</strong>
                 </h2>
@@ -567,14 +547,14 @@ const IndexPage = () => {
               
             </div>
 
-            <div className="flex flex-row mb-16" >
+            <div className="flex flex-row xl:ml-40 lg:ml-40 md:ml-44 sm:ml-12 ml-4 mb-16" >
 
               <img
-                className="m-auto"
+                className="mt-0"
                 src="./images/Portefeuille.svg"
                 alt="Portefeuille"
               />
-              <div className="md:ml-8 sm:ml-4 ml-4 mt-8">
+              <div className="xl:ml-8 lg:ml-8 md:ml-8 sm:ml-4 ml-4 mt-8">
                 <h2 className="text-white text-left text-2xl md:text-2xl">
                   <strong>{t("index.section5.h2img3")}</strong>
                 </h2>
@@ -585,7 +565,7 @@ const IndexPage = () => {
               
             </div>
 
-            <div className="md:ml-0 ml-12 md:mb-12 mb-20 ">
+            <div className="xl:ml-40 lg:ml-40 md:ml-0 ml-12 md:mb-12 mb-20 ">
               <Link
                 to="/our-services"
                 className="bg-orange-bohr text-white text-center border-orange-bohr rounded-full border-solid border-4 md:py-2 py-2 px-4 w-60"
@@ -666,7 +646,7 @@ const IndexPage = () => {
         
         <FooterImage />
 
-        <div className="flex md:flex-row flex-col md:p-8 p-2 md:justify-left sm:ml-12 sm:mt-12">
+        <div className="flex md:flex-row flex-col md:p-8 p-2 md:justify-left sm:ml-12 sm:mt-12 justify-center">
         
           <div>
             <h3 className="md:text-4xl sm:text-4xl text-2xl">
@@ -685,11 +665,11 @@ const IndexPage = () => {
                 src="./images/logo_eex.png"
                 alt="EEX"
               />
-              <img
+              {/*<img
                 className="md:w-32 sm:w-32 w-24 md:ml-8 sm:ml-12 ml-2"
                 src="./images/logo_enedis.png"
                 alt="Enedis"
-              />
+              /> */}
               <img
                 className="md:w-18 md:w-18 w-14 md:ml-8 sm:ml-12 ml-2"
                 src="./images/logo_rte.png"
@@ -699,9 +679,9 @@ const IndexPage = () => {
             </div>
           </div>
 
-          <div className="md:ml-48 sm:ml-0 ml-0 md:mb-0 sm:mb-12 my-12 border"></div>   
+          <div className="xl:ml-48 lg:48 md:ml-48 sm:ml-0 ml-0 md:mb-0 sm:mb-12 my-12 border"></div>   
 
-          <div className="md:ml-24 sm:ml-0 ml-0">
+          <div className="xl:ml-48 lg:48 md:ml-24 sm:ml-0 ml-0">
             <h3 className="md:text-4xl sm:text-4xl text-2xl">
               <strong>{t("index.section4.h3")}</strong>
             </h3>

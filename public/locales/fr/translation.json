@@ -27,7 +27,7 @@
 
     "section1":{
      "h1":"Si vous aviez vendu 1 MW/h en 2022",
-     "h1_2":"vous auriez generé:",
+     "h1_2":"vous auriez généré:",
      "h2":"Rejoignez Bohr Energie et vendez votre production au Marché Spot ! ",
      "h3":"Spot (€/MWh)",
      "h4":"Futures (€/MWh)",
@@ -188,12 +188,12 @@
     "section2":{
       "h0":"Améliorez la rentabilité de votre production grâce à notre centrale virtuelle de gestion.",
       "h1":"Comment fonctionne notre centrale virtuelle de gestion ?",
-      "h2":"Titre",
-      "h3":"Aggregation",
+      "h2":"Une energie distribuée",
+      "h3":"Agrégation",
       "h4":"Interface marché",
       "p1":"La centrale électrique virtuelle est une technologie clé qui permet de résoudre les tâches du monde de l’énergie distribuée.",
       "p2":"La centrale virtuelle permet non seulement d’agréger des milliers de producteurs d’électricité, des actifs flexibles tels que des unités de stockage, ou encore des consommateurs électro-intensifs ayant choisi des solutions de flexibilités type effacement.",
-      "p3":"La plateforme permet d’offrir leur puissance et leur flexibilité sur différents marchés tout en contrôlant intelligemment leurs injections ou soutirages et minimisant les risques.",
+      "p3":"Notre plateforme permet de gérer la puissance et la flexibilité des actifs énergétiques sur différents marchés tout en contrôlant intelligemment leurs injections tout en minimisant les risques.",
       "button":"Contactez-nous"
     }
   },

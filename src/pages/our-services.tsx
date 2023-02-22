@@ -15,9 +15,9 @@ const openSolutions = () => {
       {/* hero */}
       <section className="flex bg-hero-customer bg-cover h-410p">
         
-        <div className="md:w-2/3 sm:w-full w-full md:ml-24 sm:ml-8 ml-4 md:mt-0 sm:mt-0 mt-0">
+        <div className="md:w-2/3 sm:w-full w-full md:ml-24 sm:ml-24 ml-4 md:mt-0 sm:mt-0 mt-0">
 
-          <h1 className="text-white font-semibold md:text-5xl text-3xl mt-24 ">
+          <h1 className="text-white font-semibold md:text-5xl sm:text-4xl text-3xl mt-24 ">
             {t("beOurClient.hero.l1")}
           </h1>
           <p className="text-white md:text-xl sm:text-xl text-base md:mt-12 sm:mt-12 mt-12 md:w-2/3 sm:w-2/3 w-full"> 

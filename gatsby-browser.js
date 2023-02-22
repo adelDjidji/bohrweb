@@ -6,3 +6,10 @@
 
 // You can delete this file if you're not using it
 import './src/styles/global.css';
+
+export const onClientEntry = () => {
+    if (typeof IntersectionObserver === `undefined`) {
+      require(`intersection-observer`)
+      console.log(`# IntersectionObserver is polyfilled!`)
+    }
+  }

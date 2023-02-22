@@ -6,15 +6,15 @@ export const isMobileNumber = (e: any) => {
     if (!e) {
         return true;
     }
-    return /([0-9]●?){9,14}[0-9]$/
+    return /^([0-9]){9,14}$/
     .test(e);
 };
 export const isPasswordValid = (e: any) => {
     if (!e) {
         return true;
     }
-    return /^[a-zA-Z0-9]{8,16}$/
-    .test(e);
+    return e.trim().length >7
+    // .test(e);
 };
 export const isEmailValid = (e: any) => {
     if (!e) {

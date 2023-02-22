@@ -10,7 +10,7 @@ import "./../styles/contactus.css"
 import "./../styles/datepicker.css"
 import { useRef } from "react"
 import ApiService from "../app/services/ApiService"
-import { errMessage, successMessage } from "../app/actions"
+import { errMessage, successMessage } from "../app/redux/actions"
 import { useDispatch } from "react-redux"
 import { toast } from 'react-toastify';
 toast.configure();
@@ -59,7 +59,7 @@ const ContactUs: FC<Props> = () => {
     }
   }
   return (
-    <div className="md:mx-auto flex md:flex-row flex-col mt-12 md:mt-6 md:p-8 p-0 md:justify-around md:px-4 px-0 md:mb-10 sm:mb-10 mb-0">
+    <div className="md:mx-auto flex md:flex-row sm:flex-row flex-col mt-12 md:mt-6 md:p-8 p-0 md:justify-around md:px-4 sm:px-4 px-0 md:mb-10 sm:mb-10 mb-0">
       
       <div className="flex-auto md:w-3/2 sm:w-3/2 md:px-0 sm:px-0 px-4 w-full">
         
@@ -68,8 +68,8 @@ const ContactUs: FC<Props> = () => {
         </h2>
 
         <form onSubmit={submitform}>
-          <div className="flex md:flex-row flex-col">
-            <div className = "md:w-1/2 w-full">
+          <div className="flex md:flex-row sm:flex-row flex-col">
+            <div className = "md:w-1/2 sm:w-1/2 w-full">
               <label className="" htmlFor="name">
                 {t("contactUs.section1.h2")}
               </label>
@@ -81,7 +81,7 @@ const ContactUs: FC<Props> = () => {
               />
             </div>
             <div className="md:ml-4 sm:ml-4 ml-0 md:w-1/2 sm:w-1/2 w-full">
-              <label className="block mt-5" htmlFor="company">
+              <label className="block md:mt-0 sm:mt-0 mt-4" htmlFor="company">
                 {t("contactUs.section1.h3")}
               </label>
               <input
@@ -93,8 +93,8 @@ const ContactUs: FC<Props> = () => {
             </div>
           </div>
           
-          <div className="flex md:flex-row flex-col">
-            <div className = "md:w-1/2 w-full">
+          <div className="flex md:flex-row sm:flex-row flex-col">
+            <div className = "md:w-1/2 sm:w-1/2 w-full">
               <label className="block mt-5" htmlFor="tel">
                 {t("contactUs.section1.h4")}
               </label>
@@ -105,7 +105,6 @@ const ContactUs: FC<Props> = () => {
                 className="border px-6 border-black border-solid rounded-lg h-10 w-full"
               />
             </div>
-
             <div className="md:ml-4 sm:ml-4 ml-0 md:w-1/2 sm:w-1/2 w-full">
               <label className="block mt-5" htmlFor="email">
                 {t("contactUs.section1.h5")}
@@ -131,7 +130,7 @@ const ContactUs: FC<Props> = () => {
           ></textarea>
           <button
             // href="mailto:ea_djidjik@esi.dz"
-            className="block text-white bg-orange-bohr border-orange-bohr rounded-full border-solid border-4 md:py-2 py-1 px-4 w-44 md:mt-8 mt-8"
+            className="block text-white bg-orange-bohr border-orange-bohr rounded-full border-solid border-4 md:py-2 py-1 px-4 w-44 md:mt-8 mt-8 md:mb-0 sm:mb-0 mb-12"
           >
             {t("contactUs.section1.button")}
           </button>
@@ -139,14 +138,14 @@ const ContactUs: FC<Props> = () => {
 
       </div>
 
-      <div className="text-black flex-auto md:ml-8 sm:ml-8 ml-4" >
+      {/*<div className="text-black flex-auto md:ml-8 sm:ml-8 ml-4" >
         
         <h2 className="mt-8 mb-8 text-black md:text-3xl sm:text-3xl text-2xl">
           <strong>{t("contactUs.hero.l3")}</strong>
         </h2>
 
         <DatePicker
-          wrapperClassName="datePicker h-1/2"
+          wrapperClassName="datePicker text-sm"
           selected={startDate}
           onChange={(date: any) => setStartDate(date)}
           excludeOutOfBoundsTimes
@@ -165,7 +164,7 @@ const ContactUs: FC<Props> = () => {
         >
           {t("contactUs.section1.button2")}
         </a>
-      </div>
+      </div>*/}
 
     </div>
   )

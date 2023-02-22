@@ -81,7 +81,7 @@ const Navbar = () => {
                 |
               </li>
               <li className="ml-8 text-white hover:text-gray-800">
-                <Link to="/beliefs">{t("navBar.clientSpace")}</Link>
+                <Link to="/app">{t("navBar.clientSpace")}</Link>
               </li>
             </ul>
             
@@ -97,7 +97,7 @@ const Navbar = () => {
         leave="transition duration-250 ease-in-out"
         leaveFrom="transform translate-x-0"
         leaveTo="transform -translate-x-full"
-        className="bg-violet-menu  text-white flex flex-col items-left sm:text-3xl text-2xl justify-left hover:text-gray-300 absolute z-50 w-full h-screen"
+        className="bg-violet-menu  text-white flex flex-col items-left sm:text-3xl text-2xl justify-left hover:text-gray-300 absolute z-50 w-full min-h-screen"
       >
        
         <Link className="mt-16 w-full items-center content-center justify-center" to="/">

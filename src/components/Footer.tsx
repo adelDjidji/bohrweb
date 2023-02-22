@@ -22,23 +22,23 @@ const Footer = () => {
         
 
         {/* Links */}
-        <div className="text-xs md:flex text-center md:ml-48 sm:ml-2 ml-0 md:w-3/4 sm:w-3/4 w-full md:mb-0 sm:mb-8 mb-8">
-          <Link className="md:ml-0 sm:ml-0 -ml-2" to="/legal-notice">
+        <div className="text-xs md:flex text-center xl:ml-60 lg:ml-60 md:ml-48 sm:ml-2 ml-0 xl:w-3/4 lg:w-3/4 md:w-3/4 sm:w-3/4 w-full md:mb-0 sm:mb-8 mb-8">
+          <Link className="xl:ml-0 lg:ml-0 md:ml-0 sm:ml-0 -ml-2" to="/legal-notice">
             Legal notice
           </Link>
-          <Link className="md:ml-8 sm:ml-2 ml-2" to="/contactus">
+          <Link className="xl:ml-8 lg:ml-8 md:ml-8 sm:ml-2 ml-2" to="/our-services">
             Contact
           </Link>
-          <Link className="md:ml-8 sm:ml-2 ml-2" to="/cgv">
+          <Link className="xl:ml-8 lg:ml-8 md:ml-8 sm:ml-2 ml-2" to="/cgv">
             CGV
           </Link>
-          <Link className="md:ml-8 sm:ml-2 ml-2" to="/cgu">
+          <Link className="xl:ml-8 lg:ml-8 md:ml-8 sm:ml-2 ml-2" to="/cgu">
             CGU
           </Link>
         </div>
 
-        <p className="text-xs md:-ml-0 sm:ml-0 ml-0 md:w-1/2">
-            Ⓒ 2020 Bohr Energie
+        <p className="text-xs xl:ml-24 lg:ml-24 md:-ml-0 sm:ml-0 ml-0 xl:w-1/2 lg:w-1/2 md:w-1/2">
+            Ⓒ 2022 Bohr Energie
         </p>
         
         {/* Social networks */}
