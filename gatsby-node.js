@@ -10,13 +10,22 @@ exports.onCreatePage = async ({ page, actions }) => {
 
   // page.matchPath is a special key that's used for matching pages
   // only on the client.
-  if (page.path.match(/^\/app/)) {
-    page.matchPath = "/app/*"
+  if (page.path.match(/^\//)) {
+    page.matchPath = "/*"
 
     // Update the page.
     createPage(page)
   }
 }
+// exports.createPages = async ({ actions }) => {
+//   const { createPage } = actions
+
+//   createPage({
+//     path: '/404',
+//     component: require.resolve('/pages/404.tsx'),
+//     context: {}
+//   })
+// }
 
 exports.onCreateBabelConfig = ({ actions }) => {
   actions.setBabelPlugin({

@@ -1,5 +1,5 @@
 # base image to use
-FROM node:15.12-stretch
+FROM node:18.14-alpine
 
 LABEL description="Website" \
       maintainer="luis.urday@bohr-energie.fr"
@@ -14,7 +14,7 @@ COPY / web/
 
 WORKDIR /home/bohruser/web
 RUN rm -R node_modules
-RUN npm install 
+RUN npm install --legacy-peer-deps
 
 #Master node
 ENTRYPOINT ["npm", "start"]

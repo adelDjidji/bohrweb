@@ -1,0 +1,21 @@
+.active-link path{
+  fill: #5819f1;
+}
+.active-link span{
+  color: #5819f1;
+}
+.active-link span.ml-3.text-sm.font-medium{
+  font-weight: 600 !important;
+}
+.sidebar-link-container .active-link::before {
+  content: '';
+  width: 4px;
+  height: 40px;
+  background-color: red;
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  background: #5819f1;
+  border-radius: 0px 8px 8px 0px;
+}

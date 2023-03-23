@@ -12,3 +12,25 @@
 .brightness-140 {
   filter: brightness(1.4);
 }
+
+@font-face {
+  font-family: "CamptonBold";
+  src: url("../../public/fonts/Campton-Bold.otf");
+}
+
+@font-face {
+  font-family: "CamptonThin";
+  src: url("../../public/fonts/Campton-Thin.otf");
+}
+
+@font-face {
+  font-family: "Campton";
+  src: url("../../public/fonts/Campton-Medium.otf");
+}
+
+.all-Campton * {
+  font-family: "Campton", sans-serif;
+}
+body{
+  min-height: 100vh;
+}

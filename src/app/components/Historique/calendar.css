@@ -1,0 +1,74 @@
+.fc-header-toolbar.fc-toolbar .fc-toolbar-chunk:nth-child(2)> div{
+    display: flex !important;
+    align-items: center;
+    gap: 20px;
+}
+.fc-header-toolbar.fc-toolbar .fc-toolbar-chunk:nth-child(2) button {
+    background: transparent;
+    border: none;
+    color: #5819F1;
+    outline: none;
+}
+.fc .fc-toolbar-title{
+    text-transform: capitalize;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+.fc-icon-chevron-left:before, .fc-icon-chevron-right:before {
+    font-size: 21px !important;
+}
+.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard{
+    background: white;
+    border: solid 1px #E5E3ED;
+    border-radius: 8px;
+    padding-top: 15px;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: transparent !important;
+}
+.fc .fc-daygrid-day-top {
+    flex-direction: row !important;
+}
+
+.fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number{
+    background: #5819F1 !important;
+    color: white;
+    border-radius: 50%;
+    margin: 4px;
+}
+.fc-col-header-cell-cushion{
+    font-weight: 100 !important;
+    line-height: 3 !important;
+}
+.fc .fc-daygrid-day-number{
+    font-size: 12px !important;
+    margin: 8px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+.event-custom{
+    font-size: 12px !important;
+    padding: 4px !important;
+    border: none !important;
+    padding-left: 6px !important;
+    overflow: hidden;
+    cursor: pointer;
+}
+.event-custom i {
+    font-style: normal !important;
+}
+
+.fc-daygrid-more-link.fc-more-link{
+    padding: 5px;
+    top: 7px;
+    color: #5819F1;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.fc .fc-col-header-cell-cushion {
+    text-transform: capitalize !important;
+}
