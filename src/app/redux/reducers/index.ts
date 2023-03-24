@@ -12,6 +12,8 @@ import invoices from "./invoices";
 import contracts from "./contracts";
 import forecast from "./forecast";
 import sites from "./sites";
+import benchmark from "./benchmark";
+import live from "./live";
 
 export default combineReducers({
   auth,
@@ -26,5 +28,7 @@ export default combineReducers({
   invoices,
   contracts,
   forecast,
-  sites
+  sites,
+  benchmark,
+  live,
 });

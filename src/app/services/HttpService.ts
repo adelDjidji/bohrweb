@@ -27,6 +27,7 @@ const put = (url: string, body: any) => _axios.put(url, body);
 const get = (url: string, params?:any) => _axios.get(url, {params});
 const secureGet = (url: string, params?:any) => _axios.get(url, { headers: { Authorization: `Bearer ${UserService.getToken()}` }, params });
 const securePost = (url: string, body:any) => _axios.post(url, body, { headers: { Authorization: `Bearer ${UserService.getToken()}` } });
+const securePostFile = (url: string, body:any) => _axios.post(url, body, { headers: { Authorization: `Bearer ${UserService.getToken()}`, contentType: 'multipart/form-data' } });
 const remove = (url: string) => _axios.delete(url);
 
 const HttpService = {
@@ -38,7 +39,8 @@ const HttpService = {
   remove,
   put,
   secureGet,
-  securePost
+  securePost,
+  securePostFile
 };
 
 export default HttpService;

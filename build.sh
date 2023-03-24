@@ -1,5 +1,5 @@
 # image version used for tagging
-export BUILD_VERSION=2.1.3
+export BUILD_VERSION=2.1.6
 # image name
 export IMAGE_NAME=webapp_frontend
 
@@ -11,5 +11,3 @@ docker build --tag luiscua/$IMAGE_NAME:$BUILD_VERSION -f Dockerfile . --build-ar
 
 # push image to repository
 docker push luiscua/$IMAGE_NAME:$BUILD_VERSION
-
-

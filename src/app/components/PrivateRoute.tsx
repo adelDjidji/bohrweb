@@ -20,10 +20,10 @@ const PrivateRoute: FC<Props> = ({
     : UserService.isLoggedIn()
   if (
     !canAccess && 
-    location?.pathname !== `/login` &&
-    location?.pathname !== `/register`
+    location?.pathname !== `/app/login` &&
+    location?.pathname !== `/app/register`
   ) {
-    typeof window !== "undefined" && navigate("/login")
+    typeof window !== "undefined" && navigate("/app/login")
     return null
   }
   return <Component {...rest} />

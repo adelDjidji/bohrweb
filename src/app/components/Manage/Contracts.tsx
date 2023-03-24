@@ -1,30 +1,138 @@
-import { SetStateAction, useEffect, useState } from "react"
-import { Space, Table, Pagination, Modal } from "antd"
+import React, { useEffect, useState } from "react"
+import { Collapse, Col, Row, Avatar, Spin, Tag, Card, Segmented } from "antd"
 import { Colors, Icon, IconNames } from "../Icon"
-import SelectDropdown from "../SelectDropdown"
+import Text from "../Text"
+import "./customStyle.css"
+import ModalAssign from "./ModalAssign"
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux"
-import { fetchContracts } from "../../redux/actions"
+import { fetchContracts, fetchSitesDetail } from "../../redux/actions"
+import { stringToHexColor } from "../../utils"
 import UserService from "../../services/UserService"
+import moment from "moment"
+import { fetchCompanies } from "../../redux/actions/commun"
+import SelectDropdown from "../SelectDropdown"
+import { Space, Table, Pagination, Modal } from "antd"
+import { UserOutlined } from '@ant-design/icons';
+
 
 const url = process.env.GATSBY_API_URL
 
+const { Panel } = Collapse
 
-const ContractsTable = ({
-  enabledFilters = ["site"],
-  showExport = true,
-}) => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([])
-  const [showedData, setShowedData] = useState()
-  const { sites } = useSelector((state: RootStateOrAny) => state.commun)
-  const { data, loading } = useSelector(
-    (state: RootStateOrAny) => state.contracts
-  )
+const Contracts = () => {
+  
+  const commun = useSelector((state: RootStateOrAny) => state.commun)
 
   const dispatch = useDispatch()
   useEffect(() => {
+    dispatch(fetchCompanies())
+    if (commun.companies) {
+      setSPV(commun.companies)
+      setLoading(false)
+    }
+  }, [])
+
+
+  const [SPV, setSPV] = useState(Array())
+  const [loading, setLoading] = useState(true)
+  const [currentSPV, setcurrentSPV] = useState()
+  const [modalOpen, setModalOpen] = useState(false)
+
+  console.log('SPV',SPV)
+
+  useEffect(() => {
+    if (commun.companies) {
+      setSPV(commun.companies)
+      setLoading(false)
+    }
+  }, [commun.companies])
+
+  const onChange = key => {
+  }
+
+  const genExtra = spv => (
+    <span>
+      <Icon
+        name="edit"
+        onClick={event => {
+          //event.stopPropagation()
+          setcurrentSPV(spv)
+          setModalOpen(true)
+        }}
+        style={{ right: 25, position: "relative" }}
+        className="cursor-pointer"
+      />
+    </span>
+  )
+
+  const PanelHeader = ({ data, len }) => (
+    <Row className="flex items-center">
+      <Col xs={24} sm={12} md={8} lg={16}>
+        <Avatar
+          gap={9}
+          style={{
+            backgroundColor: stringToHexColor(data.name),
+            color: "white",
+            marginRight: 19,
+          }}
+          size={40}
+        >
+          {data.name.toUpperCase().slice(0, 2) }
+        </Avatar>
+        <Text type="16-600" style={{textTransform: 'capitalize'}}>{data.name} ({len})</Text>
+      </Col>
+      <Col xs={24} sm={12} md={4} lg={4}>
+        <Text className="text-gray-6f" type="12-500">
+          Siren
+        </Text>
+        <Text className="block" type="14-500">
+          {data.siren || "-"}
+        </Text>
+      </Col>
+      <Col xs={24} sm={12} md={8} lg={4}>
+        <Text className="text-gray-6f" type="12-500">
+          TVA
+        </Text>
+        <Text className="block" type="14-500">
+          {data.tva_number || "-"}
+        </Text>
+      </Col>
+    </Row>
+  )
+  
+
+  const PanelBody = ({ data,dataContract }) => {
+      return(    
+              <Row className="flex items-center" style={{marginTop:'30px'}}>
+                  <Table
+                    loading={loading}
+                    showHeader ={false}
+                    rowKey={"name"}
+                    pagination={false}
+                    columns={columns}
+                    dataSource={dataContract}
+                    style={{width:'100%'}}
+                  />
+              </Row>
+            )
+
+  }
+
+
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState([])
+  const [showedData, setShowedData] = useState(Array())
+  const { sites } = useSelector((state: RootStateOrAny) => state.commun)
+  const { data } = useSelector(
+    (state: RootStateOrAny) => state.contracts
+  )
+
+  useEffect(() => {
     dispatch(fetchContracts())
   }, [])
+
   useEffect(() => {
+    console.log('data contracts',data)
     setShowedData(data)
   }, [data])
   
@@ -34,90 +142,46 @@ const ContractsTable = ({
   const [modalPdfOpen, setmodalPdfOpen] = useState(false)
   const [pdfContent, setPdfContent] = useState(null)
 
-  async function handleViewClick(record) {
-    const downloadurl = `${url}accounts/get_contract`
+  console.log('showedData',showedData)
 
-    try {
-      const response = await fetch(downloadurl, { headers })
-      const blob = await response.blob()
-
-      // Create a URL object from the blob and set it as the source of the iframe in the Modal
-      const objectURL = URL.createObjectURL(blob)
-      const iframe = document.createElement("iframe")
-      iframe.src = objectURL
-      iframe.style.width = "100%"
-      iframe.style.height = "500px"
-
-      setmodalPdfOpen(true)
-      setPdfContent(
-        <div style={{ height: "100vh" }}>
-          <iframe
-            src={objectURL}
-            style={{ width: "90%", height: "100%", margin: "auto" }}
-          />
-        </div>
-      )
-    } catch (error) {
-      console.error(error)
-    }
+  const onSelectChange = (newSelectedRowKeys: SetStateAction<never[]>) => {
+    setSelectedRowKeys(newSelectedRowKeys)
+  }
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
   }
 
-
-  function handleDownloadClick(record) {
-    fetch(`${url}accounts/get_contract`, { headers })
-      .then(response => {
-        // Convert the response to a blob object
-        return response.blob()
-      })
-      .then(blob => {
-        // Create a temporary URL object from the blob
-        const url = URL.createObjectURL(blob)
-
-        // Create a link and click it to download the PDF
-        const link = document.createElement("a")
-        link.href = url
-        link.download = `${record.name}-${record.site}.pdf`
-        link.click()
-
-        // Clean up the temporary URL object
-        URL.revokeObjectURL(url)
-      })
-      .catch(error => {
-        console.error("Failed to download PDF:", error)
-      })
-  }
-
-  const handleCloseModalPdf = () => {
-    setmodalPdfOpen(false)
-  }
 
   const columns = [
     {
-      title: "Nom du contrat",
-      dataIndex: "name",
-      key: "name",
-      width: 200,
-      render: (_, { name }) => <b>{name}</b>,
-    },
-    {
       title: "Site",
       dataIndex: "site",
-      width: 200,
-      responsive: ["md"],
       key: "site",
+      responsive: ["sm"],
+      width: '10%',
+      render: (_, { site }) => (site),
     },
     {
-      title: "Date de création",
-      dataIndex: "creation_date",
-      key: "creation_date",
-      responsive: ["lg"],
-      width: 250,
+      title: "Nom",
+      dataIndex: "contract_label",
+      key: "contract_label",
+      responsive: ["sm"],
+      width: '70%',
+      render: (_, { contract_label }) => (contract_label),
     },
-
+    {
+      title: "Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      responsive: ["sm"],
+      width: '10%',
+      render: (_, { createdAt }) => (moment(createdAt).format("DD/MM/YYYY")),
+    },
     {
       title: "",
       key: "action",
-      width: 100,
+      width: '10%',
       render: (_, record) => (
         <Space size="middle">
           <Icon
@@ -138,19 +202,6 @@ const ContractsTable = ({
     },
   ]
 
-  const onSelectChange = (newSelectedRowKeys: SetStateAction<never[]>) => {
-    setSelectedRowKeys(newSelectedRowKeys)
-  }
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  }
-
-  const [pageIndex, setPageIndex] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-  const [filters, setfilters] = useState({
-    sites: [],
-  })
 
   const handleFilterBySite = sites => {
     //filter data by site
@@ -161,63 +212,91 @@ const ContractsTable = ({
     } else setShowedData(data)
   }
 
-  if (loading) return null
+  const [filters, setfilters] = useState({
+    sites: [],
+  })
+
+  const [selectedSPV, setSelectedSPV] = useState(Array())
+
+  const handleSelectSPV = val => {
+    setSelectedSPV(val.map(i => i.public_id))
+  }
+  const handleUnselectSPV = val => {
+    setSelectedSPV(selectedSPV.filter(i => i!=val))
+  }
+
+  console.log('selectedSPV',selectedSPV)
 
   return (
-    <div className="UserTable px-6 py-4 rounded-xl bg-white">
+    <>
       <div className="md:flex justify-between  items-center pb-4">
         <div className="text-base font-semibold	mb-4 md:mb-0">
         Contrats ({showedData?.length || 0})
         </div>
         <div className="flex sm:flex-row flex-col gap-4 items-center justify-between">
           
-          {enabledFilters.includes("site") && (
+
             <div className="flex justify-center">
-              <SelectDropdown
-                placeholder="Filtrer par site"
-                width={196}
-                keyAttribute="public_id"
-                valueAttribute="name"
-                items={sites}
-                onSelect={handleFilterBySite}
-              />
+            <SelectDropdown
+              items={SPV}
+              keyAttribute="public_id"
+              valueAttribute="name"
+              defaultValues={selectedSPV}
+              onSelect={handleSelectSPV}
+              placeholder="Sélectionnez un SPV / Société"
+            />
             </div>
-          )}
-          <Pagination
-            pageSize={pageSize}
-            current={pageIndex}
-            total={showedData?.length}
-            onChange={(page: any, size: any) => {
-              setPageIndex(page)
-              setPageSize(size)
-            }}
-          />
+
         </div>
+
+
+
       </div>
-      {
-        <Table
-          loading={loading}
-          rowKey={"name"}
-          pagination={false}
-          rowSelection={rowSelection}
-          columns={columns}
-          dataSource={showedData?.slice(
-            (pageIndex - 1) * pageSize,
-            pageIndex * pageSize
+
+      <div className="flex flex-wrap gap-3" style={{marginBottom:'20px'}}>
+        {SPV?.filter(
+            spv => selectedSPV && selectedSPV.includes(spv.public_id)
+          )
+          .map(spv => (
+            <Tag closable onClose={()=>handleUnselectSPV(spv.public_id)}>{spv.name}</Tag>
+          ))}
+
+      </div>
+
+
+
+      <Spin spinning={loading}>
+        <Collapse
+          defaultActiveKey={["0"]}
+          onChange={onChange}
+          expandIconPosition="end"
+          ghost
+          collapsible="icon"
+          expandIcon={({ isActive }) => (
+            <Icon name={isActive ? "arrow-up" : "arrow-down"} />
           )}
-        />
-      }
-      <Modal
-        className="modal-fullscreen rounded-none h-full w-full p-0 m-0 all-Campton"
-        open={modalPdfOpen}
-        onCancel={handleCloseModalPdf}
-        bodyStyle={{ minHeight: "100vh" }}
-        width="100%"
-        footer={null}
-      >
-        {pdfContent}
-      </Modal>
-    </div>
+        >
+          {SPV?.map((spv: any, index: number) => {
+
+      
+              if (showedData.filter((i)=>i.company==spv.name).length > 0 && (selectedSPV.includes(spv.public_id) || selectedSPV.length==0 ) ) {
+
+
+                return (  <Panel
+                  header={<PanelHeader data={spv} len={showedData.filter((i)=>i.company==spv.name).length}/>}
+                  key={index + ""}
+                >
+                  <PanelBody data={spv} dataContract={showedData.filter((i)=>i.company==spv.name)}/>
+                </Panel>)
+
+              } 
+
+            })}
+        </Collapse>
+      </Spin>
+
+
+    </>
   )
 }
-export default ContractsTable
+export default Contracts

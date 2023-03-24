@@ -62,7 +62,7 @@ function Password(props: any) {
           //res.message
           setloading(false)
           dispatch(successMessage("Inscription avec success"))
-          navigate("/login")
+          navigate("/app/login")
         })
         .catch(err => {
           setloading(false)

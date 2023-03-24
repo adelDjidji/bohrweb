@@ -8,55 +8,19 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts"
-
 import Text from "../Text"
-import { Xformater, Xtransformer } from "./LineChart"
-const series = [
-  {
-    name: "Series 1",
-    data: [
-      { category: "B", value: 23 },
-      { category: "C", value: 15 },
-      { category: "D", value: 15 },
-    ],
-  },
-  {
-    name: "Series 2",
-    data: [
-      { category: "B", value: 23 },
-      { category: "C", value: 40 },
-      { category: "D", value: 89 },
-    ],
-  },
-]
-
-const data = [
-  { category: "A", value: 10 },
-  { category: "B", value: 23 },
-]
-const CustomTooltip = ({ active, payload, label, ...props }) => {
-
-  if (active && payload && payload.length) {
-    return (
-      <div
-        className="text-white rounded-lg p-2"
-        style={{ background: "#20263D" }}
-      >
-        {payload.map(p => (
-          <div>
-            <Text type="12-500">{p.name}</Text> <br />
-            <Text type="14-600">{p.value.toLocaleString("fr")}</Text>
-          </div>
-        ))}
-      </div>
-    )
-  }
-
-  return null
-}
+import moment from "moment"
+import { Xtransformer } from "./Util"
 
 
-function DashLine({ dataReal = [], dataPrediction = [], xScale='hour' }) {
+interface P {
+  dataReal: any,
+  dataPrediction : any,
+  unit : any,
+ }
+ 
+ const  DashLineChartComponent: React.FC<P> = ({ dataReal = [], dataPrediction = [], xScale='hour'}) => {
+
   var _name = ""
   var _unit = ""
 
@@ -64,9 +28,39 @@ function DashLine({ dataReal = [], dataPrediction = [], xScale='hour' }) {
     _name = dataReal[0].name
     _unit = dataReal[0].unit
   }
+ 
+  // const [dataChart, setDataChart] = useState([])
+
+  // useEffect(() => {
+
+  //   const x = Xtransformer(data, xScale)
+  //   setDataChart(x)
+    
+  // }, [data])
+
+  const CustomTooltip = ({ active, payload, label, ...props }) => {
+
+    if (active && payload && payload.length) {
+      return (
+        <div
+          className="text-white rounded-lg p-2"
+          style={{ background: "#20263D" }}
+        >
+          <div><Text type="14-600">{payload[0]['payload']['start_time']}</Text> </div><br />
+          {payload.map(p => (
+            <div>
+              <Text type="12-500">{p.name}</Text> <br />
+              <Text type="14-600">{p.value.toLocaleString("fr")}</Text>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  
+    return null
+  }
 
   return (
-
     <ResponsiveContainer width="100%" height={300}>
       <LineChart
         width={500}
@@ -126,6 +120,7 @@ function DashLine({ dataReal = [], dataPrediction = [], xScale='hour' }) {
       </LineChart>
     </ResponsiveContainer>
   )
-}
+ 
+ };
+ export default DashLineChartComponent;
 
-export default DashLine

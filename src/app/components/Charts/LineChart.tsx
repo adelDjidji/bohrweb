@@ -11,53 +11,8 @@ import {
   Legend,
 } from "recharts"
 import { stringToHexColor } from "../../utils"
-
 import Text from "../Text"
-
-const data_def = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-]
+import { Xtransformer,tickFormatter } from "./Util"
 
 var Lines = [
   // {
@@ -90,63 +45,45 @@ var Lines = [
   },
 ]
 
-export function Xformater (xScale:string, val:string){
-  switch (xScale) {
-    case "hour":
-      // return moment(val).hour()<2 ? moment(val).format("DD/MM"): moment(val).hour()+'h';
-      return moment(val).format("DD/MM H")+'h'
-    case "day":
-      return moment(val).format("DD MMM");
-    case "week":
-      return `Week of ${moment(val).startOf('week').format('D MMM')}`;
-    case "month":
-      return moment(val).format("MMM YYYY");
-    default:
-      return val;
-  }
-}
-const tickFormatter = (value, xScale) => {
-  return Xformater(xScale, value)
-};
 
-export function Xtransformer(data, xScale, dateAttr='date'){
-  const keys = data.length ? Object.keys(data[0]).filter(k=>k!=dateAttr) : []
-  const groupedData = {};
 
-  for (const item of data) {
-    if (!groupedData[tickFormatter(item[dateAttr], xScale)]) {
-      groupedData[tickFormatter(item[dateAttr], xScale)] = [];
-    }
-    groupedData[tickFormatter(item[dateAttr], xScale)].push(item);
-  }
-  
-  const transformedData = [];
-  
-  for (const date in groupedData) {
-    const group = groupedData[date];
-    
-    const aggregatedValues = keys.reduce((aggregatedData, key) => {
-      aggregatedData[key] = group.reduce((sum, item) => !!item[key] ? sum + item[key] : sum, 0) / group.length;
-      return aggregatedData;
-    }, {});
-    
-    transformedData.push({
-      [dateAttr]:date,
-      ...aggregatedValues
-    });
-  }
-  
-  return transformedData
+interface P {
+ data: any,
+ xScale : string
 }
 
-function ExampleAreaChart({ data, xScale='hour' }) {
+const  AreaChartComponent: React.FC<P> = ({ data, xScale='hour'}) => {
 
   const [lines, setlines] = useState(Lines)
+  const [dataChart, setDataChart] = useState(Array())
+
+
+  useEffect(() => {
+
+    if(data.length){
+    //  const keys = Object.keys(data[0]).filter(k=>k!='date' && k !=='Prix marché Spot')
+     const keys = ['h01','h07']
+     const l = keys.map((i, idx)=>({
+        key: i,
+        title: "Tarif contrat "+i,
+        color: stringToHexColor("Tarif contrat "+i+idx),
+        hasDot:false,
+        fill:false
+      }))
+      setlines([...Lines, ...l])
+    }
+
+    const x = Xtransformer(data, xScale)
+    setDataChart(x)
+    
+  }, [data])
+
 
   const renderLabel = (label: string) => {
     const obj = lines.find(i => i.key == label)
     return obj ? obj.title : label
   }
+
   const CustomTooltip = ({ xScale, active, payload, label, ...props }) => {
     if (active && payload && payload.length) {
       return (
@@ -167,26 +104,12 @@ function ExampleAreaChart({ data, xScale='hour' }) {
     return null
   }
 
-  useEffect(() => {
-    if(data.length){
-      const keys = Object.keys(data[0]).filter(k=>k!='date' && k !=='Prix marché Spot')
-     const l = keys.map((i, idx)=>({
-        key: i,
-        title: "Tarif contrat "+i,
-        color: stringToHexColor("Tarif contrat "+i+idx),
-        hasDot:false,
-        fill:false
-      }))
-      setlines([...Lines, ...l])
-    }
-    
-  }, [data])
-  
-  
+
   return (
+          <>
     <ResponsiveContainer width="100%" height={300}>
       <AreaChart
-        data={Xtransformer(data, xScale)}
+        data={dataChart}
         margin={{
           top: 10,
           right: 30,
@@ -208,8 +131,20 @@ function ExampleAreaChart({ data, xScale='hour' }) {
           axisLine={false}
           dataKey="date"
           tickFormatter={tickFormatter}
+
         />
-        <YAxis unit={" €"} tickLine={false} axisLine={false} />
+        <YAxis 
+        unit={" €"} 
+        tickLine={false} 
+        axisLine={false} 
+        domain={['auto', 'auto']}
+        tickFormatter={(value) =>
+          new Intl.NumberFormat("fr", {
+            notation: "compact",
+            compactDisplay: "short",
+          }).format(value)
+        }
+        />
         <Tooltip
           content={p => <CustomTooltip xScale={xScale} {...p} />}
           cursor={{ fill: "transparent" }}
@@ -226,6 +161,7 @@ function ExampleAreaChart({ data, xScale='hour' }) {
           iconType="line"
           formatter={(value, entry, index) => renderLabel(value)}
         />
+
         {lines.map(l => (
           <Area
             dot={l.hasDot ? { stroke: l.color, strokeWidth: 2, fill: "white", r: 4 } : false}
@@ -239,9 +175,14 @@ function ExampleAreaChart({ data, xScale='hour' }) {
             isAnimationActive={false}
           />
         ))}
+
+
       </AreaChart>
     </ResponsiveContainer>
-  )
-}
 
-export default ExampleAreaChart
+
+          </>
+  );
+
+};
+export default AreaChartComponent;

@@ -1,4 +1,4 @@
-const initState = { roles: undefined, companies:undefined,companiesDetails:undefined, groups:undefined, sites:[], types:[], typesTech:[], oldContracts:[] }
+const initState = { roles: undefined, products: undefined, companies: undefined, companiesDetails: undefined, groups: undefined, sites: [], types: [], typesTech: [], oldContracts: [], OAContracts: [] }
 
 const communReducer = (state = initState, action: any) => {
   switch (action.type) {
@@ -6,6 +6,11 @@ const communReducer = (state = initState, action: any) => {
       return {
         ...state,
         roles: action.payload,
+      }
+    case "LOAD_PRODUCTS":
+      return {
+        ...state,
+        products: action.payload,
       }
     case "LOAD_COMPANIES":
       return {
@@ -41,6 +46,11 @@ const communReducer = (state = initState, action: any) => {
       return {
         ...state,
         oldContracts: action.payload,
+      }
+    case "LOAD_OA_CONTRACTS":
+      return {
+        ...state,
+        OAContracts: action.payload,
       }
     default:
       return state

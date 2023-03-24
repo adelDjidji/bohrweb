@@ -75,7 +75,7 @@ const LoginForm: FC<Props> = () => {
         dispatch(
           successMessage("Mot de passe mise a jour, vous pouvez vous conecter")
         )
-        navigate("/login")
+        navigate("/app/login")
         setIsLoading(false)
       })
       .catch(err => {
@@ -92,7 +92,7 @@ const LoginForm: FC<Props> = () => {
         dispatch(
           successMessage("Vous pouvez réessayer votre ancien mot de passe")
         )
-        navigate("/login")
+        navigate("/app/login")
       })
       .catch(err => {
         console.log("error : ", err)

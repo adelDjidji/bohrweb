@@ -4,11 +4,12 @@ import Seo from "../../components/seo"
 import Card from "../components/Card"
 import Text from "../components/Text"
 import { Spin, Table } from "antd"
-import AreaChart from "../components/Charts/LineChart"
+import AreaChartComponent from "../components/Charts/LineChart"
 import { DateSelector } from "../components/DateSelector"
 import SelectDropdown from "../components/SelectDropdown"
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux"
 import { fetchMarche } from "../redux/actions"
+import moment from 'moment'
 
 const columns = [
   {
@@ -16,7 +17,6 @@ const columns = [
     dataIndex: "Année",
     key: "Année",
     render: (_, record) => <b>{record["Année"]}</b>,
-
   },
   {
     title: "Cal Base",
@@ -110,7 +110,37 @@ const columnsoa = [
   },
 ]
 
+const columnssp = [
+  {
+    title: "Date",
+    dataIndex: "Date",
+    key: "Date",
+    render: (_, record) => <b>{moment(record["Date"]).format("DD/MM/YYYY")}</b>,
+
+  },
+  {
+    title: "Spot Base",
+    dataIndex: "Spot Base",
+    key: "Spot Base",
+    render: (_, record) => <Text type="16-600" className="text-gray-6f">{record["Spot Base"]?.toLocaleString("fr")}</Text>,
+
+  },
+  {
+    title: "Spot Pointe",
+    dataIndex: "Spot Pointe",
+    key: "Spot Pointe",
+    // responsive: ["lg"],
+    render: (_, record) => <Text type="16-600" className="text-gray-6f">{record["Spot Pointe"]?.toLocaleString("fr")}</Text>,
+  },
+]
+
+
+
+
+
+
 export default function Marche() {
+
   var start_date = new Date() 
   var today = new Date() 
   start_date.setDate(today.getDate() - 7); 
@@ -121,9 +151,11 @@ export default function Marche() {
   const [end_time, setend_time] = useState(today.toISOString().split('T')[0])
   const dispatch = useDispatch()
 
+  
   useEffect(() => {
     dispatch(fetchMarche(start_time, end_time))
   }, [start_time, end_time])
+
 
   function transform(oldData, spotMarketPrice) {
 
@@ -156,7 +188,15 @@ export default function Marche() {
 
 
   const d = marche.data
-  console.log('uuu',d?.spotMarketPrice)
+  
+  const [datachart, setDataChart] = useState(transform(d?.OAcontract, d?.spotMarketPrice))
+
+  useEffect(() => {
+    setDataChart(transform(d?.OAcontract, d?.spotMarketPrice))
+  }, [marche.data])
+
+
+
   return (
     <Layout isDashboard={true} showSignlerArret showContactUs>
       <Seo title="Bohr Energie | Marché" />
@@ -165,19 +205,19 @@ export default function Marche() {
           Marché
         </h1>
         <div className="flex items-center gap-2">
-          <DateSelector
-            defaultValue={start_time}
-            onChange={(date: string) => setstart_time(date)}
-            format="YYYY-MM-DD"
-            showHours={false}
-          />
-          au
-          <DateSelector
-            defaultValue={end_time}
-            onChange={(date: string) => setend_time(date)}
-            format="YYYY-MM-DD"
-            showHours={false}
-          />
+            <DateSelector
+              defaultValue={start_time}
+              onChange={(date: string) => setstart_time(date)}
+              format="YYYY-MM-DD"
+              showHours={false}
+            />
+            au
+            <DateSelector
+              defaultValue={end_time}
+              onChange={(date: string) => setend_time(date)}
+              format="YYYY-MM-DD"
+              showHours={false}
+            />
         </div>
       </Layout.Header>
       <Spin spinning={marche.loading}>
@@ -202,9 +242,9 @@ export default function Marche() {
               />
             }
           >
-            <AreaChart
+            <AreaChartComponent
               xScale={xScale.key}
-              data={transform(d?.OAcontract, d?.spotMarketPrice)}
+              data={datachart}
             />
           </Card>
           <Card className="w-full md:w-1/3" title="Prix futur"  help="futur help">
@@ -216,26 +256,12 @@ export default function Marche() {
           </Card>
           <div className="w-full md:w-1/3">
             <Card title="Prix marché Spot (€/MWh)" help="Prix Spot help">
-              <div className="flex">
-                <div className="w-1/3">
-                  <Text type="16-600">Date</Text> <br />
-                  <Text type="16-600" className="text-gray-6f">
-                    {d?.spotPrices.Date}
-                  </Text>
-                </div>
-                <div className="w-1/3">
-                  <Text type="16-600">Spot Base</Text> <br />
-                  <Text type="16-600" className="text-gray-6f">
-                    {d?.spotPrices["Spot Base"].toLocaleString("fr")}
-                  </Text>
-                </div>
-                <div className="w-1/3">
-                  <Text type="16-600">Spot Pointe</Text> <br />
-                  <Text type="16-600" className="text-gray-6f">
-                    {d?.spotPrices["Spot Pointe"].toLocaleString("fr")}
-                  </Text>
-                </div>
-              </div>
+              <Table
+                pagination={false}
+                dataSource={d?.spotPrices}
+                columns={columnssp}
+              />
+
             </Card>
             <Card title="Prix Garanties d’origine" help="Gos help">
               <Table

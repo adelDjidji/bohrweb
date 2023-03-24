@@ -50,7 +50,7 @@ function EmailInformation(props: any) {
           {errors.email && <ErrorMessage message={errors.email.message} />}
         </div>
         <div className="flex mt-8 space-x-4">
-          <Link to="/login">
+          <Link to="/app/login">
             <button
               type="button"
               className="inline-block px-4 py-3 text-sm font-semibold leading-tight text-violet-bohr bg-transparent border-2 border-violet-bohr rounded-lg shadow-md outline-none focus:shadow-lg focus:ring-0 active:bg-violet-bohr active:shadow-lg"

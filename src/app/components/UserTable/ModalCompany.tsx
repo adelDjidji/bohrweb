@@ -9,8 +9,10 @@ import { RootStateOrAny, useDispatch, useSelector } from "react-redux"
 import ApiService from "../../services/ApiService"
 import { errorNotification, successNotification } from "../../utils"
 import { fetchCompanies, loadGroups } from "../../redux/actions/commun"
+import ClipLoader from "react-spinners/ClipLoader";
 
 const ModalCompany = ({ onClose, open = false }: ModalProps) => {
+  
   const {
     register,
     handleSubmit,
@@ -50,6 +52,46 @@ const ModalCompany = ({ onClose, open = false }: ModalProps) => {
     }
   }
 
+  const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+
+
+  const getInfoPappersV2 = async (siren) => {
+    setSpinner(true);
+    try {
+        const resp = await ApiService.Pappers({'siren':siren})
+        if(resp.status==200){
+        const info = resp.data
+        setPappers(info)
+        setSpinner(false);
+        }
+    } catch (error) {
+      console.log("error", error);
+      setSpinner(false);
+    }
+  }
+
+  
+ const [pappers, setPappers] = useState({ 'adresse' : '',
+                                          'ville' : '',
+                                          'code_postal' : '',
+                                          'pays' : '',
+                                          'tva' : '',
+                                          'raison_sociale' : '',
+                                          'nom' : '',
+                                          'prenom' : ''})
+
+
+ const [spinner, setSpinner] = useState(false);  
+
+ const updateforms = (key,value) => { 
+    setPappers({...pappers, [key] : value})
+ }
+
+
+
   return (
     <>
       <Drawer
@@ -73,11 +115,30 @@ const ModalCompany = ({ onClose, open = false }: ModalProps) => {
               <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
                 SIREN
               </label>
+
+
+              <div style={{display:"flex",flexDirection:"row",justifyContent:'start',alignItems: 'center'}}>
               <input
-                {...register("siren", { required: "SIREN is required" })}
+                placeholder =  {pappers.siren}
+                onChange = {(e) => updateforms('siren',e.target.value)}
+                // {...register("siren", { required: "SIREN is required" })}
                 type="text"
                 className="h-10 w-64 border-2 border-gray-200 hover:border-violet-bohr  text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+                onBlur = {(e)=> getInfoPappersV2(e.target.value)}
               />
+              { spinner ?
+                <div style={{marginLeft: '10px'}}>
+                <ClipLoader
+                color={"#5819F1"}
+                size={15}
+                />
+                </div>
+                : 
+                <></>
+              }
+              </div>
+
+
               {errors.siren && <ErrorMessage message={errors.siren.message} />}
             </div>
             <div>
@@ -85,7 +146,9 @@ const ModalCompany = ({ onClose, open = false }: ModalProps) => {
                 Adresse
               </label>
               <input
-                {...register("address", { required: "Adresse is required" })}
+                value =  {pappers.adresse}
+                onChange = {(e) => updateforms('adresse',e.target.value)}
+                // {...register("address", { required: "Adresse is required" })}
                 type="text"
                 className="h-10 w-64 border-2 border-gray-200 hover:border-violet-bohr  text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
@@ -98,7 +161,9 @@ const ModalCompany = ({ onClose, open = false }: ModalProps) => {
                 Ville
               </label>
               <input
-                {...register("city", { required: "Ville is required" })}
+                value =  {pappers.ville}
+                onChange = {(e) => updateforms('adresse',e.target.value)}
+                // {...register("city", { required: "Ville is required" })}
                 type="text"
                 className="h-10 w-64 border-2 border-gray-200 hover:border-violet-bohr  text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
@@ -109,7 +174,9 @@ const ModalCompany = ({ onClose, open = false }: ModalProps) => {
                 Code postal
               </label>
               <input
-                {...register("postal_code", { required: "Ville is required" })}
+                value =  {pappers.code_postal}
+                onChange = {(e) => updateforms('code_postal',e.target.value)}
+                // {...register("postal_code", { required: "Ville is required" })}
                 type="text"
                 className="h-10 w-64 border-2 border-gray-200 hover:border-violet-bohr  text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
@@ -122,7 +189,9 @@ const ModalCompany = ({ onClose, open = false }: ModalProps) => {
                 Pays
               </label>
               <input
-                {...register("country", { required: "Pays is required" })}
+                onChange = {(e) => updateforms('pays',e.target.value)}
+                value = {pappers.pays}
+                // {...register("country", { required: "Pays is required" })}
                 type="text"
                 className="h-10 w-64 border-2 border-gray-200 hover:border-violet-bohr  text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
@@ -135,7 +204,9 @@ const ModalCompany = ({ onClose, open = false }: ModalProps) => {
                 TVA
               </label>
               <input
-                {...register("tva", { required: "TVA is required" })}
+                value =  {pappers.tva}
+                onChange = {(e) => updateforms('tva',e.target.value)}
+                // {...register("tva", { required: "TVA is required" })}
                 type="text"
                 className="h-10 w-64 border-2 border-gray-200 hover:border-violet-bohr  text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
@@ -147,9 +218,11 @@ const ModalCompany = ({ onClose, open = false }: ModalProps) => {
                 Raison sociale
               </label>
               <input
-                {...register("name", {
-                  required: "Raison sociale is required",
-                })}
+                value =  {pappers.raison_sociale}
+                onChange = {(e) => updateforms('raison_sociale',e.target.value)}
+                // {...register("name", {
+                //   required: "Raison sociale is required",
+                // })}
                 type="text"
                 className="h-10 w-64 border-2 border-gray-200 hover:border-violet-bohr  text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
@@ -161,9 +234,11 @@ const ModalCompany = ({ onClose, open = false }: ModalProps) => {
                 Nom représentant légal
               </label>
               <input
-                {...register("legal_representative_name", {
-                  required: "Nom représentant légal is required",
-                })}
+                value =  {pappers.nom}
+                onChange = {(e) => updateforms('nom',e.target.value)}
+                // {...register("legal_representative_name", {
+                //   required: "Nom représentant légal is required",
+                // })}
                 type="text"
                 className="h-10 w-64 border-2 border-gray-200 hover:border-violet-bohr  text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
@@ -179,9 +254,11 @@ const ModalCompany = ({ onClose, open = false }: ModalProps) => {
                 Prénom représentant légal
               </label>
               <input
-                {...register("legal_representative_lastname", {
-                  required: "Prénom représentant légal is required",
-                })}
+                onChange = {(e) => updateforms('prenom',e.target.value)}
+                value = {pappers.prenom}
+                // {...register("legal_representative_lastname", {
+                //   required: "Prénom représentant légal is required",
+                // })}
                 type="text"
                 className="h-10 w-64 border-2 border-gray-200 hover:border-violet-bohr  text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
@@ -206,6 +283,23 @@ const ModalCompany = ({ onClose, open = false }: ModalProps) => {
                 <ErrorMessage message={errors.contact_mail.message} />
               )}
             </div>
+
+            <div>
+              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
+                Contact Number
+              </label>
+              <input
+                {...register("contact_number", {
+                  required: "Contact Number is required",
+                })}
+                type="text"
+                className="h-10 w-64 border-2 border-gray-200 hover:border-violet-bohr  text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+              />
+              {errors.contact_mail && (
+                <ErrorMessage message={errors.contact_mail.message} />
+              )}
+            </div>
+
             {currentUser?.role == "superadmin" && (
               <div>
                 <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">

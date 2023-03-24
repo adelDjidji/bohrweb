@@ -11,51 +11,58 @@ import {
 } from "recharts"
 import { stringToHexColor } from "../../utils"
 import Text from "../Text"
-import { Xtransformer } from "./LineChart"
+import moment from "moment"
+import { XtransformerSum } from "./Util"
 
-const default_Data = [
-  { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
-  { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
-  { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
-  { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
-  { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
-  { name: "Page F", uv: 2390, pv: 3800, amt: 2500 },
-  { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
-]
-
-const CustomTooltip = ({ active, payload, label }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div
-        className="text-white rounded-lg p-2"
-        style={{ background: "#20263D" }}
-      >
-        {payload.map(p => (
-          <div>
-            <Text type="12-500">{p.name}</Text> <br />
-            <Text type="14-600">{p.value.toLocaleString("fr")} €</Text>
-          </div>
-        ))}
-      </div>
-    )
-  }
-
-  return null
-}
-
-type Iprops = {
-  data: any[],
-  xScale:string
-}
-function MixBarChart({ data, xScale='hour' }: Iprops) {
+interface P {
+  data: any,
+  xScale : string,
+  unit : any,
+ }
+ 
+ const  MixBarChartComponent: React.FC<P> = ({ data, xScale='hour',unit}) => {
+ 
   const [transData, settransData] = useState<any>([])
   const [sites, setsites] = useState()
+  const [dataChart, setDataChart] = useState([])
+
+
 
   // useEffect(() => {
   //   // const new_Arr = transform(data)
   //   // settransData(new_Arr)
   //   // setsites(Object.keys(new_Arr[0]).filter(k=>k!='date'))
   // }, [data])
+
+  useEffect(() => {
+
+    const x = XtransformerSum(data, xScale)
+    setDataChart(x)
+    
+  }, [data])
+
+
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div
+          className="text-white rounded-lg p-2"
+          style={{ background: "#20263D" }}
+        >
+          {payload.map(p => (
+            <div>
+              <Text type="12-500">{p.name}</Text> <br />
+              <Text type="14-600">{p.value.toLocaleString("fr")} {unit}</Text>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  
+    return null
+  }
+
 
   function calculateRadius(
     total: number,
@@ -66,21 +73,25 @@ function MixBarChart({ data, xScale='hour' }: Iprops) {
     if (index == total) return [20, 20, 0, 0]
     else return 0
   }
+
+ 
   return (
     <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={Xtransformer(data, xScale)} style={{ background: "white" }}>
+      <BarChart data={dataChart} style={{ background: "white" }}>
         <CartesianGrid strokeDasharray="2 2" vertical={false} />
         <XAxis tickLine={false} axisLine={false} dataKey="date" />
         <YAxis
-          label={{
-            value: " €",
-            angle: 0,
-            position: "insideTopLeft",
-            offset: 10,
-          }}
+          unit ={unit}
           tickLine={false}
           axisLine={false}
-          tickFormatter={(val)=>(val/1000).toLocaleString('fr')}
+          // tickFormatter={(val)=>(val).toLocaleString('fr')}
+          tickFormatter={(value) =>
+            new Intl.NumberFormat("fr", {
+              notation: "compact",
+              compactDisplay: "short",
+            }).format(value)
+          }
+          domain={['0', 'dataMax']}
         />
         <Tooltip
           content={p => <CustomTooltip {...p} />}
@@ -95,6 +106,7 @@ function MixBarChart({ data, xScale='hour' }: Iprops) {
           align="left"
           verticalAlign="top"
         />
+
         {data?.length &&
           Object.keys(data[0])
             .filter(k => k != "date")
@@ -109,30 +121,11 @@ function MixBarChart({ data, xScale='hour' }: Iprops) {
                 />
               )
             })}
-        {/* <Bar
-          dataKey="pv"
-          stackId="a"
-          fill="#8884d8"
-          barSize={12}
-          radius={[0, 0, 20, 20]}
-        />
-        <Bar
-          dataKey="uv"
-          stackId="a"
-          fill="#FFD300"
-          barSize={12}
-          radius={[0, 0, 0, 0]}
-        />
-        <Bar
-          dataKey="uv"
-          stackId="a"
-          fill="#82ca9d"
-          barSize={12}
-          radius={[20, 20, 0, 0]}
-        /> */}
+
       </BarChart>
     </ResponsiveContainer>
   )
-}
+ 
+ };
+ export default MixBarChartComponent;
 
-export default MixBarChart

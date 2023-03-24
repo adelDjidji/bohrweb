@@ -5,8 +5,9 @@ import TopBar from "./components/TopBar"
 import Login from "./views/login"
 import ForgetPassword from "./views/ForgetPassword"
 import Register from "./views/Register"
-import Users from "./views/Users"
+import Users from "./components/Manage/Users"
 import Clients from "./views/Clients"
+import GestionAdmin from "./views/GestionAdmin"
 import ActivationForm from "./components/ActivationForm"
 import ForgotPasswordForm from "./components/ForgotPasswordForm"
 import RenderOnAnonymous from "./components/RenderOnAnonymous"
@@ -33,6 +34,11 @@ import { navigate } from "gatsby"
 import { fetchCompanies, fetchRoles } from "./redux/actions/commun"
 
 import moment from "moment"
+import Benchmark from "./views/Benchmark"
+import Live from "./views/Live"
+
+
+
 moment.locale("fr", {
   months: "janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre".split(
     "_"
@@ -107,18 +113,18 @@ export default () => {
     localStorage.removeItem("token")
     localStorage.removeItem("user")
     dispatch(setCurrentUser(null))
-    window.location.href = "/login"
+    window.location.href = "/app/login"
     // navigate("/app/login")
   }
 
   useEffect(() => {
     const PUBLIC_PATHS = [
-      `/login`,
-      "/subscribe",
-      "/forget-password",
-      "/password_recovery",
-      "/activate",
-      "/forgotPassword",
+      `/app/login`,
+      "/app/subscribe",
+      "/app/forget-password",
+      "/app/password_recovery",
+      "/app/activate",
+      "/app/forgotPassword",
     ]
     const hasValidToken = async () => {
       try {
@@ -139,26 +145,33 @@ export default () => {
   return (
     <Router>
       <NotFoundPage default />
-      <PrivateRoute exact path="/" component={Dashboard} />
-      <PrivateRoute superadmin={true} path="/users" component={Users} />
-      <PrivateRoute superadmin={true} path="/clients" component={Clients} />
-      <PrivateRoute path="/marche" component={Marche} />
-      <PrivateRoute path="/analyses" component={Analyses} />
-      <PrivateRoute path="/previsions" component={Previsions} />
-      <PrivateRoute path="/portefeuille" component={Portefeuille} />
-      <PrivateRoute path="/historique" component={Historique} />
-      <PrivateRoute path="/manage" component={Gestion} />
+      <PrivateRoute exact path="/app" component={Dashboard} />
 
-      <PublicRoute path="/login" component={Login} />
-      <PublicRoute path="/subscribe/:token" component={Register} />
-      <PublicRoute path="/forget-password" component={ForgetPassword} />
+
+      <PrivateRoute superadmin={true} path="/app/clients" component={Clients} />
+      <PrivateRoute superadmin={true} path="/app/users" component={Users} />
+      <PrivateRoute superadmin={true} path="/app/admin" component={GestionAdmin} />
+
+
+      <PrivateRoute path="/app/marche" component={Marche} />
+      <PrivateRoute path="/app/analyses" component={Analyses} />
+      <PrivateRoute path="/app/previsions" component={Previsions} />
+      <PrivateRoute path="/app/benchmark" component={Benchmark} />
+      <PrivateRoute path="/app/live" component={Live} />
+      {/* <PrivateRoute path="/app/portefeuille" component={Portefeuille} /> */}
+      <PrivateRoute path="/app/historique" component={Historique} />
+      <PrivateRoute path="/app/manage" component={Gestion} />
+
+      <PublicRoute path="/app/login" component={Login} />
+      <PublicRoute path="/app/subscribe/:token" component={Register} />
+      <PublicRoute path="/app/forget-password" component={ForgetPassword} />
       <PublicRoute
-        path="/password_recovery/:token"
+        path="/app/password_recovery/:token"
         component={PasswordRecovery}
       />
-      <PublicRoute path="/subscribe" component={SubscireForm} />
-      <PublicRoute path="/activate" component={ActivationForm} />
-      <PublicRoute path="/forgotPassword" component={ForgotPasswordForm} />
+      <PublicRoute path="/app/subscribe" component={SubscireForm} />
+      <PublicRoute path="/app/activate" component={ActivationForm} />
+      <PublicRoute path="/app/forgotPassword" component={ForgotPasswordForm} />
     </Router>
   )
 }

@@ -20,6 +20,30 @@ export const fetchRoles = () => {
       }
     }
   };
+  
+
+export const fetchProducts = () => {
+    return async (dispatch, getState) => {
+      // check if data is already present in the store
+
+      // const {commun}  = getState();
+      // if (commun.roles?.length) {
+      //   // if data is already present, don't fetch it again
+      //   return;
+      // }
+      
+      try {
+          const resp = await ApiService.GetProducts()
+          if(resp.status==200){
+            console.log('Get_products',resp.data)
+            dispatch({type:'LOAD_PRODUCTS', payload:resp.data})
+          }
+      } catch (error) {
+        
+      }
+    }
+  };
+  
 
 export const fetchCompanies = () => {
     return async (dispatch, getState) => {
@@ -30,10 +54,12 @@ export const fetchCompanies = () => {
       //   // if data is already present, don't fetch it again
       //   return;
       // }
+
       
       try {
           const resp = await ApiService.GetCompanies()
           if(resp.status==200){
+            console.log('fetchCompanies',resp.data)
             dispatch({type:'LOAD_COMPANIES', payload:resp.data})
           }
       } catch (error) {
@@ -41,6 +67,9 @@ export const fetchCompanies = () => {
       }
     }
   };
+
+
+
 export const fetchCompaniesDetails = () => {
     return async (dispatch, getState) => {
       // check if data is already present in the store
@@ -53,7 +82,9 @@ export const fetchCompaniesDetails = () => {
       
       try {
           const resp = await ApiService.GetCompaniesDetails()
+         
           if(resp.status==200){
+            console.log('fetchCompaniesDetails',resp.data)
             dispatch({type:'LOAD_COMPANIES_DETAILS', payload:resp.data})
           }
       } catch (error) {
@@ -167,7 +198,6 @@ export const fetchOldContracts = () => {
       //   // if data is already present, don't fetch it again
       //   return;
       // }
-      
       try {
           const resp = await ApiService.GetOldContracts()
           if(resp.status==200){
@@ -178,3 +208,48 @@ export const fetchOldContracts = () => {
       }
     }
   };
+
+  export const fetchOAContracts = () => {
+    return async (dispatch, getState) => {
+      // check if data is already present in the store
+
+      // const {commun}  = getState();
+      // if (commun.oldContracts?.length) {
+      //   // if data is already present, don't fetch it again
+      //   return;
+      // }
+      try {
+          const resp = await ApiService.GetOAContracts()
+          if(resp.status==200){
+            console.log('GetOAContracts',resp.data)
+            dispatch({type:'LOAD_OA_CONTRACTS', payload:resp.data.OAcontractTypes})
+          }
+      } catch (error) {
+        
+      }
+    }
+  };
+
+  
+export const FetchUploadFile = (file) => {
+  console.log('FetchUploadFile 1 ')
+  return async (dispatch, getState) => {
+    // check if data is already present in the store
+
+    // const {commun}  = getState();
+    // if (commun.oldContracts?.length) {
+    //   // if data is already present, don't fetch it again
+    //   return;
+    // }
+    console.log('FetchUploadFile 2')
+    try {
+        const resp = await ApiService.UploadFile(file)
+        if(resp.status==200){
+          console.log('FetchUploadFile',resp.data)
+        }
+    } catch (error) {
+      
+    }
+  }
+};
+

@@ -60,7 +60,7 @@ const LoginForm: FC<Props> = () => {
     ApiService.ForgotPassword({ email })
       .then(res => {
         dispatch(successMessage(res.data.message))
-        navigate("/")
+        navigate("/app/")
         setIsLoading(false)
       })
       .catch(err => {

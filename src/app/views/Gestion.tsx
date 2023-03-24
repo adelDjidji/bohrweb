@@ -10,6 +10,7 @@ import ModalUser from "../components/UserTable/ModalUser"
 import FacturesTable from "../components/Manage/Factures"
 import ContractsTable from "../components/Manage/Contracts"
 import { RootStateOrAny, useSelector } from "react-redux"
+import SPV from "../components/Manage/SPV"
 
 export default function Gestion() {
   const [modalSiteOpen, setmodalSiteOpen] = useState(false)
@@ -27,10 +28,10 @@ export default function Gestion() {
 
   const ActionButton = () => {
     const actionFunction = () => {
-      activeTab == "4" && setmodalSiteOpen(true)
-      activeTab == "1" && setmodalUserOpen2(true)
+      activeTab == "2" && setmodalSiteOpen(true)
+      activeTab == "5" && setmodalUserOpen2(true)
     }
-    if (activeTab == "4" || activeTab == "1")
+    if (activeTab == "5" || activeTab == "2")
       return (
         <button
           className="bg-violet-bohr text-white flex items-center justify-center py-2.5 px-4 rounded-lg"
@@ -39,8 +40,8 @@ export default function Gestion() {
         >
           <Icon name={IconNames.plusCircle} />
           <span className="ml-2.5">
-            {activeTab == "4" && "Ajouter un site de production"}
-            {activeTab == "1" && "Ajouter un utilisateur"}
+            {activeTab == "2" && "Ajouter un site de production"}
+            {activeTab == "5" && "Ajouter un utilisateur"}
           </span>
         </button>
       )
@@ -67,25 +68,31 @@ export default function Gestion() {
         defaultActiveKey="1"
         items={[
           {
-            label: `Utilisateurs`,
+            label: `SPV / Sociétés`,
             key: "1",
-            children: <UserTable isGestion={true} showExport={false} enabledFilters={['site']} handleEdit={handleEditUser} />,
+            children: <SPV />,
+          },
+          {
+            label: `Sites`,
+            key: "2",
+            children: <Sites />,
           },
           {
             label: `Factures`,
-            key: "2",
+            key: "3",
             children: <FacturesTable/>,
           },
           {
             label: `Contracts`,
-            key: "3",
+            key: "4",
             children: <ContractsTable/>,
           },
           {
-            label: `Sites`,
-            key: "4",
-            children: <Sites />,
+            label: `Utilisateurs`,
+            key: "5",
+            children: <UserTable isGestion={true} showExport={false} enabledFilters={['site']} handleEdit={handleEditUser} />,
           },
+
         ]}
         tabBarExtraContent={<ActionButton />}
       />

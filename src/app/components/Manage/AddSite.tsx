@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react"
-import { Steps, AutoComplete as AntAutocomplet } from "antd"
+import { Steps } from "antd"
 import Text from "../Text"
 import "../../App.css"
 import Input from "../Input"
@@ -20,11 +20,16 @@ import { RootStateOrAny, useDispatch, useSelector } from "react-redux"
 import { Icon } from "../Icon"
 import { fetchSitesDetail } from "../../redux/actions"
 import {
+  addCompany,
   fetchCompanies,
   fetchCompaniesDetails,
+  fetchOAContracts,
   fetchOldContracts,
   fetchTypesTech,
 } from "../../redux/actions/commun"
+import ClipLoader from "react-spinners/ClipLoader"
+import { DateSelector } from "../DateSelector"
+
 const ICON = icon({
   iconUrl:
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/images/marker-icon.png",
@@ -33,68 +38,159 @@ const ICON = icon({
 // import 'leaflet/dist/images/marker-icon.png';
 // import 'leaflet/dist/images/marker-shadow.png';
 
-const def = {
-  tva: "",
-  company_name: "",
-  company_siren: "",
-  company_address: "",
-  company_postal_code: "",
-  company_city: "",
-  company_country: "",
-  company_legal_representative_name: "",
-  company_legal_representative_lastname: "",
-  company_contact_mail: "",
-  bank_account_holder_account: "",
-  bank_account_holder_address: "",
-  bank_account_bank_name: "",
-  bank_account_bank_address: "",
-  bank_account_iban: "",
-  bank_account_bic: "",
-  site_name: "",
-  site_card_number: "",
-  site_prm_number: "",
-  site_type: "",
-  site_old_contract: "",
-  site_installed_capacity: "",
-  site_commisionning_date: "",
-  site_grid: "",
-  site_tracker: "",
-  site_inclination: "",
-  site_azimut: "",
-  site_orientation: "",
-  site_height: "",
-  site_turbine_type: "",
-  site_reference_river: "",
-  site_lat: "48.856614",
-  site_ton: "2.3522219",
-  site_address: "",
-  site_postal_code: null,
-  site_country: "",
-}
+
 const AddSite = props => {
-  const { typesTech, oldContracts, companiesDetails } = useSelector(
+
+  const { typesTech, oldContracts, companies,OAContracts } = useSelector(
     (state: RootStateOrAny) => state.commun
   )
+
 
   const [step, setStep] = useState(-1)
   const [ibans, setIbans] = useState(["", "", "", ""])
 
+
   const dispatch = useDispatch()
-  const [position, setPosition] = useState({
-    lat: 48.856614,
-    lng: 2.3522219,
-  })
 
   useEffect(() => {
     dispatch(fetchTypesTech())
     dispatch(fetchOldContracts())
+    dispatch(fetchOAContracts())
     dispatch(fetchCompaniesDetails())
+
   }, [])
 
-  const [values, setvalues] = useState(def)
+  // const [values, setvalues] = useState(def)
+
   const onStepChange = newStep => {
     setStep(newStep)
   }
+
+  
+  const [spinner, setSpinner] = useState(false);  
+  
+
+  const [def,setDef] = useState({
+                                  'tva': "",
+                                  'company_name': "",
+                                  'company_siren': "",
+                                  'company_address': "",
+                                  'company_postal_code': "",
+                                  'company_city': "",
+                                  'company_country': "",
+                                  'company_legal_representative_name': "",
+                                  'company_legal_representative_lastname': "",
+                                  'company_contact_mail': "",
+                                  'company_contact_phone': "",
+                                  'bank_account_holder_account': "",
+                                  'bank_account_holder_address': "",
+                                  'bank_account_bank_name': "",
+                                  'bank_account_bank_address': "",
+                                  'bank_account_iban': "",
+                                  'bank_account_bic': "",
+                                  'site_name': "",
+                                  'site_card_number': "",
+                                  'site_prm_number': "",
+                                  'site_type': "",
+                                  'site_old_contract': "",
+                                  'site_installed_capacity': "",
+                                  'site_commisionning_date': "2020-01-01",
+                                  'site_grid': "",
+                                  'site_tracker': "",
+                                  'site_inclination': "",
+                                  'site_azimut': "",
+                                  'site_orientation': "",
+                                  'site_height': "",
+                                  'site_turbine_type': "",
+                                  'site_reference_river': "",
+                                  'site_lat': "48.856614",
+                                  'site_lon': "2.3522219",
+                                  'site_address': "",
+                                  'site_postal_code': null,
+                                  'site_country': "",
+                                })
+                         
+
+  const [position, setPosition] = useState({'lat':"48.856614",'lon':"2.3522219"});  
+
+  const getInfoPappersV2 = async (siren) => {
+    try {
+
+      if (companies.filter(e=>e.siren === siren).length > 0 ) {
+        setSpinner(false)
+      } else {
+        // Reset everyfield before autocomplete
+        setDef( {...def,
+          'company_name' : '',
+          'company_siren' : siren,
+          'tva': '',
+          'company_address': '',
+          'company_city' : '',
+          'company_country' : '',
+          'company_postal_code' : '',
+          'company_legal_representative_lastname': '',
+          'company_legal_representative_name': '',
+          'company_contact_phone': '',
+          'company_contact_mail': '',
+          'bank_account_holder_account': "",
+          'bank_account_holder_address': "",
+          'bank_account_bank_name': "",
+          'bank_account_bank_address': "",
+          'bank_account_iban': "",
+          'bank_account_bic': "",
+        } )
+
+
+        setSpinner(true);
+        const resp = await ApiService.Pappers({'siren':siren})
+        if(resp.status==200){
+        const info = resp.data
+
+        const new_c =  {
+          public_id: "999999",
+          name: info['name'],
+          siren: siren,
+          address: info['address'],
+          city: info['city'],
+          country: info['country'],
+          legal_representative: info['legal_representative_lastname'] + ' ' + info['legal_representative_name'] ,
+          postal_code: info['postal_code'],
+          tva_number: info['tva_number'],
+        }
+
+        setDef( {...def,
+                'company_name' : info['name'],
+                'company_siren' : siren,
+                'tva': info['tva_number'],
+                'company_address': info['address'],
+                'company_city' : info['city'],
+                'company_country' :  info['country'],
+                'company_postal_code' : info['postal_code'],
+                'company_legal_representative_lastname': info['legal_representative_lastname'],
+                'company_legal_representative_name' :info['legal_representative_name'] 
+              } )
+
+
+        companies.push(new_c)
+        setSpinner(false);
+        setselectedCompany(new_c)
+        }
+      }
+
+
+
+
+    } catch (error) {
+
+      setSpinner(false);
+    }
+  }
+
+  
+    const updateforms = (key,value) => { 
+        setDef({...def, [key] : value})
+    }
+
 
   const sendSms = async callbackSuccess => {
     try {
@@ -108,17 +204,19 @@ const AddSite = props => {
     }
   }
   const onSubmit = () => {
-    setvalues({ ...values, bank_account_iban: ibans.join("") })
+    setDef({ ...def, bank_account_iban: ibans.join("") })
     sendSms(() => setStep(5))
   }
 
   const handleAddSite = async sms_code => {
     try {
-      const resp = await ApiService.AddSite({ ...values, sms_code })
+      console.log(def)
+      const resp = await ApiService.AddSite({ ...def, sms_code })
       if (resp.status == 200) {
         successNotification(resp.data.message)
         props.closeModal()
         dispatch(fetchSitesDetail())
+        setStep(0)
       } else {
         errorNotification(resp.data.message)
       }
@@ -127,14 +225,16 @@ const AddSite = props => {
     }
   }
 
-  const handleOnSelectPlace = place => {
-    setPosition({
-      lat: place.geometry.location.lat(),
-      lng: place.geometry.location.lng(),
-    })
-    setvalues({ ...values, site_lat: place.geometry.location.lat() })
-    setvalues({ ...values, site_ton: place.geometry.location.lng() })
+  const handleOnSelectPlace = async place => {
+    // const  pos =  await { lat : place.geometry.location.lat(), lng: place.geometry.location.lng() }
+    console.log(' handleOnSelectPlace')
+    // setPosition({'lat':pos.lat,'lon':pos.lng})
+
+    // setDef({ ...def, site_lat: pos.lat.toString()})
+    // setDef({ ...def, site_lon: pos.lng.toString() })
   }
+
+
   function MyComponent(props) {
     const markerRef = useRef(null)
     const eventHandlers = useMemo(
@@ -142,19 +242,22 @@ const AddSite = props => {
         dragend() {
           const marker = markerRef.current
           if (marker != null) {
-            setPosition(marker.getLatLng())
-            setvalues({
-              ...values,
+            setPosition({'lat': marker.getLatLng().lat,'lon':marker.getLatLng().lng,})
+            setDef({
+              ...def,
               site_lat: marker.getLatLng().lat,
-              site_ton: marker.getLatLng().lng,
+              site_lon: marker.getLatLng().lng,
             })
           }
         },
       }),
       []
     )
+
     const map = useMap()
     map.setView(props.center)
+
+
     return (
       <Marker
         draggable
@@ -168,59 +271,81 @@ const AddSite = props => {
   const [options, setOptions] = useState([])
   const [selectedCompany, setselectedCompany] = useState()
   const [bankDetails, setbankDetails] = useState()
+  
+  
   const handleSlectCompany = async (company: {
     name: string
     siren: string
     public_id: string
     tva_number: string
     address: string
-    legal_representative: string
+    city : string,
+    country: string,
+    postal_code : string,
+    legal_representative: string,
+    legal_representative_name: string,
+    legal_representative_lastname: string
+    contact_phone: string,
+    contact_mail: string,
+
   }) => {
     if (!!company) {
       setselectedCompany(company)
       const resp = await ApiService.GetBankDetails(company.public_id)
-      console.log(resp)
-      const {
-        bank_address,
-        bank_name,
-        bic,
-        holder_account,
-        holder_address,
-        iban,
-      } = resp.data[0]
-      setvalues({
-        ...values,
-        bank_account_bank_address: bank_address,
-        bank_account_bank_name: bank_name,
-        bank_account_bic: bic,
-        bank_account_holder_account: holder_account,
-        bank_account_holder_address: holder_address,
-        bank_account_iban: iban,
+      if(resp.status==200){
+        if (resp.data[0] ===  undefined) {
+          var bank = {'bank_address':'','bank_name':'','bic':'','holder_account':'','holder_address':'','iban':'FR1111111111111111111111111',}
+        } else {
+
+          const {
+            bank_address,
+            bank_name,
+            bic,
+            holder_account,
+            holder_address,
+            iban,
+          } = resp.data[0]
+         var bank = {'bank_address': resp.data[0]['bank_address'],'bank_name':resp.data[0]['bank_name'],'bic':resp.data[0]['bic'],'holder_account':resp.data[0]['holder_account'],'holder_address':resp.data[0]['holder_address'],'iban':resp.data[0]['iban'],}
+        }
+      }  else  {
+          var bank = {'bank_address':'','bank_name':'','bic':'','holder_account':'','holder_address':'','iban':'FR1111111111111111111111111',}
+      }
+      setDef({
+        ...def,
+        bank_account_bank_address: bank.bank_address,
+        bank_account_bank_name: bank.bank_name,
+        bank_account_bic: bank.bic,
+        bank_account_holder_account: bank.holder_account,
+        bank_account_holder_address: bank.holder_address,
+        bank_account_iban: bank.iban,
         company_name: company.name,
         company_siren: company.siren,
         tva: company.tva_number,
         company_address: company.address,
-        company_legal_representative_name: company.legal_representative.split(
+        company_postal_code: company.postal_code,
+        company_contact_mail: company.contact_mail,
+        company_contact_phone: company.contact_phone,
+        company_legal_representative_name: company.legal_representative_name.split(
           " "
         )[0],
-        company_legal_representative_lastname: company.legal_representative.split(
+        company_legal_representative_lastname: company.legal_representative_lastname.split(
           " "
         )[1],
       })
-      setIbans(iban.match(/.{1,4}/g))
+      setIbans(bank.iban.match(/.{1,4}/g))
     }
   }
   const handleSelectType = (type: { key: string; value: string }) => {
     if (!!type)
-      setvalues({
-        ...values,
+      setDef({
+        ...def,
         site_type: type.key,
       })
   }
   const handleSelectOC = (oc: { key: string; value: string }) => {
     if (!!oc)
-      setvalues({
-        ...values,
+      setDef({
+        ...def,
         site_old_contract: oc.key,
       })
   }
@@ -301,7 +426,7 @@ const AddSite = props => {
     return <div className="flex gap-2 flex-wrap">{inputs}</div>
   }
   const dic = {
-    solaire: ["puissance", "tracker", "azimut"],
+    solaire: ["puissance", "tracker", "azimut",'altitude', "inclinaison", "orientation","onduleur","module","strings","module_per_strings"],
     hydro: ["puissance"],
     eolien: ["puissance", "altitude"],
   }
@@ -315,25 +440,45 @@ const AddSite = props => {
       valueKey: "site_tracker",
     },
     azimut: {
-      label: "Asimat",
+      label: "Asimut",
       valueKey: "site_azimut",
     },
     altitude: {
       label: "Altitude",
       valueKey: "site_altitude",
     },
-    inchinaison: {
-      label: "Inchinaison",
+    inclinaison: {
+      label: "Inclinaison",
       valueKey: "site_inclination",
     },
     orientation: {
       label: "Orientation",
       valueKey: "site_orientation",
     },
+    module: {
+      label: "Nom du Module",
+      valueKey: "site_module",
+    },
+    strings: {
+      label: "Nombre de Strings",
+      valueKey: "site_strings",
+    },
+    module_per_strings: {
+      label: "Nombre de Module par Strings",
+      valueKey: "site_module_per_strings",
+    },
+    onduleur: {
+      label: "Nom de l'Onduleur",
+      valueKey: "site_onduleur",
+    },
+
   }
+
+  
   const renderInputsByType = (type: "solaire" | "hydro" | "eolien") => {
     if (type?.trim() == "") return null
     const inputsKeys = dic[type] // array of inputs keys
+
     const inputs = inputsKeys?.length ?  inputsKeys.map(k =>
       Object.keys(dicKeys).includes(k) ? dicKeys[k] : null
     ) : [] // inputs with {label, key}
@@ -344,10 +489,10 @@ const AddSite = props => {
         </label>
         <input
           type="text"
-          value={values[input.valueKey]}
+          value={def[input.valueKey]}
           onChange={e =>
-            setvalues({
-              ...values,
+            setDef({
+              ...def,
               [input.valueKey]: e.target.value,
             })
           }
@@ -357,20 +502,66 @@ const AddSite = props => {
       </div>
     ))
   }
+
+
+
   const europeanCountries = ["be", "cy", "cz", "dk", "fr"]
   const steps = [
     {
-      title: "Entreprise",
+      title: "Entreprise / SPV",
       subTitle: "Etape 1",
       content: (
         <>
+
+
+
           <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-x-8">
+
+          <div className="col-span-4" style={{display:"flex",flexDirection:"row",justifyContent:'start',alignItems: 'center',borderBottom:'1px grey solid'}}>
+            Vos Informations
+          </div>
+
+            <div className="w-80">
+
+              <div style={{display:"flex",flexDirection:"row",justifyContent:'start',alignItems: 'center'}}>
+
+                <div>
+                  <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
+                    SIREN
+                  </label>
+                </div>
+
+                { spinner ?
+                  <div style={{marginLeft: '10px',paddingTop:'25px'}}>
+                    <ClipLoader
+                    color={"#5819F1"}
+                    size={15}
+                    />
+                  </div>
+                  : 
+                  <></>
+                }
+              </div>
+
+
+
+              <input
+                type="text"
+                // value={values.company_siren}
+                value =  {def.company_siren}
+                onChange = {(e) => updateforms('company_siren',e.target.value)}
+                onBlur = {(e)=> getInfoPappersV2(e.target.value)}
+                placeholder=""
+                className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+              />
+            </div>
+
             <div className="w-80">
               <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
-                Entreprise
+                Entreprise / SPV
               </label>
               <SelectDropdown
-                items={companiesDetails}
+                items={companies}
                 type="none"
                 fullWidth
                 keyAttribute="public_id"
@@ -380,20 +571,23 @@ const AddSite = props => {
                 onSelect={handleSlectCompany}
               />
             </div>
+
+{/* 
+            
             <div className="w-80">
               <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
-                Raison sociale
+                Entreprise / SPV
               </label>
               <input
                 type="text"
                 placeholder=""
-                value={values["company_name"]}
-                onChange={e =>
-                  setvalues({ ...values, company_name: e.target.value })
-                }
+                value =  {pappers.raison_sociale}
+                onChange = {(e) => updateforms('raison_sociale',e.target.value)}
                 className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
-            </div>
+            </div> */}
+
+
             <div className="w-80">
               <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
                 Adresse
@@ -401,13 +595,52 @@ const AddSite = props => {
               <input
                 type="text"
                 placeholder=""
-                value={values["company_address"]}
-                onChange={e =>
-                  setvalues({ ...values, company_address: e.target.value })
-                }
+                value =  {def.company_address}
+                onChange = {(e) => updateforms('company_address',e.target.value)}
                 className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
             </div>
+
+            <div className="w-80">
+              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
+                Ville
+              </label>
+              <input
+                type="text"
+                placeholder=""
+                value =  {def.city}
+                onChange = {(e) => updateforms('city',e.target.value)}
+                className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+              />
+            </div>
+
+
+            <div className="w-80">
+              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
+                Code Postal
+              </label>
+              <input
+                type="text"
+                placeholder=""
+                value =  {def.company_postal_code}
+                onChange = {(e) => updateforms('company_postal_code',e.target.value)}
+                className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+              />
+            </div>
+
+            <div className="w-80">
+              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
+                Pays
+              </label>
+              <input
+                type="text"
+                placeholder=""
+                value =  {def.company_country}
+                onChange = {(e) => updateforms('company_country',e.target.value)}
+                className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+              />
+            </div>
+
             <div className="w-80">
               <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
                 TVA
@@ -415,25 +648,12 @@ const AddSite = props => {
               <input
                 type="text"
                 placeholder=""
-                value={values["tva"]}
-                onChange={e => setvalues({ ...values, tva: e.target.value })}
+                value =  {def.tva}
+                onChange = {(e) => updateforms('tva',e.target.value)}
                 className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
             </div>
-            <div className="w-80">
-              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
-                SIREN
-              </label>
-              <input
-                type="text"
-                value={values.company_siren}
-                onChange={e =>
-                  setvalues({ ...values, company_siren: e.target.value })
-                }
-                placeholder=""
-                className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
-              />
-            </div>
+
             <div className="w-80">
               <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
                 Nom représentant légal
@@ -441,34 +661,92 @@ const AddSite = props => {
               <input
                 type="text"
                 placeholder=""
-                value={values["company_legal_representative_name"]}
-                onChange={e =>
-                  setvalues({
-                    ...values,
-                    company_legal_representative_name: e.target.value,
-                  })
-                }
+                value =  {def.company_legal_representative_lastname}
+                onChange = {(e) => updateforms('company_legal_representative_lastname',e.target.value)}
                 className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
             </div>
             <div className="w-80">
               <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
-                Préom représentant légal
+                Prénom représentant légal
               </label>
               <input
                 type="text"
                 placeholder=""
-                value={values["company_legal_representative_lastname"]}
-                onChange={e =>
-                  setvalues({
-                    ...values,
-                    company_legal_representative_lastname: e.target.value,
-                  })
-                }
+                value =  {def.company_legal_representative_name}
+                onChange = {(e) => updateforms('company_legal_representative_name',e.target.value)}
                 className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
             </div>
+
+            <div className="w-80">
+              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
+                Contact Responsable Telephone
+              </label>
+              <input
+                type="text"
+                placeholder=""
+                value =  {def.company_contact_phone}
+                onChange = {(e) => updateforms('company_contact_phonee',e.target.value)}
+                className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+              />
+            </div>
+            <div className="w-80">
+              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
+                Contact Responsable Mail
+              </label>
+              <input
+                type="text"
+                placeholder=""
+                value =  {def.company_contact_mail}
+                onChange = {(e) => updateforms('company_contact_mail',e.target.value)}
+                className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+              />
+            </div>
+
+
+            <div className="col-span-4" style={{display:"flex",flexDirection:"row",justifyContent:'start',alignItems: 'center',borderBottom:'1px grey solid',marginTop:'30px'}}>
+            Vos Informations Bancaires
+            </div>
+
+            <div className="col-span-2">
+              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
+                Titulaire du compte
+              </label>
+              <input
+                type="text"
+                value={def.bank_account_holder_account}
+                onChange = {(e) => updateforms('bank_account_holder_account',e.target.value)}
+                placeholder=""
+                className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+              />
+            </div>
+
+
+            <div className="col-span-4">
+              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
+                IBAN
+              </label>
+              <IbanInputs defaultValue={def.bank_account_iban} />
+            </div>
+            <div className="col-span-1">
+              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
+                BIC
+              </label>
+              <input
+                type="text"
+                value={def.bank_account_bic}
+                onChange = {(e) => updateforms('bank_account_bic',e.target.value)}
+                placeholder=""
+                className="w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+              />
+            </div>
+
+
           </div>
+
+
+
         </>
       ),
     },
@@ -478,6 +756,26 @@ const AddSite = props => {
       content: (
         <>
           <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-x-8">
+          <div className="w-80">
+              <div className="flex items-center mt-8 mb-2 gap-3">
+                <label className="text-sm font-medium text-dark-grey">
+                  Nom du Site
+                </label>
+                <Icon
+                  name="info"
+                  title="Vous trouverez ce numéro lorem ipsum dolor es...."
+                />
+              </div>
+
+              <input
+                // {...register("n_prm")}
+                type="text"
+                value={def.site_name}
+                onChange = {(e) => updateforms('site_name',e.target.value)}
+                className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+              />
+            </div>
+
             <div className="w-80">
               <div className="flex items-center mt-8 mb-2 gap-3">
                 <label className="text-sm font-medium text-dark-grey dark:text-white">
@@ -492,11 +790,8 @@ const AddSite = props => {
               <input
                 // {...register("n_carte")}
                 type="text"
-                placeholder=""
-                value={values["site_card_number"]}
-                onChange={e =>
-                  setvalues({ ...values, site_card_number: e.target.value })
-                }
+                value={def.site_card_number}
+                onChange = {(e) => updateforms('site_card_number',e.target.value)}
                 className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
             </div>
@@ -514,79 +809,84 @@ const AddSite = props => {
               <input
                 // {...register("n_prm")}
                 type="text"
-                placeholder=""
-                value={values["site_prm_number"]}
-                onChange={e =>
-                  setvalues({ ...values, site_prm_number: e.target.value })
-                }
+                value={def.site_prm_number}
+                onChange = {(e) => updateforms('site_prm_number',e.target.value)}
                 className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
             </div>
-            <div className="w-80">
-              <label className="block mt-8 mb-2 text-sm font-semibold text-dark-grey dark:text-white">
-                Type
-              </label>
+
+
+
+
+
+              <div className="w-80">
+              <div className="flex items-center mt-8 mb-2 gap-3">
+                <label className="text-sm font-medium text-dark-grey">
+                  Type
+                </label>
+                <Icon
+                  name="info"
+                  title="Vous trouverez ce numéro lorem ipsum dolor es...."
+                />
+              </div>
               <SelectDropdown
                 items={typesTech?.map(i => ({ key: i, value: i }))}
                 type="none"
                 className="mr-0"
-                defaultValue={values.site_type}
+                defaultValue={def.site_type}
                 onSelect={handleSelectType}
               />
             </div>
+
             <div className="w-80">
-              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
-                Ancien contract
-              </label>
+            <div className="flex items-center mt-8 mb-2 gap-3">
+                <label className="text-sm font-medium text-dark-grey">
+                  Ancien Contrat
+                </label>
+                <Icon
+                  name="info"
+                  title="Vous trouverez ce numéro lorem ipsum dolor es...."
+                />
+              </div>
               <SelectDropdown
-                items={oldContracts?.map(i => ({ key: i, value: i }))}
+                items={OAContracts?.map(i => ({ key: i.contract_type, value: i.contract_type }))}
                 type="none"
                 className="mr-0"
-                defaultValue={values.site_old_contract}
+                defaultValue={def.site_old_contract}
                 onSelect={handleSelectOC}
               />
             </div>
-          </div>
-        </>
-      ),
-    },
-    {
-      title: "Unite de production",
-      subTitle: "Etape 3",
-      content: (
-        <>
-          <div className="grid md:grid-cols-2 grid-cols-1 gap-x-8">
-            <div className="sm:col-span-2 col-span-1">
-              <Text type="20-600" style={{textTransform: 'capitalize'}}>{values.site_type}</Text>
-            </div>
-            {renderInputsByType(values.site_type)}
-          </div>
-        </>
-      ),
-    },
-    {
-      title: "Adresse",
-      subTitle: "Etape 4",
-      content: (
-        <>
-          <div className="grid md:grid-cols-5 md:grid-rows-3 sm:grid-cols-1 gap-x-8 w-full">
+
+            
+            <div className="w-80">
+                <div className="flex items-center mt-8 mb-2 gap-3">
+                  <label className="text-sm font-medium text-dark-grey">
+                    Date de Mise en Service
+                  </label>
+                  <Icon
+                    name="info"
+                    title="Vous trouverez ce numéro lorem ipsum dolor es...."
+                  />
+                </div>
+                <DateSelector
+                  // defaultValue={start_time}
+                  onChange={(date: string) => setDef({...def, site_commisionning_date : date})}
+                  format="YYYY-MM-DD"
+                  showHours={false}
+                />
+              </div>
+
+            
+
             <div className="md:col-span-2 sm:col-span-1">
               <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
                 Adresse du site
               </label>
 
-              {/* <AntAutocomplet
-               className="w-full"
-               onSearch={handleSearch}
-               placeholder="input here"
-               options={options}
-             >
-              <input className="w-full border-2 border-gray-200 text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block p-2.5 focus:outline-none" type="text" />
-             </AntAutocomplet> */}
               <AutoComplete
                 className="w-full border-2 border-gray-200 text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block p-2.5 focus:outline-none"
                 apiKey={GOOGLE_MAP_API_KEY}
-                callback={() => {}}
+                // callback={() => {}}
                 options={{
                   types: [
                     // 'geocode',
@@ -606,21 +906,15 @@ const AddSite = props => {
                 defaultValue="Paris, France"
               />
             </div>
-            <div className="md:col-span-3 sm:col-span-1 row-span-3 ">
-              <div className="mt-8 w-full h-72 rounded-lg overflow-hidden	">
-                <MapContainer center={position} zoom={12}>
-                  <MyComponent center={position} />
-                  <TileLayer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png" />
-                </MapContainer>
-              </div>
-            </div>
+
+
             <div>
               <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
                 Latitude
               </label>
               <input
                 type="text"
-                value={values["site_lat"]}
+                value={position.lat}
                 // onChange={e =>
                 //   setvalues({ ...values, Latitude: e.target.value })
                 // }
@@ -628,6 +922,7 @@ const AddSite = props => {
                 className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
             </div>
+
             <div>
               <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
                 Longitude
@@ -635,7 +930,7 @@ const AddSite = props => {
               <input
                 // {...register("Longitude")}
                 type="text"
-                value={values["site_ton"]}
+                value={position.lon}
                 // onChange={e =>
                 //   setvalues({ ...values, Longitude: e.target.value })
                 // }
@@ -643,108 +938,36 @@ const AddSite = props => {
                 className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
               />
             </div>
-          </div>
+
+            <div className="md:col-span-2 sm:col-span-1 row-span-2 ">
+              <div className="mt-8 w-full h-72 rounded-lg overflow-hidden	">
+                <MapContainer center={ {'lat': position.lat, 'lon':position.lon}} zoom={12}>
+                  <MyComponent center={ {'lat': position.lat, 'lon':position.lon} } />
+                  <TileLayer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png" />
+                </MapContainer>
+              </div>
+            </div>
+
+            </div>
+
         </>
       ),
     },
     {
-      title: "Information bancaires",
-      subTitle: "Etape 5",
+      title: "Unite de production",
+      subTitle: "Etape 3",
       content: (
         <>
-          <div className="grid md:grid-cols-4 sm:grid-cols-1 gap-x-8">
-            <div className="col-span-2">
-              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
-                Titulaire du compte
-              </label>
-              <input
-                type="text"
-                value={values["bank_account_holder_account"]}
-                onChange={e =>
-                  setvalues({
-                    ...values,
-                    bank_account_holder_account: e.target.value,
-                  })
-                }
-                placeholder=""
-                className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
-              />
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-x-8">
+            <div className="sm:col-span-2 col-span-1">
+              <Text type="20-600" style={{textTransform: 'capitalize'}}>{def.site_type}</Text>
             </div>
-            <div className="col-span-2">
-              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
-                Adresse
-              </label>
-              <input
-                type="text"
-                value={values["bank_account_holder_address"]}
-                onChange={e =>
-                  setvalues({
-                    ...values,
-                    bank_account_holder_address: e.target.value,
-                  })
-                }
-                placeholder=""
-                className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
-              />
-            </div>
-            <div className="col-span-2">
-              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
-                Banque
-              </label>
-              <input
-                type="text"
-                value={values["bank_account_bank_name"]}
-                onChange={e =>
-                  setvalues({
-                    ...values,
-                    bank_account_bank_name: e.target.value,
-                  })
-                }
-                placeholder="Banque"
-                className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
-              />
-            </div>
-            <div className="col-span-2">
-              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
-                Adresse
-              </label>
-              <input
-                type="text"
-                value={values["bank_account_bank_address"]}
-                onChange={e =>
-                  setvalues({
-                    ...values,
-                    bank_account_bank_address: e.target.value,
-                  })
-                }
-                placeholder=""
-                className=" w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
-              />
-            </div>
-            <div className="col-span-3">
-              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
-                IBAN
-              </label>
-              <IbanInputs defaultValue={values["bank_account_iban"]} />
-            </div>
-            <div className="col-span-1">
-              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
-                BIC
-              </label>
-              <input
-                type="text"
-                value={values["bank_account_bic"]}
-                onChange={e =>
-                  setvalues({ ...values, bank_account_bic: e.target.value })
-                }
-                placeholder=""
-                className="w-full border-2 border-gray-200 hover:border-violet-bohr  text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600  block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
-              />
-            </div>
+            {renderInputsByType(def.site_type)}
           </div>
         </>
       ),
     },
+
   ]
 
   return (
@@ -773,10 +996,10 @@ const AddSite = props => {
                 />
               </div>
               <Text className="mb-4" type="20-600">
-                L'entreprise
+                L'entreprise / Le SPV
               </Text>
               <Text className="text-gray-6f" type="16-500">
-                Raison social, Adresse, SIREN, TVA
+                SIREN
               </Text>
             </div>
             <div className="grid text-center w-64">
@@ -825,7 +1048,7 @@ const AddSite = props => {
             </button>
           </div>
         </>
-      ) : step != 5 ? (
+      ) : step != 3 ? (
         <>
           <>
             <Steps
@@ -876,7 +1099,7 @@ const AddSite = props => {
               center
               handleSubmit={handleAddSite}
               handleback={() => {
-                setStep(4)
+                setStep(2)
               }}
               handleResend={sendSms}
             />

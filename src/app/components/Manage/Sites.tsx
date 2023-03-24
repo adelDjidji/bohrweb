@@ -12,16 +12,53 @@ import moment from "moment"
 const { Panel } = Collapse
 
 const Sites = () => {
-  const { data, loading } = useSelector((state: RootStateOrAny) => state.sites)
 
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(fetchSitesDetail())
-  }, [])
+  // const { data, loading } = useSelector((state: RootStateOrAny) => state.sites)
+
+  // const dispatch = useDispatch()
+  // useEffect(() => {
+  //   dispatch(fetchSitesDetail())
+  // }, [])
+
+
+
+//////
+
+
+
+const sites = useSelector((state: RootStateOrAny) => state.sites)
+
+const dispatch = useDispatch()
+useEffect(() => {
+  dispatch(fetchSitesDetail())
+  if (sites) {
+    setData(sites.data)
+    setLoading(false)
+  }
+}, [])
+
+
+const [data, setData] = useState(Array())
+const [loading, setLoading] = useState(true)
+const [currentSite, setcurrentSite] = useState()
+const [modalOpen, setModalOpen] = useState(false)
+
+
+useEffect(() => {
+  if (sites.data) {
+    setData(sites.data)
+    setLoading(false)
+  }
+}, [sites.data])
+
+
+
+
+//////////
 
   const onChange = key => {
   }
-  const [currentSite, setcurrentSite] = useState()
+ 
   const genExtra = site => (
     <span>
       <Icon
@@ -37,9 +74,104 @@ const Sites = () => {
     </span>
   )
 
+
+  const panelDataType = (site) => {
+  
+    if (site?.site_type == 'hydro') {
+      return (
+        {
+          "N. Card": "card_number",
+          "Ancien contrat": "last_contract",
+          "Puissance d’injection max": "installed_capacity",
+          "Latitude": "latitude",
+          "Longitude": "longitude",
+          "Puissance installé": "installed_capacity",
+          "Type Turbine": "turbine_type",
+          "Riviere de Reference": "reference_river",
+          'Mail Responsable': 'contact_mail',
+          'Telephone Responsable':'contact_phone',
+          'Adresse' :'address',
+          // 'Ville' :'city',
+          'Code Postal' :'postal_code',
+          'Pays' :'country',
+
+        }
+      )
+    } else {
+      return (
+        {
+
+          "N. Card": "card_number",
+          "Ancien contrat": "last_contract",
+          "Puissance d’injection max": "installed_capacity",
+          "Latitude": "latitude",
+          "Longitude": "longitude",
+          "Puissance installé": "installed_capacity",
+          "Tracker": "tracker",
+          "Inclinaison": "inclination",
+          "Azimut": "azimut",
+          "Orientation": "orientation",
+          'Mail Responsable': 'contact_mail',
+          'Telephone Responsable':'contact_phone',
+          'Adresse' :'address',
+          // 'Ville' :'city',
+          'Code Postal' :'postal_code',
+          'Pays' :'country',
+
+        }
+      )
+    }
+  }
+
+
+
+  const keyMapping = {
+    'commisionning_date' : "Date de mise en service",
+    'card_number': "Numéro Card",
+    'grid': "Grid",
+    'turbine_type': "Type de Turbine",
+    'city': "Ville",
+    'reference_river': "Rivière de référence",
+    'legal_representative_name' : "Représentant Legal",
+    'address': "Adresse",
+    'postal_code': "Code Postal",
+    'country': "Pays",
+    'last_contract': "Ancien Contrat",
+    "installed_capacity" : "Capacité Installé",
+    'tracker' : "Tracker",
+    'inclination' : "Inclinaison",
+    'azimut' : "Azimut",
+    'orientation' : "Orientation",
+    'height' : "Altitude",
+    'latitude':'Latitude',
+    'longitude':'Longitude',
+    'contact_mail':'Mail Responsable',
+    'contact_phone':'Telephone Responsable',
+  }
+
+
+  const panelData = {
+    "N. Card": "card_number",
+    "Ancien contrat": "last_contract",
+    "Puissance d’injection max": "installed_capacity",
+    "Latitude": "latitude",
+    "Longitude": "longitude",
+    "Puissance installé": "installed_capacity",
+    "Type Turbine": "turbine_type",
+    "Riviere de Reference": "reference_river",
+    'Mail Responsable': 'contact_mail',
+    'Telephone Responsable':'contact_phone',
+    'Adresse' :'address',
+    // 'Ville' : 'city',
+    'Code Postal' :'postal_code',
+    'Pays' :'country',
+  }
+
+
+
   const PanelHeader = ({ data }) => (
     <Row className="flex items-center">
-      <Col xs={24} sm={12} md={8} lg={6}>
+      <Col xs={24} sm={12} md={8} lg={16}>
         <Avatar
           gap={9}
           style={{
@@ -61,15 +193,7 @@ const Sites = () => {
           {data.site_type || "-"}
         </Text>
       </Col>
-      {/* <Col xs={24} sm={12} md={4} lg={4}>
-        <Text className="text-gray-6f" type="12-500">
-          Raison sociale
-        </Text>
-        <Text className="block" type="14-500">
-          {data.raison_social || "-"}
-        </Text>
-      </Col> */}
-      <Col xs={24} sm={12} md={8} lg={10}>
+      <Col xs={24} sm={12} md={8} lg={4}>
         <Text className="text-gray-6f" type="12-500">
           N.PRM
         </Text>
@@ -79,44 +203,59 @@ const Sites = () => {
       </Col>
     </Row>
   )
-  const panelData = {
-    TVA: "tva",
-    "N. Card": "card_number",
-    "N.PRM": "prm_number",
-    Type: "site_type",
-    "Ancien contrat": "last_contract",
-    "Puissance d’injection max": "installed_capacity",
-    "Coordonnées site": "20.1, 54.0.98",
-    "Puissance installé": "installed_capacity",
-    Tracker: "tracker",
-    Inclinaison: "inclination",
-    Azimut: "azimut",
-    Orientation: "orientation",
-    "Titulaire du compte": "tutilaire",
-    "Adresse du titulaire": "address",
-    Banque: "banc",
-    "Adresse banque": "address",
-    IBAN: "iban",
-    BIC: "bic",
+  
+
+
+
+
+
+  const PanelBody = ({ data }) => {
+
+    if (data.site_type=='hydro') {
+
+        return(    
+                <Row className="flex items-center">
+                  {Object.keys(data).filter(i=>!['prm_number','name', 'site_type','related_company_id','public_id','tracker','inclination','azimut','orientation','height'].includes(i)).map(key => (
+                    <Col className="mt-6" xs={24} sm={12} md={4} lg={4}>
+                      <Text className="text-gray-6f" type="12-500">
+                        {keyMapping[key]} 
+                      </Text>
+                      <Text className="block" type="14-500">
+                        {key == "commisionning_date" ? moment(data[key]).format('YYYY/MM/DD') : null}
+                        { ['card_number','grid','turbine_type','reference_river','address','postal_code','country','last_contract','contact_mail','contact_phone','city'].includes(key) ? data[key] : null}
+                        { ['latitude','longitude'].includes(key) && data[key] ? parseFloat(data[key]).toFixed(3) : null }
+                        {key == "installed_capacity" && data[key] + " KwC"}
+                      </Text>
+                    </Col>
+                  ))}
+                </Row>
+              )
+
+    } else {
+        return( 
+          <Row className="flex items-center">
+          {Object.keys(data).filter(i=>!['prm_number','name','related_company_id', 'site_type','turbine_type','reference_river','public_id'].includes(i)).map(key => (
+            <Col className="mt-6" xs={24} sm={12} md={4} lg={4}>
+              <Text className="text-gray-6f" type="12-500">
+                {key}
+              </Text>
+              <Text className="block" type="14-500">
+                {key == "commisionning_date" ? moment(data[key]).format('YYYY/MM/DD') : null}
+                { ['card_number','grid','address','postal_code','country','last_contract','tracker','inclination','azimut','orientation','height','city'].includes(key) ? data[key] : null}
+                { ['latitude','longitude'].includes(key) && data[key] ? parseFloat(data[key]).toFixed(3) : null }
+                {key == "installed_capacity" && data[key] + " KwC"}
+                
+              </Text>
+            </Col>
+          ))}
+        </Row>
+        )
+
+
+    }
   }
-  const PanelBody = ({ data }) => (
-    <Row className="flex items-center">
-      {Object.keys(data).filter(i=>!['prm_number','name', 'site_type'].includes(i)).map(key => (
-        <Col className="mt-6" xs={24} sm={12} md={4} lg={4}>
-          <Text className="text-gray-6f" type="12-500">
-            {key}
-          </Text>
-          <Text className="block" type="14-500">
-            {key !== "commisionning_date"
-              ? data[key]
-              : moment(data[key]).format('lll')}
-            {key == "installed_capacity" && " KwC"}
-          </Text>
-        </Col>
-      ))}
-    </Row>
-  )
-  const [modalOpen, setModalOpen] = useState(false)
+
+
   return (
     <>
       <Spin spinning={loading}>

@@ -43,8 +43,8 @@ const UserTable = ({
     dispatch(successMessage("Vous etes a present connecté en tant que "+res.data.userInfo.name))
     dispatch(setCurrentUser({...res.data.userInfo, user_id:user.public_id, root_id:currentUser.user_id}))
     persistor.flush()
-    if (user.role === "superadmin") window.location.href='/users' //navigate("/app/users")
-    else window.location.href="/" //navigate("/app/")
+    if (user.role === "superadmin") window.location.href='/app/users' //navigate("/app/users")
+    else window.location.href="/app/" //navigate("/app/")
   }
 
   const handleLoginAsUser = async (user) => {

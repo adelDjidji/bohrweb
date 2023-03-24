@@ -104,7 +104,7 @@ export default function PersistentDrawerLeft() {
         <Divider />
         <Button
           component={Link}
-          to={"/dashboard"}
+          to={"/app/dashboard"}
           variant="contained"
           color="primary"
           size="large"
@@ -115,7 +115,7 @@ export default function PersistentDrawerLeft() {
         </Button>
         <Button
           component={Link}
-          to={"/consommation"}
+          to={"/app/consommation"}
           variant="contained"
           color="primary"
           size="large"
@@ -125,7 +125,7 @@ export default function PersistentDrawerLeft() {
         </Button>
         <Button
           component={Link}
-          to={"/payments"}
+          to={"/app/payments"}
           variant="contained"
           color="primary"
           size="large"
@@ -136,7 +136,7 @@ export default function PersistentDrawerLeft() {
         </Button>
         <Button
           component={Link}
-          to={"/informations"}
+          to={"/app/informations"}
           variant="contained"
           color="primary"
           size="large"
@@ -147,7 +147,7 @@ export default function PersistentDrawerLeft() {
         </Button>
         <Button
           component={Link}
-          to={"/contrats"}
+          to={"/app/contrats"}
           variant="contained"
           color="primary"
           size="large"
@@ -159,7 +159,7 @@ export default function PersistentDrawerLeft() {
 
         <Button
           component={Link}
-          to={"/help"}
+          to={"/app/help"}
           variant="contained"
           color="primary"
           size="large"
@@ -176,7 +176,7 @@ export default function PersistentDrawerLeft() {
           className={classes.button}
           onClick={() => {
             localStorage.removeItem("token")
-            navigate("/home")
+            navigate("/app/home")
           }}
         >
           <ExitToAppIcon className={classes.icons} />

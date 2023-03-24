@@ -26,7 +26,7 @@ const SelectDropdown = ({
   items = [],
   onSelect,
   placeholder = "",
-  width = 230,
+  width = 280,
   fullWidth = false,
   FooterComponent = null,
   type = "checkbox",
@@ -86,7 +86,6 @@ const SelectDropdown = ({
         setslectedValues([])
       }
     }
-    console.log({defaultValue, defaultValues})
   }, [defaultValue, defaultValues])
 
   const [allSelected, setallSelected] = useState(false)

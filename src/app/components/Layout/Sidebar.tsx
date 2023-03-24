@@ -20,49 +20,65 @@ const ManageusersMenu = [
   {
     title: "Espace client",
     icon: { name: "users" },
-    link: "/clients",
+    link: "/app/clients",
   },
   {
-    title: "Gestion utilisateur",
+    title: "Gestion",
     icon: { name: "manage" },
-    link: "/users",
+    link: "/app/admin",
   },
+  // {
+  //   title: "Gestion utilisateur",
+  //   icon: { name: "manage" },
+  //   link: "/app/users",
+  // },
+  // {
+  //   title: "Gestion Produits",
+  //   icon: { name: IconNames.coin },
+  //   link: "/app/admin",
+  // },
+
 ]
 const DashboardMenu = [
   {
     title: "Tableau de bohr",
     icon: { name: IconNames.dashboard },
-    link: "/",
+    link: "/app/",
   },
   {
     title: "Marché",
     icon: { name: IconNames.coin },
-    link: "/marche",
+    link: "/app/marche",
   },
   {
     title: "Analyses",
     icon: { name: IconNames.chart },
-    link: "/analyses",
+    link: "/app/analyses",
   },
+  // {
+  //   title: "Prévisions",
+  //   icon: { name: IconNames.predict },
+  //   link: "/app/previsions",
+  // },
   {
-    title: "Prévisions",
+    title: "Benchmark",
     icon: { name: IconNames.predict },
-    link: "/previsions",
+    link: "/app/benchmark",
   },
-  {
-    title: "Portefeuille",
-    icon: { name: IconNames.card },
-    link: "/portefeuille",
-  },
+  // {
+  //   title: "Portefeuille",
+  //   icon: { name: IconNames.card },
+  //   link: "/app/portefeuille",
+  // },
   {
     title: "Historique des arrêts",
     icon: { name: IconNames.list },
-    link: "/historique",
+    link: "/app/historique",
   },
   {
     title: "Gestion",
     icon: { name: IconNames.manage },
-    link: "/manage",
+    link: "/app/manage",
   },
 ]
 interface Sidebarprops {
@@ -109,8 +125,8 @@ export default function Sidebar({
     dispatch(successMessage("Vous etes a present connecté en tant que "+res.data.userInfo.name))
     dispatch(setCurrentUser({...res.data.userInfo, user_id:user.root_id}))
     persistor.flush()
-    if (res.data.userInfo.role === "superadmin") navigate("/users")
-    else navigate("/")
+    if (res.data.userInfo.role === "superadmin") navigate("/app/users")
+    else navigate("/app/")
   }
 
   const logedAsUser =  currentUser && currentUser?.name.indexOf(' as ')>0
@@ -123,7 +139,7 @@ export default function Sidebar({
       localStorage.removeItem("token")
       localStorage.removeItem("user")
       dispatch(setCurrentUser(null))
-      navigate("/")
+      navigate("/app/")
     }
     
   }
@@ -212,7 +228,7 @@ export default function Sidebar({
                 >
                   <Icon color={Colors.primary} name={IconNames.alertCircle} />
                   <span className="ml-2.5 font-semibold text-sm">
-                    Signaler un arrtêt
+                    Signaler un arrêt
                   </span>
                 </button>
               )}

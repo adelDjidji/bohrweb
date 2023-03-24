@@ -8,7 +8,7 @@ import Card from "../components/Card"
 import DeltaBadge from "../components/DeltaBadge"
 import DashLine from "../components/Charts/DashLineChart"
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux"
-import { fetchForecast } from "../redux/actions"
+import { fetchForecast, fetchSitesDetail } from "../redux/actions"
 import moment from "moment"
 import { Spin } from "antd"
 
@@ -21,7 +21,10 @@ export default function Previsions() {
   end_date.setDate(end_date.getDate()); 
   //var firstDayOfYear = new Date(start_date.getFullYear(), 0, 1);
 
-  const { sites } = useSelector((state: RootStateOrAny) => state.commun)
+  // const { sites } = useSelector((state: RootStateOrAny) => state.commun)
+
+  const sites_ = useSelector((state: RootStateOrAny) => state.sites)
+
   const { data, loading } = useSelector(
     (state: RootStateOrAny) => state.forecast
   )
@@ -32,13 +35,26 @@ export default function Previsions() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchForecast(start_time, end_time))
+    dispatch(fetchForecast(start_time, end_time,selectedSites))
   }, [start_time, end_time])
 
+  
+  useEffect(() => {
+    dispatch(fetchSitesDetail())
+  }, [])
+
+  const [sites, setSites] = useState(sites_.data)
+  const [selectedSites, setSelectedSites] = useState(Array())
+  
   const handleSlectHour = val => {
     setxScale(val)
   }
-  const handleSlectSite = val => {}
+
+  const handleSelectSite = val => {
+    setSelectedSites(val.map(i => i.public_id))
+  }
+
+
 
   return (
     <Layout isDashboard={true}>
@@ -52,9 +68,11 @@ export default function Previsions() {
             items={sites}
             keyAttribute="public_id"
             valueAttribute="name"
-            onSelect={handleSlectSite}
+            defaultValues={selectedSites}
+            onSelect={handleSelectSite}
             placeholder="Sélectionnez un site"
           />
+
           <div className="flex items-center gap-2">
             <DateSelector
               defaultValue={start_time}
@@ -99,9 +117,9 @@ export default function Previsions() {
               </div>
             }
           >
-            <div className="flex items-center gap-x-4 mb-1.5">
-              <Text type="32-600">{data?.spotRealised[data?.spotRealised.length-1]['value']} €</Text>
-            </div>
+            {/* <div className="flex items-center gap-x-4 mb-1.5">
+              <Text type="32-600">{data?.spotRealised[data?.spotRealised.length-1]?.value} €</Text>
+            </div> */}
             <DashLine
               xScale={xScale.key}
               dataReal={data?.spotRealised}
@@ -120,9 +138,9 @@ export default function Previsions() {
               </div>
             }
           >
-            <div className="flex items-center gap-x-4 mb-1.5">
-              <Text type="32-600">{data?.productionRealised[data?.productionRealised.length-1]['value']} MW</Text>
-            </div>
+            {/* <div className="flex items-center gap-x-4 mb-1.5">
+              <Text type="32-600">{data?.productionRealised[data?.productionRealised.length-1]?.value} MW</Text>
+            </div> */}
             <DashLine
               xScale={xScale.key}
               dataReal={data?.productionRealised}
@@ -131,7 +149,7 @@ export default function Previsions() {
           </Card>
           <Card
             className="w-full"
-            title="Prévision du portefeuille"
+            title="Prévision débit associé"
             headerRight={
               <div className="p-3 rounded" style={{ background: "#F5F6FA" }}>
                 <Text type="16-600" className="text-gray-6f">
@@ -141,9 +159,9 @@ export default function Previsions() {
               </div>
             }
           >
-            <div className="flex items-center gap-x-4 mb-1.5">
+            {/* <div className="flex items-center gap-x-4 mb-1.5">
               <Text type="32-600">1 250 362 €</Text>
-            </div>
+            </div> */}
             <DashLine
               xScale={xScale.key}
               dataReal={data?.portfolioRealised}
@@ -162,9 +180,9 @@ export default function Previsions() {
               </div>
             }
           >
-            <div className="flex items-center gap-x-4 mb-1.5">
+            {/* <div className="flex items-center gap-x-4 mb-1.5">
               <Text type="32-600">250 362 €</Text>
-            </div>
+            </div> */}
             <DashLine
               xScale={xScale.key}
               dataReal={data?.gainRealised}

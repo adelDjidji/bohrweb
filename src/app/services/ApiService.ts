@@ -63,6 +63,8 @@ const GetBankDetails = (company_id:string) => HttpService.securePost(`${url}asse
 
 const GetRoles = () => HttpService.secureGet(`${url}assets/get_roles`)
 
+const GetProducts = () => HttpService.secureGet(`${url}assets/get_product`)
+
 const GetSites = (company?: string) =>
   HttpService.secureGet(`${url}assets/get_sites`, { company })
 
@@ -80,7 +82,7 @@ const GetTypes = (company?: string) =>
 
 const GetGroups = () => HttpService.secureGet(`${url}assets/get_groups`)
 
-const GetDashboard = () => HttpService.secureGet(`${url}accounts/get_dashboard`)
+
 
 type IDateRange = {
   start_time: string
@@ -90,6 +92,13 @@ type IAnalysis = {
   start_time: string
   end_time: string
   sites_ids?:string[]
+  show_by_site:boolean
+}
+
+type IBenchmark = {
+  start_time: string
+  end_time : string
+  site_id : string
 }
 
 const GetMarche = (params: IDateRange) =>
@@ -98,6 +107,12 @@ const GetMarche = (params: IDateRange) =>
 const GetAnalysis = (params: IAnalysis) =>
   HttpService.secureGet(`${url}accounts/get_analysis`, params)
 
+const GetBenchmark = (params: IBenchmark) =>
+  HttpService.secureGet(`${url}accounts/get_benchmark`, params)
+
+const GetLive = (params: IBenchmark) =>
+  HttpService.secureGet(`${url}accounts/get_live`, params)
+
 const GetPortfolio = (params: IDateRange) =>
   HttpService.secureGet(`${url}accounts/get_portfolio`, params)
 
@@ -105,8 +120,11 @@ const GetOutages = (params: IDateRange) =>
   HttpService.secureGet(`${url}outages/get_outages`, params)
 
 const GetInvoices = () => HttpService.secureGet(`${url}accounts/get_invoices`)
-
 const GetContracts = () => HttpService.secureGet(`${url}accounts/get_contracts`)
+
+
+const GetOAContracts = () => HttpService.secureGet(`${url}assets/get_oa_contracts`)
+
 
 const GetInvoice = (id: string) =>
   HttpService.secureGet(`${url}accounts/get_invoice`, { id })
@@ -114,11 +132,11 @@ const GetInvoice = (id: string) =>
 const GetContract = (id: string) =>
   HttpService.secureGet(`${url}accounts/get_contract`, { id })
 
-const GetForecast = (params: IDateRange) =>
-  HttpService.secureGet(`${url}accounts/get_forecast`, params)
-
 const DeleteUser = (body: { mail: string }) =>
   HttpService.securePost(`${url}invitation/delete_user`, body)
+
+const DeleteProduct = (body: { public_id: string }) =>
+  HttpService.securePost(`${url}assets/delete_product`, body)
 
 const ModifyUser = (body: any) =>
   HttpService.securePost(`${url}assets/modify_user`, body)
@@ -128,6 +146,9 @@ const InviteUser = (body: any) =>
 
 const CreateCompany = (body: any) =>
   HttpService.securePost(`${url}assets/create_company`, body)
+
+const CreateProduct= (body: any) =>
+  HttpService.securePost(`${url}assets/create_product`, body)
 
 const CreateGroup = (body: any) =>
   HttpService.securePost(`${url}assets/create_group`, body)
@@ -140,6 +161,45 @@ const Withdraw = (body: any) =>
 
 const ModifySite = (body: any) =>
   HttpService.securePost(`${url}assets/modify_site`, body)
+
+const ModifyCompany = (body: any) =>
+  HttpService.securePost(`${url}assets/modify_company`, body)
+
+const GetForecast = (params: IForecast) =>
+  HttpService.secureGet(`${url}accounts/get_forecast`, params)
+
+const UploadFile = (body: any) =>
+HttpService.securePostFile(`${url}accounts/upload`, body)
+ 
+const UploadContract = (body: any) =>
+HttpService.securePostFile(`${url}accounts/upload_contract`, body)
+
+const UploadInvoice = (body: any) =>
+HttpService.securePostFile(`${url}accounts/upload_invoice`, body)
+
+
+type IForecast = {
+    start_time: string
+    end_time: string
+    sites_ids?:string[]
+  }
+
+
+
+
+  type Isiren = {
+    siren : string;
+  }
+
+const Pappers = (params: Isiren) => 
+  HttpService.secureGet(`${url}assets/get_companies_by_siren`, params)
+
+type ISwitch = {
+  show_by_site: boolean
+  }
+
+const GetDashboard = (params: ISwitch) => 
+  HttpService.secureGet(`${url}accounts/get_dashboard`,params)
 
 type IArret = {
   public_id?: string
@@ -167,6 +227,11 @@ const LogoutAsUser = () =>
   HttpService.secureGet(`${url}management/logout_as_user`)
 
 const ApiService = {
+  UploadFile,
+  UploadInvoice,
+  UploadContract,
+  GetBenchmark,
+  GetLive,
   isLoggedIn,
   Login,
   Register,
@@ -179,13 +244,16 @@ const ApiService = {
   CreatePassword,
   GetUsers,
   DeleteUser,
+  DeleteProduct,
   ModifyUser,
   GetCompanies,
   GetRoles,
+  GetProducts,
   GetSites,
   InviteUser,
   CreateCompany,
   CreateGroup,
+  CreateProduct,
   LoginAsUser,
   GetGroups,
   GetDashboard,
@@ -203,13 +271,16 @@ const ApiService = {
   AddSite,
   SignalerArret,
   ModifySite,
+  ModifyCompany,
   GetSitesDetails,
   GetTechnologies,
   GetOldContracts,
   GetInvoice,
   GetContract,
   GetCompaniesDetails,
-  GetBankDetails
+  GetBankDetails,
+  Pappers,
+  GetOAContracts,
 }
 
 export default ApiService

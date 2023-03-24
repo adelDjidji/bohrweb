@@ -61,8 +61,8 @@ function login() {
     dispatch(setCurrentUser(res.data.userInfo))
     persistor.flush()
     setIsLoading(false)
-    if(res.data.userInfo.role==='superadmin') navigate("/users")
-    else navigate("/")
+    if(res.data.userInfo.role==='superadmin') navigate("/app/admin")
+    else navigate("/app/")
   }
 
   const onSubmit = (data: any) => {
@@ -150,7 +150,7 @@ function login() {
                 </div>
                 <div>
                   <label className="block mt-3 mb-2 text-sm font-semibold text-violet-bohr dark:text-white underline">
-                    <Link to="/forget-password">Mot de passe oublié?</Link>
+                    <Link to="/app/forget-password">Mot de passe oublié?</Link>
                   </label>
                 </div>
                 <div className="flex mt-8 space-x-4">

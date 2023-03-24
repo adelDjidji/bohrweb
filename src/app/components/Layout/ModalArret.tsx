@@ -18,6 +18,7 @@ import { fetchTypes } from "../../redux/actions/commun"
 import ApiService from "../../services/ApiService"
 import { errorNotification, successNotification } from "../../utils"
 import { CircularProgress } from "@material-ui/core"
+import { fetchSitesDetail } from "../../redux/actions"
 
 const { TextArea } = Input
 
@@ -41,6 +42,8 @@ const ModalArret = ({ onClose = undefined, open = false }: ModalProps) => {
   const [end_time, setend_time] = useState("2023-01-02")
   const [comment, setcomment] = useState("")
   const [loading, setloading] = useState(false)
+  const [InstalledCapacity, setInstalledCapacity] = useState("")
+  
 
   const onSubmit = async (data: any) => {
     const body = {
@@ -65,7 +68,10 @@ const ModalArret = ({ onClose = undefined, open = false }: ModalProps) => {
   
 
   const handleChangeSite = site => {
+    console.log('site',site)
     setsite_public_id(site.public_id)
+    setInstalledCapacity(site.installed_capacity)
+
   }
   const handleChangeType = type => {
     setoutage_type(type.key)
@@ -75,7 +81,9 @@ const ModalArret = ({ onClose = undefined, open = false }: ModalProps) => {
 
   useEffect(() => {
     dispatch(fetchTypes())
+    dispatch(fetchSitesDetail())
   }, [])
+
 
   return (
     <>
@@ -96,6 +104,20 @@ const ModalArret = ({ onClose = undefined, open = false }: ModalProps) => {
       >
         <form onSubmit={handleSubmit(onSubmit)}>
           <Row className="flex items-center" gutter={24}>
+            <Col xs={24} sm={24} md={24} lg={24}>
+              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
+                Site
+              </label>
+              <SelectDropdown
+                placeholder="Sélectionner un site"
+                width={260}
+                items={sites}
+                keyAttribute="public_id"
+                valueAttribute="name"
+                onSelect={handleChangeSite}
+                type="radio"
+              />
+            </Col>
             <Col xs={24} sm={12} md={12} lg={12}>
               <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
                 Date de début
@@ -121,9 +143,8 @@ const ModalArret = ({ onClose = undefined, open = false }: ModalProps) => {
                 Puissance installé
               </label>
               <input
-                {...register("puissance_installe", {
-                  required: "Puissance installé is required",
-                })}
+                disabled
+                value = {InstalledCapacity}
                 type="text"
                 className="h-10 w-full border-2 border-gray-200 hover:border-violet-bohr  text-dark-grey sm:text-sm rounded-lg focus:ring-primary-600  block p-2.5  focus:outline-none"
               />
@@ -146,20 +167,7 @@ const ModalArret = ({ onClose = undefined, open = false }: ModalProps) => {
                 <ErrorMessage message={errors.remaining_power?.message} />
               )}
             </Col>
-            <Col xs={24} sm={24} md={24} lg={24}>
-              <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
-                Site
-              </label>
-              <SelectDropdown
-                placeholder="Sélectionner un site"
-                width={260}
-                items={sites}
-                keyAttribute="public_id"
-                valueAttribute="name"
-                onSelect={handleChangeSite}
-                type="radio"
-              />
-            </Col>
+
             <Col xs={24} sm={24} md={24} lg={24}>
               <label className="block mt-8 mb-2 text-sm font-medium text-dark-grey dark:text-white">
                 Type

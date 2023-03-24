@@ -34,3 +34,7 @@
 body{
   min-height: 100vh;
 }
+
+.ant-collapse-content-box {
+  padding: 0;
+ }

@@ -72,7 +72,7 @@ const LoginForm: FC<Props> = () => {
         if (res.data.token !== undefined){
           localStorage.setItem("token", res.data.token)
           dispatch(successMessage("Vous etes a present connecté"))
-          navigate("/")
+          navigate("/app/")
           setIsLoading(false)
         }
         else{
@@ -159,7 +159,7 @@ const LoginForm: FC<Props> = () => {
                 Login
               </Button>
             )}
-            <Link className={classes.forgotPassword} to={"/forgotPassword"}>
+            <Link className={classes.forgotPassword} to={"/app/forgotPassword"}>
               J'ai oublié mon mot de passe
             </Link>
           </CardActions>

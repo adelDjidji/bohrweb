@@ -13,11 +13,11 @@ const PublicRoute: FC<Props> = ({
 }) => {
   if (
     UserService.isLoggedIn() &&
-    location?.pathname !== `/` &&
-    location?.pathname !== `/home` &&
-    location?.pathname !== `/dashboard`
+    location?.pathname !== `/app` &&
+    location?.pathname !== `/app/home` &&
+    location?.pathname !== `/app/dashboard`
   ) {
-    typeof window !== "undefined" && navigate("/")
+    typeof window !== "undefined" && navigate("/app")
     return null
   }
   return <Component {...rest} />

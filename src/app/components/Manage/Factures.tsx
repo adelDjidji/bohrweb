@@ -14,6 +14,10 @@ const FacturesTable = ({ enabledFilters = ["site"], showExport = true }) => {
   const { data, loading } = useSelector(
     (state: RootStateOrAny) => state.invoices
   )
+
+
+  console.log('invoice',data)
+
   const [showedData, setShowedData] = useState()
   const { sites } = useSelector((state: RootStateOrAny) => state.commun)
   const dispatch = useDispatch()
@@ -22,13 +26,22 @@ const FacturesTable = ({ enabledFilters = ["site"], showExport = true }) => {
     Authorization: `Bearer ${UserService.getToken()}`,
   }
 
+
   const [pdfContent, setPdfContent] = useState(null)
 
   async function handleViewClick(record) {
-    const downloadurl = `${url}accounts/get_invoice`
+
+    console.log('handleViewClick',record)
+
+    const downloadurl = `${url}accounts/get_invoice?file_id=${record.id}`
+    console.log('downloadurl',downloadurl)
 
     try {
-      const response = await fetch(downloadurl, { headers })
+      const requestOptions = {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${UserService.getToken()}`},
+      };
+      const response = await fetch(downloadurl, requestOptions)
       const blob = await response.blob()
 
       // Create a URL object from the blob and set it as the source of the iframe in the Modal
@@ -57,15 +70,19 @@ const FacturesTable = ({ enabledFilters = ["site"], showExport = true }) => {
   }
 
   useEffect(() => {
+    console.log('fetchInvoices()')
     dispatch(fetchInvoices())
   }, [])
 
   useEffect(() => {
-    setShowedData(data)
+    setShowedData(data.filter((i) => i.name.startsWith('F_') ))
   }, [data])
 
   function handleDownloadClick(record) {
-    fetch(`${url}accounts/get_invoice`, { headers })
+
+    const downloadurl = `${url}accounts/get_invoice?file_id=${record.id}`
+
+    fetch(downloadurl, { headers })
       .then(response => {
         // Convert the response to a blob object
         return response.blob()
@@ -77,7 +94,8 @@ const FacturesTable = ({ enabledFilters = ["site"], showExport = true }) => {
         // Create a link and click it to download the PDF
         const link = document.createElement("a")
         link.href = url
-        link.download = `Invoice-${record.site}-${record.creation_date}.pdf`
+        // link.download = `Invoice-${record.site}-${record.creation_date}.pdf`
+        link.download = `${record.name}`
         link.click()
 
         // Clean up the temporary URL object
@@ -89,6 +107,50 @@ const FacturesTable = ({ enabledFilters = ["site"], showExport = true }) => {
   }
 
   const columns = [
+    // {
+    //   title: "id",
+    //   dataIndex: "id",
+    //   key: "id",
+    //   responsive: ["sm"],
+    //   width: 200,
+    //   render: (_, { id }) => (id),
+    // },
+    {
+      title: "Nom",
+      dataIndex: "name",
+      key: "name",
+      responsive: ["sm"],
+      width: 500,
+      render: (_, { name }) => (name.substring(2)),
+    },
+
+    {
+      title: "",
+      key: "action",
+      width: 100,
+      render: (_, record) => (
+        <Space size="middle">
+          <Icon
+            className="cursor-pointer"
+            title="View"
+            color={Colors.primary}
+            name={IconNames.eye}
+            onClick={() => handleViewClick(record)}
+          />
+          <Icon
+            title="Télécharger"
+            className="cursor-pointer"
+            onClick={() => handleDownloadClick(record)}
+            name={IconNames.download}
+          />
+        </Space>
+      ),
+    },
+  ]
+
+
+
+  const columns_ = [
     {
       title: "Date",
       dataIndex: "creation_date",
@@ -154,6 +216,8 @@ const FacturesTable = ({ enabledFilters = ["site"], showExport = true }) => {
   })
 
   const handleFilterBySite = sites => {
+    console.log('ddd')
+    dispatch(fetchInvoices())
     //filter data by site
     let sites_ = sites.map(r => r.key)
     setfilters({ ...filters, sites: sites_ })
@@ -223,7 +287,7 @@ const FacturesTable = ({ enabledFilters = ["site"], showExport = true }) => {
               <span className="ml-2.5">Tout télécharger</span>
             </button>
           )}
-          {enabledFilters.includes("site") && (
+          {/* {enabledFilters.includes("site") && (
             <div className="flex justify-center">
               <SelectDropdown
                 placeholder="Filtrer par site"
@@ -234,8 +298,8 @@ const FacturesTable = ({ enabledFilters = ["site"], showExport = true }) => {
                 onSelect={handleFilterBySite}
               />
             </div>
-          )}
-          <div className="flex justify-center">
+          )} */}
+          {/* <div className="flex justify-center">
             <SelectDropdown
               placeholder={dateFilterPlaceholder()}
               width={196}
@@ -271,7 +335,7 @@ const FacturesTable = ({ enabledFilters = ["site"], showExport = true }) => {
               }
               footerClickExitEvent={false}
             />
-          </div>
+          </div> */}
           <Pagination
             pageSize={pageSize}
             current={pageIndex}
