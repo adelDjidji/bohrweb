@@ -259,13 +259,16 @@ const AddSite = props => {
 
 
     return (
-      <Marker
+      {typeof window !== 'undefined' ? (
+        <Marker
         draggable
         eventHandlers={eventHandlers}
         ref={markerRef}
         icon={ICON}
         position={props.center}
       />
+      ) : null}
+      
     )
   }
   const [options, setOptions] = useState([])
@@ -941,10 +944,11 @@ const AddSite = props => {
 
             <div className="md:col-span-2 sm:col-span-1 row-span-2 ">
               <div className="mt-8 w-full h-72 rounded-lg overflow-hidden	">
+              typeof window !== 'undefined' ? (
                 <MapContainer center={ {'lat': position.lat, 'lon':position.lon}} zoom={12}>
                   <MyComponent center={ {'lat': position.lat, 'lon':position.lon} } />
                   <TileLayer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png" />
-                </MapContainer>
+                </MapContainer>) : null
               </div>
             </div>
 

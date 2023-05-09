@@ -98,6 +98,6 @@ module.exports = {
   plugins: [
     require("@tailwindcss/aspect-ratio"),
     require("tailwindcss-css-filters"),
-    require('tw-elements/dist/plugin'),
+    // require('tw-elements/dist/plugin'),
   ],
 }
